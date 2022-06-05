@@ -4,17 +4,18 @@ import firestore from '@react-native-firebase/firestore'
 import { AuthContext } from '../../utils/AuthProvider'
 import Loading from '../../utils/Loading';
 import Icon from "react-native-vector-icons/SimpleLineIcons";
-
+import MessageCard from '../../utils/MessageCard';
 import { theme } from '../../Chat/ChatTheme';
 import SearchInput from '../../Chat/Components/common/SearchInput'
 import firebase  from '@react-native-firebase/app'; 
-const MessagesScreen = ({navigation}) => {
-     console.log(user)
+const MessagesScreen = ({navigation,item}) => {
     const [users,setUsers] = useState(null)
     const {user, logout} = useContext(AuthContext);
     const [friendData, setFriendData] = useState(null);
     const friend = friendData
     const [ready, setReady] = useState(true)
+    const [presentData, setPresent]= useState(null)
+    /*
     const getUsers = async ()=>{
              const querySanp = await firestore().collection('users').where('uid','!=', user.uid).get()
              const allusers = querySanp.docs.map(docSnap=>docSnap.data())
@@ -22,10 +23,53 @@ const MessagesScreen = ({navigation}) => {
            
             setUsers(allusers)
     }
-
-
-
-
+    */
+    const getUsers = async () => {
+      try {
+        const list = [];
+  
+        
+       const querySanp = await firestore().collection('users').where('uid','!=', user.uid).get()
+          .then((querySnapshot) => {
+            // console.log('Total Posts: ', querySnapshot.size);
+  
+            querySnapshot.forEach((doc) => {
+              const {
+                userImg,
+                name,
+                uid,
+                about
+              
+              
+              } = doc.data();
+              list.push({
+                name,
+                uid,
+                about,
+                userImg
+              });
+            });
+          });
+        setUsers(list)
+       
+       
+      
+      } catch (e) {
+        console.log(e);
+      }
+    };
+/*
+const getPresent = async (item)=>{
+  const querySanp = await firestore()
+  .collection('present')
+  .doc(item.uid)
+  .collection('presentDetail')
+  .get()
+  const allposts = querySanp.docs.map(docSnap=>docSnap.data())
+ //  console.log(allusers)
+ setPresent(allposts)
+} 
+/*
 const fetchFriends = async () => {
   try {
     const list = [];
@@ -37,7 +81,6 @@ const fetchFriends = async () => {
       .where('uid','!=', firebase.auth().currentUser.uid)
       .get()
       .then((querySnapshot) => {
-         console.log('Total Friends: ', querySnapshot.size);
         
         querySnapshot.forEach((doc) => {
           const {
@@ -64,12 +107,12 @@ const fetchFriends = async () => {
     console.log(e);
   }
 };  
+*/
     useEffect(()=>{
       setTimeout(()=>{
         setReady(false)
         },1000)   
         getUsers();
-        fetchFriends();
     },[])
     /*
     const showStoryCircle = () => {
@@ -95,57 +138,27 @@ const fetchFriends = async () => {
     };
     */
     
-    const RenderCard = ({item})=>{
-      return (
-        
-        <View style={styles.container}>
-        <TouchableOpacity style={styles.conversation}
-        onPress={() => navigation.navigate('CHAT', {name:item.name,uid:item.uid,img:item.userImg, about:item.about
-        
-      })}>
-
-          <TouchableOpacity 
-            onPress={() => setModalVisible(currentValue => !currentValue)}
-            style={[styles.imageContainer]}>
-            <Image source={{ uri: item.userImg }} style={styles.img} />
-          </TouchableOpacity>
-          <View style={{
-              flex: 1,
-              justifyContent: 'center'
-            }}>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between'
-            }}>
-              <Text numerOfLine={1} style={styles.username}>{item.name}</Text>
-              <TouchableOpacity>
-              <Icon name="present" size={30}></Icon>
-
-              </TouchableOpacity>
-             
-            </View>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between'
-            }}>
-              
-            </View>
-          </View>
-        </TouchableOpacity>
-        </View>
-      )
-}
+    
 return (
   ready ? <Loading/> :  (
       <View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
         <SearchInput />
-        <FlatList 
-          data={users}
-          renderItem={({item})=> {return <RenderCard item={item} 
-          /> }}
-          keyExtractor={(item)=>item.uid}
-        />
-     
+    
+      <FlatList
+            data={users}
+            renderItem={({item}) => (
+              <MessageCard
+                item={item}
+            
+                
+              />
+            )}
+            keyExtractor={(item) => item.uid}
+          
+            showsVerticalScrollIndicator={false}
+            
+            
+          />
         
     </View>
 )

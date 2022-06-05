@@ -14,7 +14,7 @@ import { renderNode } from 'react-native-elements/dist/helpers';
 const gestureRootViewStyle = { flex: 1 };
 const MusicInven = () => {
 
-  const {Backaddress,setBacksaddress} = useStore();
+  const {Backaddress,setBacksaddress,BuyItem} = useStore();
   const usersCollection = firestore().collection('Inventory').doc(firebase.auth().currentUser.uid).collection('background'); 
   const addBackground = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid);
   const [tool, setTool] = useState();
@@ -28,9 +28,9 @@ const MusicInven = () => {
   };
   useEffect(() => {
     getShopData();
-  }, []);
+  }, [BuyItem]);
   const AddBackground = (newaddress) => {
-    addBackground.collection('background').doc(firebase.auth().currentUser.uid + 'mid').update({address:newaddress});
+    addBackground.collection('background').doc(firebase.auth().currentUser.uid+ 'mid').update({address:newaddress});
     //addBackground.collection('background').add({address:newaddress});
     console.log('저장완료');  
     console.log(newaddress);

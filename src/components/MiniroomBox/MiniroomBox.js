@@ -1,36 +1,52 @@
-import {View ,StyleSheet,Animated,PanResponder,Image,Button } from 'react-native';
+import {View ,StyleSheet,Animated,PanResponder,Image,Button} from 'react-native';
 import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app'
-
-const MiniroomBox =({test,x,y,name}) => {
-  var testx, testy;
+import{ useAnimatedGestureHandler,withSpring } from 'react-native-reanimated';
+const MiniroomBox =({test,name,x,y}) => {
+  
   const tool = test;
+  const testname = name;
+  let dlatlx= x;
+  let dlatly= y;
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
+  const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
+  
+  const checktItem = () => {
+    try{
+    console.log('마운트!');
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    checktItem();
+    return () => {
+      console.log('언마운트!');
+      console.log('x좌표 : ',dlatlx);
+      console.log('y좌표 : ',dlatly);
+      addItem(dlatlx,dlatly,tool,testname);
+    }
+  }, [countItem]);
+  
   const addItem = (x,y,address,name) => {
-   
-      const rows = addminiroom.where('name', '==', name);
-
-      rows.get().then(function (querySnapshot) {
+    const rows = addminiroom.where('name', '==', name);  
+    rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
+          //x=Math.floor(x/20)*20;
+          //y=Math.floor(y/20)*20;
+          //if(x>=360)x=370;
+          //if(y>=320)y=320;
           doc.ref.update({
             getx:x,
             gety:y,
             address:address,
             name:name,
           })
-
-      
-      
         });
       });
-
-      console.log(name);
-      console.log('x좌표: ',x);
-      console.log('y좌표: ',y);
-      console.log('address: ',address);
-   
+      console.log('----------------------');
       console.log('save complete');
   };
     const pan = useRef(new Animated.ValueXY()).current;
@@ -53,35 +69,34 @@ const MiniroomBox =({test,x,y,name}) => {
         pan.flattenOffset();
       },
       onPanResponderEnd: (evt , gesture) => {
-        firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).onSnapshot(doc =>{    
-          console.log(doc.data())
-        })
-        //console.log('주소는~');
-        //console.log(`${tooladdress}`)
-        testx=gesture.moveX;
-        testy=gesture.moveY;
-        console.log(testx,testy);
-        addItem(gesture.moveX,gesture.moveY,tool,name);
+        dlatlx =gesture.moveX;
+        dlatly =gesture.moveY;
+        setplaceX(gesture.moveX);
+        //setHoldx(dlatlx);
+        //setHoldy(dlatly);
+        console.log('아이템 : ',name);
+        console.log('x좌표 : ',dlatlx);
+        console.log('y좌표 : ',dlatly);
+        
       },
     })
   ).current;
     return(
-        <Animated.View style={{transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
+      <View style={{position:'absolute',transform: [{translateX: x} , {translateY:y}]}}>
+        <Animated.View style={{width:5,height:5,backgroundColor:'red',position:'absolute',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
             <View style={styles.box}>
-                <Image source={{uri:`${test}`}} resizeMode='stretch' style={{borderWidth:1,flex:1}}></Image>
+                <Image source={{uri:`${test}`}} resizeMode='stretch' style={{flex:1}}></Image>
             </View>
       </Animated.View>
+      </View>
         )
     }
 
     const styles =StyleSheet.create({
         box:{
-            translateX:1,
-            translateY:-300,
-            height: 40,
-            width: 40,
-            borderColor: "blue",
-            borderWidth:1,
+            height: 80,
+            width: 80,
+            position:'absolute'
           },
     });
     export default MiniroomBox

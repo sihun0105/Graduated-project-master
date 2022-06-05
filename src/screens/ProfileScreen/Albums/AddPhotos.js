@@ -31,7 +31,7 @@ import { AuthContext } from '../../../utils/AuthProvider';
 import { configureStore } from '@reduxjs/toolkit';
 
 const AddPhotos = ({route}) => {
-
+  const [userData, setUserData] = useState(null);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [deleted, setDeleted] = useState(false);
@@ -74,6 +74,19 @@ const AddPhotos = ({route}) => {
       setImage(imageUri);
     });
   };
+
+  const getUser = async() => {
+    const currentUser = await firestore()
+    .collection('users')
+    .doc(user.uid)
+    .get()
+    .then((documentSnapshot) => {
+      if( documentSnapshot.exists ) {
+        console.log('User Data', documentSnapshot.data());
+        setUserData(documentSnapshot.data());
+      }
+    })
+  }
   const submitPost = async () => {
     const currentPhotoId = Math.floor(100000 + Math.random() * 9000).toString();
     const currentuserId = firebase.auth().currentUser.uid
@@ -114,6 +127,15 @@ const AddPhotos = ({route}) => {
           postTime: firestore.Timestamp.fromDate(new Date()),
           
         })
+        .then(() => {
+         
+            firestore()
+            .collection('users')
+            .doc(user.uid)
+            .update({
+              point :  userData.point + 10
+            })
+        })
       console.log('Post Added!');
       Alert.alert(
         '게시물 업데이트 완료!',
@@ -133,6 +155,7 @@ const AddPhotos = ({route}) => {
 
   useEffect(() => {
     setDeleted(false);
+    getUser();
   }, [deleted,refreshing]);
 
   const uploadImage = async () => {

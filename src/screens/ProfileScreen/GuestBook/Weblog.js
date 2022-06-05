@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
       color: theme.colors.title,
       width: 210
     },
+    
     delete: {
       fontSize: theme.fontSize.title,
       color: theme.colors.title,

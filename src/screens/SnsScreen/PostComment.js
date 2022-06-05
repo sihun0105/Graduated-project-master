@@ -54,8 +54,12 @@ const PostComment = ({navigation,route}) => {
       commentCount : 1
     })
     .then(() => {
-    
-      
+        firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          point :  userData.point + 5
+        })
     
       console.log('Groups Added!');
       setDeleted(true);

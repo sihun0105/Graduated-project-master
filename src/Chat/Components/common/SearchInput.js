@@ -7,10 +7,8 @@ import { theme } from '../../ChatTheme';
 const SearchInput = () => {
 	return (
 		<View style={styles.container}>
-			<View style={styles.row}>
-				<Icon name="search" size={20} color={theme.colors.searchIcon} />
-				<TextInput style={styles.input} placeholder="Search" maxLength={10} />
-			</View>
+		<Text style={{textAlign : 'center', fontFamily: 'Jalnan', fontSize : 20}}>회원 목록</Text>
+		<Text style={{textAlign : 'center', fontFamily: 'Jalnan', fontSize : 15}}>사람들과 대화를 주고받고 선물을 해보세요!</Text>
 		</View>
 	)
 }

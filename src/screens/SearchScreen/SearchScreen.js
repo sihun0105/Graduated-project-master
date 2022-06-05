@@ -260,6 +260,8 @@ useEffect(()=>{
     />
     </View>
    
+    
+    
     <View style={{flexDirection : 'row',marginBottom : 10}}>
     <ScrollView
           horizontal={true}
@@ -287,21 +289,6 @@ useEffect(()=>{
           </TouchableOpacity>
           </ScrollView>
     </View>
-    <Text style={{fontSize : 20, fontWeight : 'bold', marginLeft : 5}}>실시간 인기 게시물</Text>
-    <View style={{flexDirection : 'row'}}>
-    <ScrollView
-    horizontal={true}
-    showsHorizontalScrollIndicator = {false}>
-    {
-        Bestposts?.map((row, idx) => {
-         {
-            return  <Image source ={{uri:row.postImg}} style={{width:200,height:150,}} ></Image>
-         }
-      })
-      }
-      </ScrollView>
-    </View>
-       
     <View style={{marginTop : 10}}>
       
     <FlatList 

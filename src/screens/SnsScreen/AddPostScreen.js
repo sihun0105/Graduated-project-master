@@ -42,7 +42,8 @@ const AddPostScreen = () => {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [post, setPost] = useState([null]);
-  
+  const [userData, setUserData] = useState(null);
+
   const [tag, setTag] = useState(null);
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -74,6 +75,20 @@ const AddPostScreen = () => {
       setImage(imageUri);
     });
   };
+
+  const getUser = async() => {
+    const currentUser = await firestore()
+    .collection('users')
+    .doc(user.uid)
+    .get()
+    .then((documentSnapshot) => {
+      if( documentSnapshot.exists ) {
+        console.log('User Data', documentSnapshot.data());
+        setUserData(documentSnapshot.data());
+      }
+    })
+  }
+
   const currentPhotoId = Math.floor(100000 + Math.random() * 9000).toString();
 
   const submitPost = async () => {
@@ -97,6 +112,12 @@ const AddPostScreen = () => {
       postid : currentPhotoId,
     })
     .then(() => {
+      firestore()
+      .collection('users')
+      .doc(user.uid)
+      .update({
+        point :  userData.point + 10
+      })
       console.log('Post Added!');
       Alert.alert(
         '게시물 업데이트 완료!',
@@ -115,6 +136,7 @@ const AddPostScreen = () => {
 
   useEffect(() => {
     setDeleted(false);
+    getUser();
   }, [deleted,refreshing]);
 
   const uploadImage = async () => {
@@ -151,7 +173,6 @@ const AddPostScreen = () => {
       await task;
 
       const url = await storageRef.getDownloadURL();
-
       setUploading(false);
       setImage(null);
 

@@ -1,9 +1,9 @@
-import { View,  ActivityIndicator, Text,TouchableOpacity,StyleSheet,SafeAreaView,Button} from 'react-native';
+import { View,  ActivityIndicator, Text,TouchableOpacity,StyleSheet,SafeAreaView,Button,Alert,} from 'react-native';
 import React, { useState,useEffect,useContext,useCallback } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {format} from 'date-fns';
 import { InputFieldDiary, InputTitle, InputWrapper,Boundary, SubmitBtn, AddImageD,
-  SubmitBtnText, DiaryBtn, DiaryBtnText, DiaryBtnWapper, AddImage,StatusWrapper, } from '../../../../styles/AddPost';
+  InputField,SubmitBtnText, DiaryBtn, DiaryBtnText, DiaryBtnWapper, AddImage,StatusWrapper, } from '../../../../styles/AddPost';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import ImagePicker from 'react-native-image-crop-picker';
 import { AuthContext } from '../../../utils/AuthProvider';
@@ -180,15 +180,16 @@ const AddDiary = () =>{
       hideDatePicker();
       setdate2(format(date, 'yyyy-MM-dd'));
     };
-  
+    showDatePicker
     return (
       <View>
-        <Text style={{fontSize: 20}}>
+       
+        <Text style={{fontSize: 20,marginTop : 10, marginLeft : 20, marginBottom : 10}}>
           {format(date, 'yyyy/MM/dd')}
         </Text>
-        <DiaryBtn onPress={showDatePicker}>
-        <DiaryBtnText>날짜</DiaryBtnText>
-        </DiaryBtn>
+        <TouchableOpacity style={styles.userBtn} onPress={() => showDatePicker()}>
+        <Text style={styles.userBtnTxt}>날짜 선택</Text>
+        </TouchableOpacity>
   
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -202,40 +203,32 @@ const AddDiary = () =>{
   
 
     return(
-        <SafeAreaView style= {styles.container}>
+        <View style= {styles.container}>
         <ScrollView>
             <InputWrapper>
             <View style= {styles.DateWapper}>
             <DatePicker/>
             </View>
-
-            <InputTitle
-                placeholder="제목입력.."
+            
+            <InputField
+               
+                fontFamily="Jalnan"
+                placeholder="제목을 입력 해주세요.."
                 value={post}
                 onChangeText={(content) => setPost(content)}
             />
+           
             <Boundary/>
-            <View style= {styles.Wapper}>
-                <DiaryBtn>
-                    <DiaryBtnText>굵게</DiaryBtnText>
-                </DiaryBtn>
-                <DiaryBtn>
-                    <DiaryBtnText>밑줄</DiaryBtnText>
-                </DiaryBtn>
-                <DiaryBtn>
-                    <DiaryBtnText>기울기</DiaryBtnText>
-                </DiaryBtn>
-                <DiaryBtn>
-                    <DiaryBtnText>글자크기</DiaryBtnText>
-                </DiaryBtn>
-            </View>
-            <InputFieldDiary
-            placeholder="내용입력.."
+            
+            <InputField
+            placeholder="내용을 입력 해주세요.."
             multiline
-            numberOfLines={10}
+            fontFamily="Jalnan"
+            numberOfLines={5}
             value={body}
             onChangeText={(content) => setBody(content)}
             />
+           
              <View  style= {styles.image}>
             {image != null ? <AddImageD source={{uri: image}} /> : null}
             </View>
@@ -245,10 +238,10 @@ const AddDiary = () =>{
             <ActivityIndicator size="large" color="#0000ff" />
           </StatusWrapper>
         ) : (
-          <DiaryBtn onPress={updatePost}>
-            <DiaryBtnText>Post </DiaryBtnText>
+          <TouchableOpacity style={styles.postBtn} onPress={updatePost}>
+            <Text style={styles.userBtnTxt}>저장 </Text>
             
-          </DiaryBtn>
+          </TouchableOpacity>
         )}
 
             </InputWrapper>
@@ -268,7 +261,7 @@ const AddDiary = () =>{
           <Icon name="md-images-outline" style={styles.actionButtonIcon} />
         </ActionButton.Item>
       </ActionButton>
-        </SafeAreaView>
+        </View>
 
         
     );
@@ -284,13 +277,49 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         backgroundColor: '#fff',
-
+        
     },
+      userBtn: {
+    width:150,
+    backgroundColor:'orange',
+    borderColor: 'orange',
+    borderBottomColor:'#fff',
+    borderWidth:1,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    marginHorizontal: 6,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  postBtn: {
+    width:90,
+    backgroundColor:'orange',
+    borderColor: 'orange',
+    borderBottomColor:'#fff',
+    borderWidth:1,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    marginHorizontal: 6,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  userBtnTxt: {
+    fontFamily: "Jalnan",
+    color: '#fff',
+    textAlign:'center',  
+    fontSize:20,
+  },
     DateWapper:{
         flexDirection: 'row',
         justifyContent: 'flex-end',
         width: '100%',
         marginright:10,
+        marginBottom : 50,
+        marginTop : 20
     },
     Wapper:{
       flexDirection: 'row',

@@ -79,6 +79,15 @@ const Comment = ({navigation,route}) => {
       uid : firebase.auth().currentUser.uid,
       
     })
+    .then(() => {
+         
+      firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        point :  userData.point + 5
+      })
+  })
       console.log('Groups Added!');
       setDeleted(true);
       Alert.alert('댓글 작성 완료!')

@@ -12,6 +12,8 @@ target 'login0101' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
+
   target 'login0101Tests' do
     inherit! :complete
     # Pods for testing

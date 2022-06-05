@@ -8,6 +8,8 @@ import {
   SafeAreaView,
   Alert,
   RefreshControl,
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
@@ -22,9 +24,10 @@ import {Container} from '../../../styles/FeedStyles';
 import { AuthContext } from '../../utils/AuthProvider';
 import useStore from '../../../store/store';
 import Loading from '../../utils/Loading';
+import { useNavigation } from "@react-navigation/native";
 
 
-const SnsScreen = ({navigation,route}) => {
+const SnsScreen = ({props}) => {
   const [refreshing, setRefreshing] = useState(false);
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,6 +35,9 @@ const SnsScreen = ({navigation,route}) => {
   const [currentUserLike, setCurrentUserLike] = useState(false)
   const {Post,SetPost} = useStore(); // 0522새로고침용
   const [ready, setReady] = useState(true)
+  const [Bestposts,setBestPosts] = useState(null)
+  const navigation = useNavigation();
+
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -40,7 +46,16 @@ const SnsScreen = ({navigation,route}) => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
     
-    
+  const getBestPosts = async ()=>{
+    const querySanp = await firestore()
+    .collection('posts')
+    .orderBy('likes', 'desc')
+    .limit((5))
+    .get()
+    const allposts = querySanp.docs.map(docSnap=>docSnap.data())
+   //  console.log(allusers)
+   setBestPosts(allposts)
+  } 
 
   const fetchPosts = async () => {
     try {
@@ -99,6 +114,7 @@ const SnsScreen = ({navigation,route}) => {
       },1000)   
     fetchPosts();
     setDeleted(false);
+    getBestPosts();
   }, [deleted,refreshing,Post]);
 
   const handleDelete = (postId) => {
@@ -167,13 +183,33 @@ const SnsScreen = ({navigation,route}) => {
       .catch((e) => console.log('Error deleting posst.', e));
   };
 
-  const ListHeader = () => {
-    return null;
-  };
+ 
   return (
     ready ? <Loading/> :  (
-
+<ScrollView style={{flex: 1}}>
         <Container>
+          <Text style={{fontSize : 20, marginLeft : 5, fontFamily : 'Jalnan',marginTop : 5, color : 'orange'}}>🎉인기 게시물 Top 5🎉</Text>
+    <View style={{flexDirection : 'row', marginBottom : 10}}>
+    <ScrollView
+    horizontal={true}
+    showsHorizontalScrollIndicator = {false}>
+    {
+        Bestposts?.map((row, idx) => {
+          return (
+            <View>
+              <TouchableOpacity 
+              onPress={() => navigation.navigate('BestSnsScreen', { uid : row.uid, postimg : row.postImg, post: row.post, postTime : row.postTime })}
+              >
+              <Image source ={{uri:row.postImg}} style={{width:200,height:150,marginLeft : 10}} ></Image>
+              </TouchableOpacity>
+              </View>
+        
+          )  ;      
+         
+      })
+      }
+      </ScrollView>
+    </View>
           <FlatList
             data={posts}
             renderItem={({item}) => (
@@ -189,8 +225,6 @@ const SnsScreen = ({navigation,route}) => {
               />
             )}
             keyExtractor={(item) => item.id}
-            ListHeaderComponent={ListHeader}
-            ListFooterComponent={ListHeader}
             showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl
@@ -200,7 +234,7 @@ const SnsScreen = ({navigation,route}) => {
             }
           />
         </Container>
-    
+        </ScrollView>
     )
   );
 };

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext,useRef} from 'react';
 
 
 import {
@@ -10,9 +10,10 @@ import {
   ScrollView,
   SafeAreaView,
   Alert,
-  
+  Button
   
 } from 'react-native';
+import Icon from "react-native-vector-icons/Entypo";
 import { AuthContext } from '../../utils/AuthProvider';
 import firestore from '@react-native-firebase/firestore';
 import firebase  from '@react-native-firebase/app';
@@ -20,6 +21,10 @@ import songs from '../../data/songdata';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Loading from '../../utils/Loading';
 import {songT} from '../../components/MusicPlayer/MusicPlayer'
+import ViewShot from 'react-native-view-shot';
+import storage from '@react-native-firebase/storage';
+import { theme } from '../../Chat/ChatTheme';
+import moment from 'moment';
 
 const ProfileScreen = ({navigation,route}) => {
 
@@ -31,6 +36,94 @@ const ProfileScreen = ({navigation,route}) => {
   const [LoginuserData, setLoginUserData] = useState(null);
   const [RequestData, setRequestData] = useState([]);
   const [ready, setReady] = useState(true)
+  const captureRef = useRef();
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
+  const [CommentData, setCommentData] = useState([]);
+
+  const getComment = async() => {
+    const querySanp = await firestore()
+    .collection('guestbook')
+    .doc(route.params ? route.params.uid : user.uid)
+    .collection('comment')
+    .get()
+
+    const allcomments = querySanp.docs.map(docSnap=>docSnap.data())
+    setCommentData(allcomments)
+      
+    
+  }
+  const uploadImage = async () => {
+  
+    const uploadUri = await getPhotoUri();
+    
+    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+
+    // Add timestamp to File Name
+    const extension = filename.split('.').pop(); 
+    const name = filename.split('.').slice(0, -1).join('.');
+    filename = name + Date.now() + '.' + extension;
+
+    setUploading(true);
+
+    const storageRef = storage().ref(`miniRoomImage/${filename}`);
+    const task = storageRef.putFile(uploadUri);
+    task.on('state_changed', (taskSnapshot) => {
+      console.log(
+        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+      );
+
+      setTransferred(
+        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
+          100,
+      );
+    });
+
+    try {
+      await task;
+
+      const url = await storageRef.getDownloadURL();
+      console.log('uri', url)
+
+      setUploading(false);
+      setImage(null);
+      firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        miniRoom : url
+      })
+      // Alert.alert(
+      //   'Image uploaded!',
+      //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
+      // );
+      return url;
+
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+
+
+  }; 
+  const getPhotoUri = async () => {
+    const uri = await captureRef.current.capture();
+    console.log('👂👂 Image saved to', uri);
+    return uri;
+  };
+    
+  const onSave = async () => {
+    const uri = await getPhotoUri();
+    const imageuri = uploadImage();
+    console.log('Image Url: ', imageuri);
+
+ 
+    
+  
+
+
+  };
 
   const getUser = async() => {
     await firestore()
@@ -112,6 +205,7 @@ const ProfileScreen = ({navigation,route}) => {
     fetchFriends();
     getLoginUser();
     getRequest();
+    getComment();
     navigation.addListener("focus", () => setLoading(!loading));
   }, [navigation, loading]);
 
@@ -212,8 +306,12 @@ const handleDelete = () => {};
           <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
                 <Text style={styles.titleText}>{userData ? userData.name : ''}님의 미니홈피</Text>
           </View>
+          <TouchableOpacity style={{marginRight: 15, justifyContent : 'center'}} onPress={() => navigation.navigate('PointGuide')}>
+
+          <Icon name="dots-three-horizontal" size={25} color="#fff" />
         
-      
+          </TouchableOpacity>
+
       </>
       ) : (
         <>
@@ -221,6 +319,11 @@ const handleDelete = () => {};
         <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
                 <Text style={styles.titleText}>{userData ? userData.name : ''}님의 미니홈피</Text>
           </View>
+          <TouchableOpacity style={{marginRight: 15, justifyContent : 'center'}} onPress={() => navigation.navigate('PointGuide')}>
+
+          <Icon name="dots-three-horizontal" size={25} color="#fff" />
+          </TouchableOpacity>
+
         </>
           )}
         </View>
@@ -240,8 +343,9 @@ const handleDelete = () => {};
           
           
           </View>
-          
+
           <View style={styles.rightcontainer}>
+
             <View style={styles.action}>
             <Text style={{color : 'black'}}>이름</Text>
             <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
@@ -275,7 +379,6 @@ const handleDelete = () => {};
             
             </View>
           </View> 
-        
        
         
         
@@ -338,16 +441,69 @@ const handleDelete = () => {};
                 <Text style={styles.userBtnTxt}> 방명록</Text>
               </TouchableOpacity>
         </View>
+        <ViewShot ref={captureRef} options={{ format: 'jpg', quality: 0.9, backgroundColor : 'white' }}>
+
         <TouchableOpacity style={styles.miniroom} onPress={() => onMiniroompress()}>
         <View>
-        <Text style={{fontSize:20,textAlign:'center',marginBottom:10, fontFamily: "DungGeunMo", color: "#129fcd" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
-          <Image source={{uri: 'https://t1.daumcdn.net/cafeattach/MT4/648d42cb50cafc47f7d02fdfc380f91449afca84'}}
-       style={{width: 400, height: 230,marginTop:0}}>
+        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:20, fontFamily: "DungGeunMo", color: "#129fcd" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
+          <Image source={{ uri: userData ? userData.miniRoom || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
+       style={{width: 400, height: 300,marginBottom:0,resizeMode:'cover' }}>
 
           </Image>
         </View>
         
         </TouchableOpacity>
+        </ViewShot>
+        {
+              
+              CommentData?.map((row, idx) => {
+                return (
+                  
+                  <View style={styles.guestBtn}>
+                  <View style={styles.conversation}> 
+                  
+                <TouchableOpacity 
+                      onPress={() => setModalVisible()}
+                      style={[styles.imageContainer]}>
+                      <Image source={{ uri: row.userImg }} style={styles.img} />
+                    </TouchableOpacity>
+                    <View style={{
+                        marginLeft : 15,
+                        flex: 1,
+                        justifyContent: 'center'
+                      }}>
+                      <View style={{
+                        flexDirection: 'row',
+          
+                      }}>
+                        <Text numerOfLine={1} style={styles.username}>{row.name}</Text>
+                        
+                        
+                      </View>
+                      <View style={{
+                        flexDirection: 'row',
+                      }}>
+                        <Text style={styles.message}>{row.comment}</Text>
+                        
+                      </View>
+                      <View style={{
+                        flexDirection: 'row',
+                      }}>
+                        <Text style={styles.message}>{moment(row.commentTime.toDate()).fromNow()}</Text>
+                        
+                      </View>
+                      </View>
+                      
+                      
+                      </View>
+                      </View>
+                  
+              
+              
+                )  ;      
+               
+            })
+            } 
       </ScrollView>
     </SafeAreaView>
     )
@@ -382,11 +538,32 @@ const styles = StyleSheet.create({
     marginTop:10,
    
   },
+  imageContainer: {
+    marginLeft : 10,
+    borderRadius: 25,
+    height: 60,
+    width: 60,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center' 
+  },
   music:{
     marginTop:10,
     height:25,
     marginLeft:25,
     marginRight:25,
+  },
+  username: {
+    fontSize: theme.fontSize.title,
+    color: theme.colors.title,
+    width: 210
+  },
+  message: {
+    fontSize: theme.fontSize.message,
+    width: 240,
+    color: theme.colors.subTitle,
+    marginTop : 5,
   },
 
   title:{ 
@@ -396,12 +573,19 @@ const styles = StyleSheet.create({
     
    
   },
+  img:{width:60,height:60,borderRadius:30,backgroundColor:"orange"},
   titleText:{
     fontFamily: "DungGeunMo",
     justifyContent: 'space-around',
     fontSize: 20,
     color:'white',
    
+  },
+  conversation: {
+    flexDirection: 'row',
+    paddingBottom: 25,
+    paddingRight: 20,
+    paddingTop : 20,
   },
   userImg: {
     height: 125,
@@ -434,6 +618,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  guestBtn: {
+    width : 395,
+    backgroundColor:'#ffffff',
+    borderColor: '#ffffff',
+    borderBottomColor:'#fff',
+    borderWidth:1,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    marginBottom : 10,
+ 
   },
   userBtnTxt: {
     fontFamily: "DungGeunMo",
@@ -477,6 +676,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     paddingVertical: 8,
     paddingHorizontal: 8,
+    marginBottom : 70
 
   },
 

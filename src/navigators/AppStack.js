@@ -22,6 +22,9 @@ import SNSProfileScreen from '../screens/ProfileScreen/SNSprofileScreen';
 import Store from '../screens/StoreScreen/Store';
 import SearchSnsScreen from '../screens/SearchScreen/SearchSnsScreen';
 import PostComment from '../screens/SnsScreen/PostComment';
+import BestSnsScreen from '../screens/SnsScreen/BestSnsScreen';
+import PresentScreen from '../screens/ChatScreen/PresentScreen';
+import PresentDetailScreen from '../screens/ChatScreen/PresentDetailScreen'
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const FeedStack = ({navigation}) => (
@@ -30,25 +33,50 @@ const FeedStack = ({navigation}) => (
       name="SNS"
       component={SnsScreen}
       options={{
-        title: '',
+        title: '자유로운 소통공간 스타',
+        
         headerTitleStyle: {
-         
+         fontFamily: 'Jalnan'
          
         },
         headerStyle: {
           shadowColor: '#fff',
           elevation: 0,
-          backgroundColor : 'orange'
+          backgroundColor : '#fff'
         },
         headerRight: () => (
           <View style={{marginRight: 10}}>
             <FontAwesome5.Button
               name="plus"
               size={22}
-              backgroundColor="orange"
-              color="white"
+              backgroundColor="white"
+              color="black"
               onPress={() => navigation.navigate('AddPost')}
             />
+          </View>
+        ),
+      }}
+    />
+    <Stack.Screen
+      name="BestSnsScreen"
+      component={BestSnsScreen}
+      options={{
+        title: 'Top 5 게시물 !',
+        headerTitleAlign: 'center',
+
+        headerTitleStyle: {
+         fontFamily: 'Jalnan',
+
+        },
+        headerStyle: {
+          shadowColor: '#fff',
+          elevation: 0,
+          backgroundColor : '#fff'
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+            <Ionicons name="arrow-back" size={25} color="black" />
           </View>
         ),
       }}
@@ -155,6 +183,25 @@ const MessageStack = ({navigation}) => (
     >
       {props => <ChatScreen {...props}  /> }
     </Stack.Screen>
+    
+    <Stack.Screen
+      name="Present"
+      component={PresentScreen}
+      options={{
+        headerShown: false,
+        
+        
+      }}
+    />
+    <Stack.Screen
+      name="PresentDetail"
+      component={PresentDetailScreen}
+      options={{
+        headerShown: false,
+        
+        
+      }}
+    />
   </Stack.Navigator>
 );
 const ProfileStack = ({navigation}) => (

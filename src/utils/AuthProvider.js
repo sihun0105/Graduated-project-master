@@ -1,15 +1,33 @@
-import React, {createContext, useState} from 'react';
-import {Image} from 'react-native';
+import React, {createContext, useState,useEffect} from 'react';
+import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import firebase from '@react-native-firebase/app'
+import { useCardAnimation } from '@react-navigation/stack';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
 
+  const getUser = async() => {
+    const currentUser = await firestore()
+    .collection('users')
+    .doc(firebase.auth().currentUser.uid)
+    .get()
+    .then((documentSnapshot) => {
+      if( documentSnapshot.exists ) {
+        console.log('User Data', documentSnapshot.data());
+        setUserData(documentSnapshot.data());
+      }
+    })
+  }
+  useEffect(() => {
+
+    getUser();
+  }, []);
   return (
     <AuthContext.Provider
       value={{
@@ -17,7 +35,26 @@ export const AuthProvider = ({children}) => {
         setUser,
         login: async (email, password) => {
           try {
-            await auth().signInWithEmailAndPassword(email, password);
+            await auth().signInWithEmailAndPassword(email, password)
+            .then(() => {
+             
+              firestore()
+              .collection('users')
+              .doc(firebase.auth().currentUser.uid)
+              .update({
+                point :  userData.point + 10
+              })
+              Alert.alert(
+                '10 포인트가 지급 되었습니다.',
+              ).catch(error => {
+                  console.log('Something went wrong with added user to firestore: ', error);
+              })
+            })
+          
+          
+        
+           
+           
           } catch (e) {
             console.log(e);
           }
@@ -143,7 +180,10 @@ export const AuthProvider = ({children}) => {
                   postTime: firestore.Timestamp.fromDate(new Date()),
                 }).then(() => {
                   firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('background').doc(auth().currentUser.uid+ 'mid').set({
-                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45'
+                    background: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45'
+                  })
+                  firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minime').doc(auth().currentUser.uid+ 'mid').set({
+                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Minimi%2Fboy.png?alt=media&token=9497cbc4-b2b1-4000-9c03-fcba87f24998'
                   }).catch(error => {
                   console.log('Something went wrong with added user to firestore: ', error);
               })
