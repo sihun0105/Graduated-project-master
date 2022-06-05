@@ -49,6 +49,10 @@ const ProfileStackScreen = ({navigation}) => {
                     options={{
                     title: '포인트 가이드',
                     headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : 'orange'
+                     },
                     headerStyle: {
                     backgroundColor: '#fff',
                     shadowColor: '#fff',
@@ -69,7 +73,11 @@ const ProfileStackScreen = ({navigation}) => {
                     name="SNSProfile"
                     component={SNSProfileScreen}
                     options={{
-                    title: '',
+                    title: 'SNS Profile',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
                     headerTitleAlign: 'center',
                     headerStyle: {
                     backgroundColor: '#fff',
@@ -91,7 +99,11 @@ const ProfileStackScreen = ({navigation}) => {
                     name="EditProfile"
                     component={EditProfile}
                     options={{
-                    title: '',
+                    title: '프로필을 변경해보세요!',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : 'orange'
+                     },
                     headerTitleAlign: 'center',
                     headerStyle: {
                     backgroundColor: '#fff',
@@ -134,6 +146,10 @@ const ProfileStackScreen = ({navigation}) => {
                     component={Requset}
                     options={{
                     title: '친구 요청',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
                     headerTitleAlign: 'center',
                     headerStyle: {
                     backgroundColor: '#fff',
@@ -156,6 +172,10 @@ const ProfileStackScreen = ({navigation}) => {
                     component={Friend}
                     options={{
                     title: '친구',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
                     headerTitleAlign: 'center',
                     headerStyle: {
                     backgroundColor: '#fff',
@@ -172,24 +192,64 @@ const ProfileStackScreen = ({navigation}) => {
                     ),
                     }}
                   />
-                  <Stack.Screen
+                     <Stack.Screen
                     name="Diary"
                     component={Diary}
                     options={{
-                      headerShown: false,
-                      }}
-                      />
+                    title: '다이어리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
                  
                   <Stack.Screen 
                   name="AddDiary" 
                   component={AddDiary}
-
-                  />
+                  options={{
+                    title: '일기를 작성해보세요!',
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                     fontFamily: 'Jalnan',
+                     color : 'orange'
+                    },
+                    headerStyle: {
+                      shadowColor: '#fff',
+                      elevation: 0,
+                      backgroundColor : '#fff'
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                      <View style={{marginLeft: 15}}>
+                        <Ionicons name="arrow-back" size={25} color="black" />
+                      </View>
+                    ),
+                  }}
+                />
                   <Stack.Screen
                     name="Album"
                     component={Album}
                     options={{
                     title: '앨범',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
                     headerTitleAlign: 'center',
                     headerStyle: {
                     backgroundColor: '#fff',
@@ -238,34 +298,17 @@ const ProfileStackScreen = ({navigation}) => {
                     ),
                     }}
                   />
-                  <Stack.Screen
-                    name="UserAllPhotos"
-                    component={UserAllPhotos}
-                    options={{
-                    title: '사진',
-                    headerTitleAlign: 'center',
-                    headerStyle: {
-                    backgroundColor: '#fff',
-                    shadowColor: '#fff',
-                    elevation: 0,
-                    
-          
-                    },
-                    headerBackTitleVisible: false,
-                    headerBackImage: () => (
-                    <View style={{marginLeft: 15}}>
-                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-                      </View>
-                    ),
-                    }}
-                  />
-
+                 
                   <Stack.Screen
                     name="Photos"
                     component={Photos}
                     options={{
                     title: '사진',
                     headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
                     headerStyle: {
                     backgroundColor: '#fff',
                     shadowColor: '#fff',
@@ -285,8 +328,12 @@ const ProfileStackScreen = ({navigation}) => {
                     name="AddPhotos"
                     component={AddPhotos}
                     options={{
-                    title: '사진',
+                    title: '사진을 올려보세요!',
                     headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : 'orange'
+                     },
                     headerStyle: {
                     backgroundColor: '#fff',
                     shadowColor: '#fff',
@@ -318,6 +365,10 @@ const ProfileStackScreen = ({navigation}) => {
                     options={{
                     title: '댓글',
                     headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
                     headerStyle: {
                     backgroundColor: '#fff',
                     shadowColor: '#fff',
@@ -338,7 +389,11 @@ const ProfileStackScreen = ({navigation}) => {
                     component={Weblog}
                     options={{
                     title: '방명록',
-                    headerTitleAlign: 'center',
+                    headerTitleAlign: 'center',   
+                     headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
                     headerStyle: {
                     backgroundColor: '#fff',
                     shadowColor: '#fff',

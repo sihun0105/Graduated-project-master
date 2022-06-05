@@ -12,7 +12,7 @@ import firebase  from '@react-native-firebase/app';
 import {LocaleConfig} from 'react-native-calendars';
 import { onChange } from 'react-native-reanimated';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Boundary } from '../../../../styles/AddPost';
+import useStore from '../../../../store/store'
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
@@ -28,14 +28,17 @@ LocaleConfig.defaultLocale = 'fr';
 
 
 const Diary = ({onDelete}) => {
-
+  const {DiaryPost,Checkday,setCheckday2} = useStore();
   const [posts, setPosts] = useState(null);
   const navigation = useNavigation();
   const [DiaryData, setDiaryData] = useState([]);
   const [deleted, setDeleted] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [checkday, setCheckday] = useState(null);
+  const [checkday, setCheckday] = useState([]);
+  const usersDiaryCollection = firestore().collection('Diary').doc(firebase.auth().currentUser.uid).collection('DiaryDetails');
+
+  
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -45,16 +48,19 @@ const Diary = ({onDelete}) => {
   }, []);
 
   const getDiary = async() => {
+    console.log('================================')
+    console.log(Checkday);
     const querySanp = await firestore()
     .collection('Diary')
     .doc(firebase.auth().currentUser.uid)
     .collection('DiaryDetails')
-    .doc(checkday)
+    .doc(Checkday)
     .get()
     .then((documentSnapshot) => {
       if( documentSnapshot.exists ) {
         setDiaryData(documentSnapshot.data());
-      }
+        console.log(documentSnapshot.data());
+      }console.log('xxx');
     })
   
   
@@ -155,118 +161,118 @@ const Diary = ({onDelete}) => {
     getDiary();
     getUser();
     setDeleted(false);
-  }, [deleted,refreshing]);
+  }, [deleted,refreshing,Checkday]);
 
 
 
 
-    return (
-      <View>
-      <ScrollView>
-      <View style={{backgroundColor : '#fff'}}>
+  return (
+    <View>
+    <ScrollView>
+    <View style={{backgroundColor : '#fff'}}>
 
-      <Calendar 
-      onDayPress={(day) => {
-        console.log('selected day', day)
-        Alert.alert(
-          day.dateString,
-          
-         setCheckday(day.dateString)
-           
-        );   
+    <Calendar 
+    onDayPress={(day) => {
+      console.log('selected day', day)
+      Alert.alert(
+        day.dateString,
         
-    }}
-    
-      monthFormat={'yyyy년 M월'} />
-      
-      
-      <TouchableOpacity Style={styles.itemConstainer}>
-      <View style={styles.content}>
-    <View style={styles.diaryTitle}>
-    <Text style={{fontSize : 20,fontFamily: 'DungGeunMo'}}>{DiaryData.post}</Text>
-    <Text style={styles.checkday}>{checkday}</Text>
-    </View>
-    
-    <View style={styles.picContainer}>
-<Image  source={{uri: DiaryData.img}} style={styles.pic}/> 
-    </View>
-    <Text style={{fontSize : 20,fontFamily: 'DungGeunMo'}}>{DiaryData.body}</Text>
-      </View>
-    </TouchableOpacity>
-     
-  </View>
-  </ScrollView>
-  <ActionButton buttonColor="rgb(255, 165, 0)" title="다이어리작성" onPress={()=>onAddDiarypress()}>
-            <Icon name="createDiary" style={styles.actionButtonIcon} />
-            </ActionButton>
-</View>
+       setCheckday(day.dateString)
+         
+      );   
+      setCheckday2(day.dateString);
+  }}
   
-  );
+    monthFormat={'yyyy년 M월'} />
+    
+    
+    <TouchableOpacity Style={styles.itemConstainer}>
+    <View style={styles.content}>
+  <View style={styles.diaryTitle}>
+  <Text style={{fontSize : 20,fontFamily: 'DungGeunMo'}}>{DiaryData.post}</Text>
+  <Text style={styles.checkday}>{checkday}</Text>
+  </View>
+  
+  <View style={styles.picContainer}>
+<Image  source={{uri: DiaryData.img}} style={styles.pic}/> 
+  </View>
+  <Text style={{fontSize : 20,fontFamily: 'DungGeunMo'}}>{DiaryData.body}</Text>
+    </View>
+  </TouchableOpacity>
+   
+</View>
+</ScrollView>
+<ActionButton buttonColor="rgb(255, 165, 0)" title="다이어리작성" onPress={()=>onAddDiarypress()}>
+          <Icon name="createDiary" style={styles.actionButtonIcon} />
+          </ActionButton>
+</View>
+
+);
 };
 
 export default Diary;
 
 const styles = StyleSheet.create({
-  itemConstainer:{
+itemConstainer:{
+  width:'100%',
+
+  },
+  content:{    
+    marginLeft:40,
+    marginTop:20,
+    marginRight:20,
+
+  },
+  checkday:{
+    fontSize : 20,
+    alignSelf: 'flex-end',
+    fontSize:18,
+    marginRight:40,
+    fontFamily: 'DungGeunMo'
+  },
+  diaryTitle:{
+    marginBottom:10,
+  },
+  picContainer:{
+    width:200,
+    height:200,
+    marginLeft:60,
+    marginTop:20,
+    marginBottom:20,
+  },
+  pic:{
+    width:'100%',
+    height:'100%',
+
+  },
+  line:{
+    marginTop:10,
+    borderBottomColor: 'gray',
+    borderBottomWidth: 1,
+
+  },
+  iconContainer:{
+    flexDirection: 'row',
+
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
+  title:{ 
+    height:50,
+    backgroundColor: '#fff',
+    flexDirection: 'row', 
     
+   
+  },
+  userImg: {
+    height: 200,
+    width: 200,
+    resizeMode : 'stretch',
+    backgroundColor: '#fff',
+    flex: 1,
+  },
 
-    },
-    content:{    
-      marginLeft:40,
-      marginTop:20,
-      marginRight:20,
-
-    },
-    checkday:{
-      fontSize : 20,
-      alignSelf: 'flex-end',
-      fontSize:18,
-      marginRight:40,
-      fontFamily: 'DungGeunMo'
-    },
-    diaryTitle:{
-      marginBottom:10,
-    },
-    picContainer:{
-      width:200,
-      height:200,
-      marginLeft:60,
-      marginTop:20,
-      marginBottom:20,
-    },
-    pic:{
-      width:'100%',
-      height:'100%',
-
-    },
-    line:{
-      marginTop:10,
-      borderBottomColor: 'gray',
-      borderBottomWidth: 1,
-
-    },
-    iconContainer:{
-      flexDirection: 'row',
-
-    },
-    actionButtonIcon: {
-      fontSize: 20,
-      height: 22,
-      color: 'white',
-    },
-    title:{ 
-      height:50,
-      backgroundColor: '#fff',
-      flexDirection: 'row', 
-      
-     
-    },
-    userImg: {
-      height: 200,
-      width: 200,
-      resizeMode : 'stretch',
-      backgroundColor: '#fff',
-      flex: 1,
-    },
-
-  })
+})
