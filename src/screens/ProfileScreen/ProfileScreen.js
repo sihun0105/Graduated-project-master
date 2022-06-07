@@ -315,14 +315,15 @@ const handleDelete = () => {};
       </>
       ) : (
         <>
-        
-        <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
+        <View style={{flexDirection:'row',justifyContent : 'space-between',alignItems : 'center',width:'100%',}}>
+        <View style={{marginLeft:15}} >
                 <Text style={styles.titleText}>{userData ? userData.name : ''}님의 미니홈피</Text>
           </View>
-          <TouchableOpacity style={{marginRight: 15, justifyContent : 'center'}} onPress={() => navigation.navigate('PointGuide')}>
+          <TouchableOpacity style={{marginRight: 15,}} onPress={() => navigation.navigate('PointGuide')}>
 
-          <Icon name="dots-three-horizontal" size={25} color="#fff" />
-          </TouchableOpacity>
+<Icon name="dots-three-horizontal" size={25} color="#fff" />
+</TouchableOpacity>
+        </View>
 
         </>
           )}
@@ -370,7 +371,7 @@ const handleDelete = () => {};
             </View>
        
             <View style={styles.action}>
-            <Text style={{color : 'black'}}>포인트</Text>
+            <Text style={styles.infotext}>포인트</Text>
             <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
             <Text style={{color : 'black', marginRight : 15}}>{userData ? userData.point : ''}</Text>
             </View>
@@ -445,7 +446,7 @@ const handleDelete = () => {};
 
         <TouchableOpacity style={styles.miniroom} onPress={() => onMiniroompress()}>
         <View>
-        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:20, fontFamily: "DungGeunMo", color: "#129fcd" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
+        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:20, fontFamily: "DungGeunMo", color: "#000" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
           <Image source={{ uri: userData ? userData.miniRoom || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
        style={{width: 400, height: 300,marginBottom:0,resizeMode:'cover' }}>
 
@@ -609,17 +610,15 @@ const styles = StyleSheet.create({
       },
   userBtn: {
     width:120,
-    backgroundColor:'orange',
+    backgroundColor:'#fff',
     borderColor: 'orange',
     borderBottomColor:'#fff',
-    borderWidth:1,
+    borderWidth:2,
     paddingVertical: 12,
     paddingHorizontal: 12,
     marginHorizontal: 6,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
   },
   guestBtn: {
     width : 395,
@@ -636,7 +635,7 @@ const styles = StyleSheet.create({
   },
   userBtnTxt: {
     fontFamily: "DungGeunMo",
-    color: '#fff',
+    color: '#000',
     textAlign:'center',  
     fontSize:15,
   },
@@ -658,7 +657,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   userInfoTitle2: {
-    color: '#129fcd',
+    color: '#000',
     fontFamily: "DungGeunMo",
     fontSize: 18,
     marginBottom: 5,

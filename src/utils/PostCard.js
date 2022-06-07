@@ -226,7 +226,7 @@ const getComment = async(item) => {
         </View>
       </View>
     </View>
-    <AppText style={Styles.likes}>  {likeData.length} likes</AppText>
+    <AppText style={Styles.likes}>좋아요  {likeData.length} 개 </AppText>
     <View
       style={{
         marginStart: 15,
@@ -248,7 +248,7 @@ const getComment = async(item) => {
           marginStart: 15,
           fontSize: 12,
         }}>
-       {moment(item.postTime.toDate()).fromNow()}
+       {moment(item.postTime.toDate()).lang("ko").fromNow()}
       </Text>
 
  
@@ -322,6 +322,7 @@ leftIcons: {
   width: 100,
 },
 likes: {
+  marginLeft:10,
   fontSize: 14,
   fontWeight: 'bold',
 },

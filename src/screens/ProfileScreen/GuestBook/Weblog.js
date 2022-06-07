@@ -180,7 +180,7 @@ const Weblog = ({navigation,route}) => {
             <View style={{
               flexDirection: 'row',
             }}>
-              <Text style={styles.message}>{moment(item.commentTime.toDate()).fromNow()}</Text>
+              <Text style={styles.message}>{moment(item.commentTime.toDate()).lang("ko").fromNow()}</Text>
               
             </View>
             </View>

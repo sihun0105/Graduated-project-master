@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/FontAwesome5';
 import COLORS from '../StoreScreen/colors';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../utils/AuthProvider';
@@ -22,7 +23,7 @@ const StoreHome = ({navigation}) => {
   const usersCollection = firestore().collection('shops').doc('shopitems').collection('tool');
   const usersCollectionM = firestore().collection('shops').doc('shopitems').collection('minime');
   const usersCollectionB = firestore().collection('shops').doc('shopitems').collection('background');
-  const categories = ['TOOL', 'MINIME', 'BACKGROUND'];
+  const categories = ['가구', '캐릭터', '벽지'];//동식물 추가?
   
   const {user, logout} = useContext(AuthContext);
   const {isPoint,setPoint} = useStore();
@@ -135,8 +136,8 @@ const StoreHome = ({navigation}) => {
               style={{flex: 1, resizeMode: 'contain',aspectRatio: 1.0,}}
             />
           </View>
-
-          <Text style={{fontWeight: 'bold', fontSize: 17, marginTop: 10}}>
+          <View style={{marginTop:13}}>
+          <Text style={{ fontSize: 17, marginTop: 10}}>
             {plant.name}
           </Text>
           <View
@@ -145,24 +146,13 @@ const StoreHome = ({navigation}) => {
               justifyContent: 'space-between',
               marginTop: 5,
             }}>
-            <Text style={{fontSize: 19, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 19,}}>
             ₩{plant.price}
             </Text>
-            <View
-              style={{
-                height: 25,
-                width: 25,
-                backgroundColor: COLORS.green,
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{fontSize: 22, color: COLORS.white, fontWeight: 'bold'}}>
-                +
-              </Text>
-            </View>
+            
           </View>
+          </View>
+          
         </View>
       </TouchableOpacity>
     );
@@ -171,21 +161,25 @@ const StoreHome = ({navigation}) => {
     <SafeAreaView
       style={{flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white}}>
       <View style={style.header}>
-        <View>        
-          <Text style={{fontSize: 25, fontWeight: 'bold'}}>Welcome to</Text>
-          <Text style={{fontSize: 38, color: COLORS.green, fontWeight: 'bold'}}>
-            MiniRoom Shop
-          </Text>
+        <View style={{flexDirection:'row',width:'100%'}}>        
+          <Text style={{fontSize: 21,}}>미니룸 스토어</Text>
+
         </View>
-        <Text>Point {userData ? userData.point : ''}</Text>
       </View>
+      <View style={{alignSelf:'flex-end'}}>
+      <Text style={{fontSize: 18,}}> <Icons
+                name="coins"
+                size={18}/>  {userData ? userData.point : ''}</Text>
+      </View>
+
+     
       <View style={{marginTop: 30, flexDirection: 'row'}}>
         <View style={style.searchContainer}>
           <Icon name="search" size={25} style={{marginLeft: 20}} />
-          <TextInput placeholder="Search" style={style.input} />
+          <TextInput placeholder="아이템찾기" style={style.input} />
         </View>
         <View style={style.sortBtn}>
-          <Icon name="sort" size={30} color={COLORS.white} />
+          <Icon name="sort" size={20} color={COLORS.white} />
         </View>
       </View>
       <CategoryList />
@@ -219,7 +213,7 @@ const style = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'space-between',
   },
-  categoryText: {fontSize: 16, color: 'grey', fontWeight: 'bold'},
+  categoryText: {fontSize: 16, color: 'grey', },
   categoryTextSelected: {
     color: COLORS.green,
     paddingBottom: 5,
@@ -236,12 +230,13 @@ const style = StyleSheet.create({
     padding: 15,
   },
   header: {
-    marginTop: 30,
+    marginTop: 20,
+    width:'100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   searchContainer: {
-    height: 50,
+    height: 40,
     backgroundColor: COLORS.light,
     borderRadius: 10,
     flex: 1,
@@ -249,15 +244,14 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
     flex: 1,
     color: COLORS.dark,
   },
   sortBtn: {
     marginLeft: 10,
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 0,
     borderRadius: 10,
     backgroundColor: COLORS.green,
     justifyContent: 'center',
