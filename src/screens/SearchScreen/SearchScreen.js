@@ -9,7 +9,7 @@ import Loading from '../../utils/Loading';
 import { VirtualizedScrollView } from 'react-native-virtualized-view';
 var { height, width } = Dimensions.get('window');
 
-const SearchScreen = (props) => {
+const SearchScreen = ({props,navigation}) => {
   const {Post} = useStore(); // 0522새로고침용
   const [posts,setPosts] = useState(null)
   const [serachposts, searchsetPosts] = useState(null);
@@ -18,6 +18,7 @@ const SearchScreen = (props) => {
   const [count, setcount] = useState(null);
   const [Bestposts,setBestPosts] = useState(null)
   const [ready, setReady] = useState(true)
+  const [Lsearch, setLsearch]  = useState(true)
 
   const tags = ["인물", "배경", "음식", "동물", "물건", "문화"]
   const [changepost,setchangePosts] = useState(null)
@@ -81,6 +82,7 @@ const handleSearchTextChange =  async (text) => {
        
       })
       setchangePosts(list);
+      setLsearch(text);
       
     if (loading) {
       setLoading(false);
@@ -245,6 +247,7 @@ useEffect(()=>{
   return (
     
     ready ? <Loading/> :  (
+      <ScrollView>
     <View style={{ backgroundColor: 'white', flex: 1 }}>
     <View style={styles.serach}>
     <TouchableOpacity style={{marginTop : 6,marginLeft : 5}} onPress={() => getPosts()}>
@@ -262,7 +265,30 @@ useEffect(()=>{
    
     
     
-    <View style={{flexDirection : 'row',marginBottom : 10}}>
+
+    <Text style={{fontSize : 20, marginLeft : 5, fontFamily : 'Jalnan',marginTop : 5, color : 'orange'}}>🎉인기 게시물 Top 5🎉</Text>
+    <View style={{flexDirection : 'row', marginBottom : 10}}>
+    <ScrollView
+    horizontal={true}
+    showsHorizontalScrollIndicator = {false}>
+    {
+        Bestposts?.map((row, idx) => {
+          return (
+            <View>
+              <TouchableOpacity 
+              onPress={() => navigation.navigate('SerachBestSnsScreen', { uid : row.uid, postimg : row.postImg, post: row.post, postTime : row.postTime })}
+              >
+              <Image source ={{uri:row.postImg}} style={{width:200,height:150,marginLeft : 10}} ></Image>
+              </TouchableOpacity>
+              </View>
+        
+          )  ;      
+         
+      })
+      }
+      </ScrollView>
+    </View>
+    <View style={{flexDirection : 'row',marginBottom : 5}}>
     <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator = {false}>
@@ -303,6 +329,7 @@ useEffect(()=>{
         </View>
         
     </View>
+    </ScrollView>
     )
   );
 };

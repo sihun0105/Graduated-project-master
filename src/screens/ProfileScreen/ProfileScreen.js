@@ -330,7 +330,7 @@ const handleDelete = () => {};
         </View>
 
       <TouchableOpacity style={styles.music} onPress={() => onMusicPressed()}>
-      <Text style={{ fontSize: 15, textAlign: 'center'}}>{songs[songIndex].title} - {songs[songIndex].artist}</Text>
+      <Text style={{ fontSize: 15, textAlign: 'center',fontFamily : "Jalnan",}}>{songs[songIndex].title} - {songs[songIndex].artist}</Text>
             </TouchableOpacity>
       <ScrollView
         style={styles.container}
@@ -348,32 +348,32 @@ const handleDelete = () => {};
           <View style={styles.rightcontainer}>
 
             <View style={styles.action}>
-            <Text style={{color : 'black'}}>이름</Text>
+            <Text style={{fontFamily : 'Jalnan',}}>이름</Text>
             <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
-            <Text style={{color : 'black'}}>{userData ? userData.name : ''}</Text>
+            <Text style={{fontFamily : 'Jalnan',}}>{userData ? userData.name : ''}</Text>
             </View>
             
             </View>
             
             <View style={styles.action}>
-            <Text style={{color : 'black'}}>나이</Text>
+            <Text style={{fontFamily : 'Jalnan',}}>나이</Text>
             <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
-            <Text style={{color : 'black'}}>{userData ? userData.age : ''}</Text>
+            <Text style={{fontFamily : 'Jalnan',}}>{userData ? userData.age : ''}</Text>
             </View>
             
             </View>
             <View style={styles.action}>
-            <Text style={{color : 'black'}}>생일</Text>
+            <Text style={{fontFamily : 'Jalnan',}}>생일</Text>
             <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
-            <Text style={{color : 'black'}}>{userData ? userData.birthday : ''}</Text>
+            <Text style={{fontFamily : 'Jalnan',}}>{userData ? userData.birthday : ''}</Text>
             </View>
             
             </View>
        
             <View style={styles.action}>
-            <Text style={styles.infotext}>포인트</Text>
+            <Text style={{fontFamily : 'Jalnan',}}>포인트</Text>
             <View style={{ flex : 1 ,justifyContent : 'center',alignItems : 'center'}}>
-            <Text style={{color : 'black', marginRight : 15}}>{userData ? userData.point : ''}</Text>
+            <Text style={{fontFamily : 'Jalnan', marginRight : 15}}>{userData ? userData.point : ''}</Text>
             </View>
             
             </View>
@@ -446,7 +446,7 @@ const handleDelete = () => {};
 
         <TouchableOpacity style={styles.miniroom} onPress={() => onMiniroompress()}>
         <View>
-        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:20, fontFamily: "DungGeunMo", color: "#000" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
+        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:20, fontFamily: "Jalnan", color: "#129fcd" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
           <Image source={{ uri: userData ? userData.miniRoom || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
        style={{width: 400, height: 300,marginBottom:0,resizeMode:'cover' }}>
 
@@ -455,6 +455,8 @@ const handleDelete = () => {};
         
         </TouchableOpacity>
         </ViewShot>
+        <Text style={{fontSize:20,marginBottom:20, fontFamily: "Jalnan",}}>친구들의 방명록</Text>
+      
         {
               
               CommentData?.map((row, idx) => {
@@ -557,14 +559,16 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: theme.fontSize.title,
-    color: theme.colors.title,
-    width: 210
+    color: '#696969',
+    width: 210,
+    fontFamily : "Jalnan",
   },
   message: {
     fontSize: theme.fontSize.message,
     width: 240,
     color: theme.colors.subTitle,
     marginTop : 5,
+    fontFamily : "Jalnan",
   },
 
   title:{ 
@@ -576,7 +580,7 @@ const styles = StyleSheet.create({
   },
   img:{width:60,height:60,borderRadius:30,backgroundColor:"orange"},
   titleText:{
-    fontFamily: "DungGeunMo",
+    fontFamily: "Jalnan",
     justifyContent: 'space-around',
     fontSize: 20,
     color:'white',
@@ -622,8 +626,8 @@ const styles = StyleSheet.create({
   },
   guestBtn: {
     width : 395,
-    backgroundColor:'#ffffff',
-    borderColor: '#ffffff',
+    backgroundColor:'#f6f6f6',
+    borderColor: '#f6f6f6',
     borderBottomColor:'#fff',
     borderWidth:1,
     borderTopLeftRadius: 20,
@@ -634,8 +638,8 @@ const styles = StyleSheet.create({
  
   },
   userBtnTxt: {
-    fontFamily: "DungGeunMo",
-    color: '#000',
+    fontFamily : 'Jalnan',
+    color: '#fff',
     textAlign:'center',  
     fontSize:15,
   },
@@ -657,8 +661,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   userInfoTitle2: {
-    color: '#000',
-    fontFamily: "DungGeunMo",
+    color: '#129fcd',
+    fontFamily: "Jalnan",
     fontSize: 18,
     marginBottom: 5,
   },

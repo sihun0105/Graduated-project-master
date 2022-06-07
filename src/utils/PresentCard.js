@@ -194,8 +194,9 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: theme.fontSize.title,
-    color: theme.colors.title,
-    width: 210
+    color: "#696969",
+    width: 210,
+    fontFamily : "Jalnan"
   },
   message: {
     fontSize: theme.fontSize.message,

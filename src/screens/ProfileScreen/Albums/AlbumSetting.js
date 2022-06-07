@@ -121,11 +121,7 @@ const Album = ({navigation,route}) => {
             <Text style={styles.panelTitle}>폴더 관리</Text>
             <Text style={styles.panelSubtitle}>카테고리로 폴더를 관리하세요</Text>
           </View>
-          <TouchableOpacity
-            style={styles.panelButton}
-            >
-            <Text style={styles.panelButtonTitle}>그룹 만들기</Text>
-          </TouchableOpacity>
+          
           <TouchableOpacity
             style={styles.panelButton} onPress={() => navigation.navigate('AddFolder', {uid : uid, name : name} )}>
             <Text style={styles.panelButtonTitle}>폴더 만들기</Text>
@@ -282,8 +278,10 @@ const styles = StyleSheet.create({
       panelTitle: {
         fontSize: 27,
         height: 35,
+        fontFamily : "Jalnan"
       },
       panelSubtitle: {
+        fontFamily : "Jalnan",
         fontSize: 14,
         color: 'gray',
         height: 30,
@@ -298,12 +296,13 @@ const styles = StyleSheet.create({
       },
       panelButtonTitle: {
         fontSize: 17,
-        fontWeight: 'bold',
         color: 'white',
+        fontFamily : "Jalnan"
       },
       titleText:{
         justifyContent: 'space-around',
         fontSize: 20,
+        fontFamily : "Jalnan"
        
       },
   

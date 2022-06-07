@@ -80,13 +80,17 @@ const FeedStack = ({navigation}) => (
           </View>
         ),
       }}
-    />
+    />   
     <Stack.Screen
       name="AddPost"
       component={AddPostScreen}
       options={{
-        title: '',
+        title: '게시글을 작성해보세요!',
         headerTitleAlign: 'center',
+        headerTitleStyle: {
+        fontFamily: 'Jalnan',
+        color : 'orange'
+         },
         headerStyle: {
           backgroundColor: 'white',
           shadowColor: 'white',
@@ -105,6 +109,10 @@ const FeedStack = ({navigation}) => (
         component={PostComment}
         options={{
         title: '댓글',
+        headerTitleStyle: {
+          fontFamily: 'Jalnan',
+          color : '#696969'
+        },
         headerTitleAlign: 'center',
         headerStyle: {
         backgroundColor: '#fff',
@@ -168,6 +176,7 @@ const FeedStack = ({navigation}) => (
 const MessageStack = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen name="Message"  component={ChatNavigator} options={{
+      
 				headerShown: true,
 				header: () => <Header title="채팅" />
 			}} />
@@ -217,9 +226,13 @@ const ProfileStack = ({navigation}) => (
       name="EditProfile"
       component={EditProfile}
       options={{
-        headerTitle: 'Edit Profile',
+        title : '프로필을 변경해보세요!',
         headerBackTitleVisible: false,
         headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontFamily: 'Jalnan',
+          color : '#696969'
+         },
         headerStyle: {
           backgroundColor: '#fff',
           shadowColor: '#fff',
@@ -264,6 +277,30 @@ const SearchStack = ({navigation}) => (
          ),
          }}
          />
+         <Stack.Screen
+      name="SerachBestSnsScreen"
+      component={BestSnsScreen}
+      options={{
+        title: 'Top 5 게시물 !',
+        headerTitleAlign: 'center',
+
+        headerTitleStyle: {
+         fontFamily: 'Jalnan',
+
+        },
+        headerStyle: {
+          shadowColor: '#fff',
+          elevation: 0,
+          backgroundColor : '#fff'
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+            <Ionicons name="arrow-back" size={25} color="black" />
+          </View>
+        ),
+      }}
+    />   
 
   </Stack.Navigator>
   
@@ -288,11 +325,13 @@ const AppStack = () => {
         tabBarHideOnKeyboard: true,
         
         
+        
       }}>
             <Tab.Screen
         name="Home"
         component={ProfileStackScreen}
         options={{
+          
           // tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="person-outline" color={color} size={size} />

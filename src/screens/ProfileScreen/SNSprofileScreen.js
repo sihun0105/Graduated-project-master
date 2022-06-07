@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily : "Jalnan",
     marginTop: 10,
     marginBottom: 10,
   },
@@ -239,6 +239,8 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
     marginBottom: 10,
+    fontFamily : "Jalnan",
+
   },
   userBtnWrapper: {
     flexDirection: 'row',
@@ -256,21 +258,25 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   userBtnTxt: {
-    
-    color: '#fff',
+    color: '#2e64e5',
+    fontFamily : "Jalnan",
+
   },
   userInfoWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
     marginVertical: 20,
+        fontFamily : "Jalnan",
+
   },
   userInfoItem: {
     justifyContent: 'center',
+    
   },
   userInfoTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily : "Jalnan",
     marginBottom: 5,
     textAlign: 'center',
     justifyContent:'center'
@@ -279,5 +285,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     textAlign: 'center',
+    fontFamily : "Jalnan",
   },
+  
 });

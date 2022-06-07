@@ -196,6 +196,7 @@ const AddPostScreen = () => {
         {image != null ? <AddImage source={{uri: image}} /> : null}
         <View style={styles.row}>
         <InputField
+          fontFamily="Jalnan"
           placeholder="게시물 내용을 작성하세요!"
           multiline
           numberOfLines={3}
@@ -203,7 +204,7 @@ const AddPostScreen = () => {
           onChangeText={(content) => setPost(content)}
         />
         </View>
-        <Text style={{marginTop : 20,marginBottom : 20}}>게시물의 주제를 선택하세요</Text>
+        <Text style={{marginTop : 20,marginBottom : 20,fontFamily : "Jalnan"}}>게시물의 주제를 선택하세요</Text>
         <SelectDropdown
            data={tags}
            onSelect={(selectedItem, index) => {
@@ -228,7 +229,7 @@ const AddPostScreen = () => {
         ) : (
           <View style={{marginTop : 20}}>
           <SubmitBtn onPress={submitPost}    >
-            <SubmitBtnText styles>Post </SubmitBtnText>
+            <SubmitBtnText styles>작성 </SubmitBtnText>
             
           </SubmitBtn>
           </View>

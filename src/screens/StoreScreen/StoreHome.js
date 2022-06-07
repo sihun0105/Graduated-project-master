@@ -182,6 +182,7 @@ const StoreHome = ({navigation}) => {
           <Icon name="sort" size={20} color={COLORS.white} />
         </View>
       </View>
+      
       <CategoryList />
       <FlatList
         columnWrapperStyle={{justifyContent: 'space-between'}}

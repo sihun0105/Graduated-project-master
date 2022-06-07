@@ -116,11 +116,11 @@ const Friend = () => {
           </View>
           
           <View style={{flexDirection:'row',flex: 1, justifyContent: "space-between", alignItems: "center"}}>
-          <Text style={{marginRight:10,flex: 1}}>{item.name}</Text>
-          <TouchableOpacity style={{marginRight:10,flex: 1}} onPress={() => ChangeSname(item)}>
-          <Text style={{}}>{item.sname}</Text>
+          <Text style={{marginRight:10,flex: 1,fontFamily : "Jalnan"}}>{item.name}</Text>
+          <TouchableOpacity style={{marginRight:10,}} onPress={() => ChangeSname(item)}>
+          <Text style={{fontFamily : "Jalnan"}}>{item.sname}</Text>
           </TouchableOpacity>
-          <Text style={{marginRight:10,flex: 1}}>{item.birthday}</Text>
+          <Text style={{flex: 1,fontFamily : "Jalnan",marginLeft : 20}}>{item.birthday}</Text>
           <TouchableOpacity style={styles.button} onPress={() => DeleteFriendCheck(item)}>
               <Text style={styles.userBtnTxt}>삭제</Text>
           </TouchableOpacity>
@@ -131,12 +131,12 @@ const Friend = () => {
 }
     return (
     <View style={styles.container}>
-        <Text style={{fontSize:20, paddingBottom: 10}}>친구 목록</Text>
+        <Text style={{fontSize:20, paddingBottom: 10, fontFamily : "Jalnan"}}>친구 목록</Text>
         <View style={styles.title}>
         <View style={{width:40}}></View>
-          <Text style={{flex:1,textAlign: 'center',}}>이름</Text>
-          <Text style={{flex:1,textAlign: 'center',}}>별명</Text>
-          <Text style={{flex:1,textAlign: 'center',}}>생일</Text>  
+          <Text style={{flex:1,textAlign: 'center',fontFamily : "Jalnan"}}>이름</Text>
+          <Text style={{flex:1,textAlign: 'center',fontFamily : "Jalnan"}}>별명</Text>
+          <Text style={{flex:1,textAlign: 'center',fontFamily : "Jalnan"}}>생일</Text>  
           <View style={{width:40}}></View>
           
         </View>
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
       alignItems: "center"
     },
     userBtnTxt: {
-      fontFamily: "DungGeunMo",
+      fontFamily: "Jalnan",
       color: '#fff',
       textAlign:'center',  
       fontSize:15,

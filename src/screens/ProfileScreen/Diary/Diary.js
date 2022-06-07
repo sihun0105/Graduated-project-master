@@ -174,12 +174,10 @@ const Diary = ({onDelete}) => {
     <Calendar 
     onDayPress={(day) => {
       console.log('selected day', day)
-      Alert.alert(
-        day.dateString,
-        
+     
        setCheckday(day.dateString)
          
-      );   
+      
       setCheckday2(day.dateString);
   }}
   

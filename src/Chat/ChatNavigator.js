@@ -145,6 +145,7 @@ const HomeNavigator = () => {
         component={MessagesScreen}
         options={{
           tabBarLabel: "채팅",
+          
         }}
       />
     

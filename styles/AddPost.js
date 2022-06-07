@@ -79,8 +79,7 @@ export const SubmitBtnGuest = styled.TouchableOpacity`
 
 export const SubmitBtnText = styled.Text`
     font-size: 18px;
-    font-family: 'Lato-Bold';
-    font-weight: bold;
+    font-family: 'Jalnan';
     color: white;
 `;
 

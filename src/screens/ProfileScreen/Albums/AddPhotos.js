@@ -216,7 +216,8 @@ const AddPhotos = ({route}) => {
         {image != null ? <AddImage source={{uri: image}} /> : null}
         <View style={styles.row}>
         <InputField
-          placeholder="게시물 제목을 작성하세요!"
+          fontFamily = "Jalnan"
+          placeholder="사진의 제목을 작성하세요!"
           multiline
           numberOfLines={3}
           value={post}
@@ -224,6 +225,7 @@ const AddPhotos = ({route}) => {
         />
         </View>
         <InputField
+          fontFamily = "Jalnan"
           placeholder="게시물 내용을 작성하세요!"
           multiline
           numberOfLines={2}

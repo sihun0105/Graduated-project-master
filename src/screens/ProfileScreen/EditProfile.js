@@ -260,7 +260,7 @@ const EditProfile = () => {
               </ImageBackground>
             </View>
           </TouchableOpacity>
-          <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
+          <Text style={{marginTop: 10, fontSize: 18,fontFamily : 'Jalnan'}}>
             {userData ? userData.name : ''}
           </Text>
          
@@ -269,6 +269,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <FontAwesome name="user-o" color="#333333" size={20} />
           <TextInput
+          fontFamily = 'Jalnan'
             placeholder="이름"
             placeholderTextColor="#666666"
             autoCorrect={false}
@@ -280,6 +281,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <FontAwesome name="user-o" color="#333333" size={20} />
           <TextInput
+          fontFamily = 'Jalnan'
             placeholder="나이"
             placeholderTextColor="#666666"
             value={userData ? userData.age : ''}
@@ -291,6 +293,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <Ionicons name="ios-clipboard-outline" color="#333333" size={20} />
           <TextInput
+          fontFamily = 'Jalnan'
             multiline
             numberOfLines={3}
             placeholder="자기소개"
@@ -304,10 +307,12 @@ const EditProfile = () => {
         <View style={styles.action}>
           <Ionicons name="ios-clipboard-outline" color="#333333" size={20} />
           <TextInput
+            fontFamily = 'Jalnan'
+          
             multiline
             numberOfLines={3}
             placeholder="생일"
-            placeholderTextColor="#666666"
+            placeholderTextColor="#696969"
             value={userData ? userData.birthday : ''}
             onChangeText={(txt) => setUserData({...userData, birthday: txt})}
             autoCorrect={true}
@@ -317,6 +322,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <Feather name="phone" color="#333333" size={20} />
           <TextInput
+          fontFamily = 'Jalnan'
             placeholder="전화"
             placeholderTextColor="#666666"
             keyboardType="number-pad"
@@ -377,12 +383,16 @@ const styles = StyleSheet.create({
   panelTitle: {
     fontSize: 27,
     height: 35,
+    fontFamily : 'Jalnan'
+
   },
   panelSubtitle: {
     fontSize: 14,
     color: 'gray',
     height: 30,
     marginBottom: 10,
+    fontFamily : 'Jalnan'
+
   },
   panelButton: {
     padding: 13,
@@ -393,8 +403,8 @@ const styles = StyleSheet.create({
   },
   panelButtonTitle: {
     fontSize: 17,
-    fontWeight: 'bold',
     color: 'white',
+    fontFamily : 'Jalnan'
   },
   action: {
     flexDirection: 'row',
@@ -415,6 +425,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
-    color: '#333333',
+    color: '#696969',
   },
 });

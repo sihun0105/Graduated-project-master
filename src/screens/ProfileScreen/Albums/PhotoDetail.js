@@ -212,7 +212,7 @@ const RenderCard = ({item})=>{
         <View style={{ justifyContent : 'center', marginLeft: 120}}>
         <View style={styles.folderContainer}>
       <Icon name="folder"  size={23} color="orange"/>
-      <Text style={{fontSize : 18,fontFamily: 'DungGeunMo'}}> {route.params.foldername}</Text>
+      <Text style={{fontSize : 18,fontFamily : "Jalnan"}}> {route.params.foldername}</Text>
         
         
         

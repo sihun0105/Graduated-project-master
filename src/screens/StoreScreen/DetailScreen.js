@@ -198,7 +198,7 @@ const addItem = async () => {
             <TouchableOpacity onPress={CheckBuy}>
             <View style={style.buyBtn}>
               <Text
-                style={{color: COLORS.white, fontSize: 18, fontWeight: 'bold'}}>
+                style={{color: COLORS.white, fontSize: 18,  fontFamily : "Jalnan"}}>
                 구매
               </Text>
             </View>
@@ -206,7 +206,7 @@ const addItem = async () => {
             <TouchableOpacity onPress={CheckPresent}>
             <View style={style.buyBtn}>
               <Text
-                style={{color: COLORS.white, fontSize: 18, fontWeight: 'bold'}}>
+                style={{color: COLORS.white, fontSize: 18,  fontFamily : "Jalnan"}}>
                 조르기
               </Text>
             </View>

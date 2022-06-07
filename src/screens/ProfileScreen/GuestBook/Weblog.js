@@ -289,8 +289,9 @@ const styles = StyleSheet.create({
     img:{width:60,height:60,borderRadius:30,backgroundColor:"orange"},
     username: {
       fontSize: theme.fontSize.title,
-      color: theme.colors.title,
-      width: 210
+      color: '#696969',
+      width: 210,
+      fontFamily : "Jalnan",
     },
     
     delete: {
@@ -305,6 +306,7 @@ const styles = StyleSheet.create({
       width: 240,
       color: theme.colors.subTitle,
       marginTop : 5,
+      fontFamily : "Jalnan",
     },
     imageContainer: {
       marginLeft : 10,

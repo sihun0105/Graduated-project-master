@@ -44,29 +44,29 @@ const SettingScreen = () => {
             <View >
                 <View style={styles.row}>
                     <Text style={styles.title}>
-                        PROFILE SETTINGS
+                        프로필 설정
                     </Text>
                 </View>
                 
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.section}>
-                        <Text >
-                            Edit Profile
+                    <Text style ={styles.TextStyle} >
+                            프로필 변경
                         </Text>
                     </TouchableOpacity>
                 </View>
                 
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.section}>
-                        <Text >
-                            Change Password
+                    <Text style ={styles.TextStyle} >
+                            비밀번호 변경
                         </Text>
                     </TouchableOpacity>
                 </View>
                 
                 <View style={styles.row}>
                     <Text style={styles.section}>
-                        Send Push Notifications
+                        메세지 알람
                     </Text>
                     <Switch/>
 
@@ -74,7 +74,7 @@ const SettingScreen = () => {
                 
                 <View style={styles.row}>
                     <Text style={styles.section}>
-                        Refresh Automatically
+                        게시물 알람
                     </Text>
 
                     <Switch/>
@@ -89,29 +89,29 @@ const SettingScreen = () => {
                 </View>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.section}>
-                        <Text >
-                            Help
+                        <Text style ={styles.TextStyle} >
+                            도움말
                         </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.section}>
-                        <Text >
-                            Privacy Policy
+                    <Text style ={styles.TextStyle} >
+                            개인 정보 정책
                         </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.section}>
-                        <Text >
-                            Terms & Conditions
+                    <Text style ={styles.TextStyle} >
+                           이용약관
                         </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.section} onPress={() => logout()}>
-                        <Text >
-                            Logout
+                        <Text style ={styles.TextStyle} >
+                            로그아웃
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -126,8 +126,11 @@ const styles = StyleSheet.create({
   title:{
       marginVertical: 25,
       fontSize:20,
-      fontWeight:'bold',
-  },  
+        fontFamily : "Jalnan" 
+     },  
+  TextStyle : {
+fontFamily : "Jalnan"
+  },
   container: {
         backgroundColor: 'black'
     },
@@ -135,7 +138,9 @@ const styles = StyleSheet.create({
         paddingVertical: 25
     },
     section: {
+        fontFamily : "Jalnan",
         marginVertical: 25
+        
     },
     heading: {
         paddingBottom: 12.5

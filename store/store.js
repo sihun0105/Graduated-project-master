@@ -24,6 +24,11 @@ const store = (set => ({
     countItem:0,
     setcountItem: () => set(state => ({countItem:state.countItem+1})), //상점 - > 미니룸 랜더링용
 
+    DiaryPost:'',
+    setDiaryPost: (input) => set({DiaryPost:input}), //상점 - > 미니룸 랜더링용
+    Checkday: new Date(),
+    setCheckday2: (input) => set({Checkday:input}), //상점 - > 미니룸 랜더링용
+
     FolderName: '', //프로필 랜더링용
     setFolderName: (input) => set({ FolderName: input }),//프로필 랜더링용
     PhotoName: '', //프로필 랜더링용
