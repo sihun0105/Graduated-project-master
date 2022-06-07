@@ -41,7 +41,7 @@ const SubmitFolder = async () => {
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
         <View style={styles.title}>
-            <Text style = {{color : 'black', fontFamily : 'DungGeunMo'}}>폴더 이름</Text>
+            <Text style = {{color : 'black', fontFamily : "Jalnan",fontSize:20}}>폴더 이름</Text>
         </View>    
 
         <TextInput
@@ -51,7 +51,7 @@ const SubmitFolder = async () => {
             placeholder="폴더 이름을 입력해주세요."
           />
           <TouchableOpacity onPress={() => SubmitFolder()}>
-          <Text style ={{color : 'black',marginLeft : 350, fontFamily : 'DungGeunMo'}}>추가</Text>
+          <Text style ={{color : 'black',marginLeft : 350, fontFamily : "Jalnan" ,fontSize:20}}>추가</Text>
           </TouchableOpacity>
     </View>
   );
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
 
   title : {
-    padding : 20,
+    margin:15,
     
   },
 
@@ -76,11 +76,13 @@ const styles = StyleSheet.create({
     marginLeft : 30,
     marginBottom: 10,
     paddingHorizontal: 10,
-    height: 40,
+    height: 45,
     width : 350,
     borderRadius: 10,
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+    fontFamily:"Jalnan",
+    fontSize:16
   },
   showText: {
     marginTop: 10,

@@ -172,6 +172,7 @@ const Diary = ({onDelete}) => {
     <View style={{backgroundColor : '#fff'}}>
 
     <Calendar 
+    style={{fontFamily:"Jalnan"}}
     onDayPress={(day) => {
       console.log('selected day', day)
      
@@ -187,14 +188,14 @@ const Diary = ({onDelete}) => {
     <TouchableOpacity Style={styles.itemConstainer}>
     <View style={styles.content}>
   <View style={styles.diaryTitle}>
-  <Text style={{fontSize : 20,fontFamily: 'DungGeunMo'}}>{DiaryData.post}</Text>
+  <Text style={{fontSize : 20,fontFamily: "Jalnan"}}>{DiaryData.post}</Text>
   <Text style={styles.checkday}>{checkday}</Text>
   </View>
   
   <View style={styles.picContainer}>
 <Image  source={{uri: DiaryData.img}} style={styles.pic}/> 
   </View>
-  <Text style={{fontSize : 20,fontFamily: 'DungGeunMo'}}>{DiaryData.body}</Text>
+  <Text style={{fontSize : 20,fontFamily: "Jalnan",}}>{DiaryData.body}</Text>
     </View>
   </TouchableOpacity>
    

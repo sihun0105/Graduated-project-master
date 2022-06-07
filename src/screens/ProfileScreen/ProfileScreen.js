@@ -446,7 +446,7 @@ const handleDelete = () => {};
 
         <TouchableOpacity style={styles.miniroom} onPress={() => onMiniroompress()}>
         <View>
-        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:20, fontFamily: "Jalnan", color: "#129fcd" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
+        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:10, fontFamily: "Jalnan", color: "#696969" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
           <Image source={{ uri: userData ? userData.miniRoom || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
        style={{width: 400, height: 300,marginBottom:0,resizeMode:'cover' }}>
 
@@ -455,7 +455,7 @@ const handleDelete = () => {};
         
         </TouchableOpacity>
         </ViewShot>
-        <Text style={{fontSize:20,marginBottom:20, fontFamily: "Jalnan",}}>친구들의 방명록</Text>
+        <Text style={{fontSize:20,marginTop:20,marginBottom:10, fontFamily: "Jalnan",}}>친구들의 방명록</Text>
       
         {
               
@@ -639,7 +639,7 @@ const styles = StyleSheet.create({
   },
   userBtnTxt: {
     fontFamily : 'Jalnan',
-    color: '#fff',
+    color: '#696969',
     textAlign:'center',  
     fontSize:15,
   },
@@ -653,7 +653,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   userInfoTitle: {
-    color: 'black',
+    color: 'orange',
 
     fontSize: 18,
     
@@ -661,7 +661,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   userInfoTitle2: {
-    color: '#129fcd',
+    color: '#696969',
     fontFamily: "Jalnan",
     fontSize: 18,
     marginBottom: 5,

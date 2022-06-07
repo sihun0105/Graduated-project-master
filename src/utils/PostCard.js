@@ -24,6 +24,7 @@ import { AuthContext } from './AuthProvider';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
+import 'moment/locale/ko';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from "@react-navigation/native";

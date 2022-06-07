@@ -137,7 +137,7 @@ const StoreHome = ({navigation}) => {
             />
           </View>
           <View style={{marginTop:13}}>
-          <Text style={{ fontSize: 17, marginTop: 10}}>
+          <Text style={{ fontSize: 17, marginTop: 10, fontFamily: "Jalnan",}}>
             {plant.name}
           </Text>
           <View
@@ -146,7 +146,7 @@ const StoreHome = ({navigation}) => {
               justifyContent: 'space-between',
               marginTop: 5,
             }}>
-            <Text style={{fontSize: 19,}}>
+            <Text style={{fontSize: 19, fontFamily: "Jalnan",}}>
             ₩{plant.price}
             </Text>
             
@@ -162,12 +162,12 @@ const StoreHome = ({navigation}) => {
       style={{flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white}}>
       <View style={style.header}>
         <View style={{flexDirection:'row',width:'100%'}}>        
-          <Text style={{fontSize: 21,}}>미니룸 스토어</Text>
+          <Text style={{fontSize: 21, fontFamily: "Jalnan",}}>미니룸 스토어</Text>
 
         </View>
       </View>
       <View style={{alignSelf:'flex-end'}}>
-      <Text style={{fontSize: 18,}}> <Icons
+      <Text style={{fontSize: 18, fontFamily: "Jalnan",}}> <Icons
                 name="coins"
                 size={18}/>  {userData ? userData.point : ''}</Text>
       </View>
@@ -214,7 +214,7 @@ const style = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'space-between',
   },
-  categoryText: {fontSize: 16, color: 'grey', },
+  categoryText: {fontSize: 16, color: 'grey', fontFamily: "Jalnan", },
   categoryTextSelected: {
     color: COLORS.green,
     paddingBottom: 5,
@@ -237,7 +237,7 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
   },
   searchContainer: {
-    height: 40,
+    height: 45,
     backgroundColor: COLORS.light,
     borderRadius: 10,
     flex: 1,
@@ -247,6 +247,7 @@ const style = StyleSheet.create({
   input: {
     fontSize: 16,
     flex: 1,
+    fontFamily: "Jalnan",
     color: COLORS.dark,
   },
   sortBtn: {

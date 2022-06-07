@@ -8,6 +8,7 @@ import {FAB} from 'react-native-paper'
 import { theme } from '../../../Chat/ChatTheme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
+import 'moment/locale/ko';
 import { AuthContext } from '../../../utils/AuthProvider';
 
 const Weblog = ({navigation,route}) => {
@@ -166,7 +167,7 @@ const Weblog = ({navigation,route}) => {
               {(() => {
           if (item.uid === firebase.auth().currentUser.uid)    
            return <TouchableOpacity onPress={() => DeleteCommentCheck(item)}>
-                    <Ionicons style={styles.delete}name="close-circle" size={25} color="gray" /> 
+                    <Ionicons style={styles.delete} name="close-circle" size={20} color='#696969' /> 
                   </TouchableOpacity>
                 })()}
               
@@ -180,7 +181,8 @@ const Weblog = ({navigation,route}) => {
             <View style={{
               flexDirection: 'row',
             }}>
-              <Text style={styles.message}>{moment(item.commentTime.toDate()).lang("ko").fromNow()}</Text>
+              <Text style={styles.message}>{moment(item.commentTime.toDate()).lang("ko").fromNow()}
+              </Text>
               
             </View>
             </View>
@@ -231,7 +233,7 @@ const Weblog = ({navigation,route}) => {
           />
           
           <TouchableOpacity onPress={() => SubmitComment()}>
-          <Text style ={{color : 'black',fontFamily : 'DungGeunMo', paddingHorizontal: 10, marginTop : 10, fontSize : 18}}>작성</Text>
+          <Text style ={{color : 'black',fontFamily :  'Jalnan', paddingHorizontal: 10, marginTop : 10, fontSize : 18}}>작성</Text>
           </TouchableOpacity>
       
         </View>
@@ -320,11 +322,13 @@ const styles = StyleSheet.create({
     },
     textInput: {
       marginBottom: 10,
-      paddingHorizontal: 10,
-      height: 40,
+      borderBottomWidth :1,
+      borderBottomColor: 'orange',
+      borderColor:'rgba(0,0,0,0)',
+      height: 45,
       width : 340,
-      borderRadius: 10,
-      borderColor: 'gray',
+      fontFamily:'Jalnan',
+      fontSize:16,
       borderWidth: 1
     },
     showText: {

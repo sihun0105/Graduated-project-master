@@ -94,13 +94,13 @@ const Album = ({navigation,route}) => {
               <View style={styles.folderContainer}>
               <View style={{ flexDirection: 'row', }}>
             <Icon name="folder"  size={23} color="orange"/>
-            <Text style={{fontSize : 18,fontFamily: 'DungGeunMo'}}> {item.name}</Text>
+            <Text style={{fontSize : 18,fontFamily: "Jalnan"}}> {item.name}</Text>
             </View>
            
     
         <TouchableOpacity style={{marginLeft: 15, justifyContent : 'center'}} onPress={() => DeletePhotoCheck(item)}>
         <View style={{marginRight :15}}>
-         <Ionicons name="trash" size={25} color="black" />
+         <Ionicons name="trash" size={23} color="#696969" />
         </View>
         </TouchableOpacity>
         

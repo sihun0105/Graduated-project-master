@@ -184,7 +184,7 @@ const AddDiary = () =>{
     return (
       <View>
        
-        <Text style={{fontSize: 20,marginTop : 10, marginLeft : 20, marginBottom : 10}}>
+        <Text style={{fontSize: 16, fontFamily:"Jalnan", marginLeft : 20, }}>
           {format(date, 'yyyy/MM/dd')}
         </Text>
         <TouchableOpacity style={styles.userBtn} onPress={() => showDatePicker()}>
@@ -211,7 +211,8 @@ const AddDiary = () =>{
             </View>
             
             <InputField
-               
+
+                style={{fontSize:18,textAlign: 'left'}}
                 fontFamily="Jalnan"
                 placeholder="제목을 입력 해주세요.."
                 value={post}
@@ -221,6 +222,7 @@ const AddDiary = () =>{
             <Boundary/>
             
             <InputField
+             style={{fontSize:18,textAlign: 'left'}}
             placeholder="내용을 입력 해주세요.."
             multiline
             fontFamily="Jalnan"
@@ -247,8 +249,9 @@ const AddDiary = () =>{
             </InputWrapper>
           </ScrollView>
 
-            <ActionButton buttonColor="#ffa500">
+            <ActionButton buttonColor="#ffa500" >
         <ActionButton.Item
+        
           buttonColor="#9b59b6"
           title="사진 촬영"
           onPress={takePhotoFromCamera}>
@@ -280,7 +283,7 @@ const styles = StyleSheet.create({
         
     },
       userBtn: {
-    width:150,
+    width:120,
     backgroundColor:'orange',
     borderColor: 'orange',
     borderBottomColor:'#fff',
@@ -311,7 +314,7 @@ const styles = StyleSheet.create({
     fontFamily: "Jalnan",
     color: '#fff',
     textAlign:'center',  
-    fontSize:20,
+    fontSize:16,
   },
     DateWapper:{
         flexDirection: 'row',

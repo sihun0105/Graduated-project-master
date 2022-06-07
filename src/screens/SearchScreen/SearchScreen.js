@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   userBtnTxt: {
-    fontFamily: "DungGeunMo",
+    fontFamily: "Jalnan",
     color: '#3e3e3e',
     textAlign:'center',  
     fontSize:15,

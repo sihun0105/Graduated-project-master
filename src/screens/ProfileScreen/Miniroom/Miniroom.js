@@ -165,7 +165,8 @@ const Miniroom = () => {
             </View>
             </ViewShot>
         <View style={styles.miniroom}>
-        <Tab.Navigator>
+        <Tab.Navigator 
+        >
       <Tab.Screen name="가구" component={ToolInven} />
       <Tab.Screen name="미니미" component={MinimiInven} />
       <Tab.Screen name="배경" component={MusicInven} />
@@ -182,6 +183,7 @@ export default Miniroom;
 const styles = StyleSheet.create({
     miniroom: {
       height:250,
+      color:'orange'
     },
     background: {
       flex: 1,
