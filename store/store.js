@@ -7,7 +7,8 @@ const store = (set => ({
     Backaddress: '', //상점 아이템 url주소값용
     setBacksaddress: (input) => set({ Backaddress: input }),//상점 아이템 url주소값용
     isMinime: '', //상점 아이템 url주소값용
-    setMinime: (input) => set({ isMinime: input }),//상점 아이템 url주소값용
+    setisMinime: (input) => set({ isMinime: input }),//상점 아이템 url주소값용
+    
     placeX: '', //미니룸 아이템 배치 좌표저장용
     setplaceX: (input) => set({placeX:input}), //미니룸 아이템 배치 좌표저장용
     placeY: '', //미니룸 아이템 배치 좌표저장용
@@ -28,6 +29,11 @@ const store = (set => ({
     setDiaryPost: (input) => set({DiaryPost:input}), //상점 - > 미니룸 랜더링용
     Checkday: new Date(),
     setCheckday2: (input) => set({Checkday:input}), //상점 - > 미니룸 랜더링용
+    Lsearch: '',
+    setLsearch: (input) => set({Lsearch:input}),
+    
+    Lsearchcount:0, //검색 새로고침용
+    setLsearchcount: () => set(state => ({Lsearchcount:state.Lsearchcount+1})), //검색 새로고침용
 
     FolderName: '', //프로필 랜더링용
     setFolderName: (input) => set({ FolderName: input }),//프로필 랜더링용

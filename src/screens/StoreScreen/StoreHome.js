@@ -23,7 +23,8 @@ const StoreHome = ({navigation}) => {
   const usersCollection = firestore().collection('shops').doc('shopitems').collection('tool');
   const usersCollectionM = firestore().collection('shops').doc('shopitems').collection('minime');
   const usersCollectionB = firestore().collection('shops').doc('shopitems').collection('background');
-  const categories = ['가구', '캐릭터', '벽지'];//동식물 추가?
+  const usersCollectionP = firestore().collection('shops').doc('shopitems').collection('minipat');
+  const categories = ['가구', '미니미', '배경','미니펫'];
   
   const {user, logout} = useContext(AuthContext);
   const {isPoint,setPoint} = useStore();
@@ -31,6 +32,7 @@ const StoreHome = ({navigation}) => {
   const [tool, setTool] = useState();
   const [minime, setminime] = useState();
   const [Background, setBackground] = useState();
+  const [Minipat, setMinipat] = useState();
   const [userData, setUserData] = useState(null);
   
   const getUser = async() => {
@@ -72,10 +74,20 @@ const StoreHome = ({navigation}) => {
       console.log(error.message);
     }
   };
+  const getShopDataP = async () => {
+    try {
+      const data = await usersCollectionP.get();
+      setMinipat(data._docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      console.log('B');
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   useEffect(() => {
     getShopData();
     getShopDataM();
     getShopDataB();
+    getShopDataP();
     getUser();
   }, [isPoint]);
   const CategoryList = () => {
@@ -178,6 +190,7 @@ const StoreHome = ({navigation}) => {
             if (catergoryIndex === 0) return tool;
             if (catergoryIndex === 1) return minime;
             if (catergoryIndex === 2) return Background;
+            if (catergoryIndex === 3) return Minipat;
           })()
         }
         renderItem={({item}) => {
@@ -197,10 +210,10 @@ const style = StyleSheet.create({
   },
   categoryText: {fontSize: 16, color: 'grey', fontFamily: "Jalnan", },
   categoryTextSelected: {
-    color: COLORS.green,
+    color: COLORS.orange,
     paddingBottom: 5,
     borderBottomWidth: 2,
-    borderColor: COLORS.green,
+    borderColor: COLORS.orange,
   },
   card: {
     height: 225,

@@ -21,6 +21,7 @@ import UserAllPhotos from './Albums/UserAllPhotos';
 import PhotoDetail from './Albums/PhotoDetail';
 import Comment from './Albums/Comment';
 import PointGuide from '../SettingScreen/PointGuide';
+
 const Stack = createNativeStackNavigator();
 const ProfileStackScreen = ({navigation}) => {
   return (

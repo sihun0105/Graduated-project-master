@@ -21,6 +21,8 @@ const Checktype = () => {
   if(plant.type=='tool') return setItem('tool');
   if(plant.type=='minime') return setItem('minime');
   if(plant.type=='background') return setItem('background');
+  if(plant.type=='minipat') return setItem('minipat');
+
   }
   const getUser = async() => {
     const currentUser = await firestore()

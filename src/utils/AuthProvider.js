@@ -180,10 +180,13 @@ export const AuthProvider = ({children}) => {
                   postTime: firestore.Timestamp.fromDate(new Date()),
                 }).then(() => {
                   firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('background').doc(auth().currentUser.uid+ 'mid').set({
-                    background: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45'
+                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45'
                   })
                   firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minime').doc(auth().currentUser.uid+ 'mid').set({
                     address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Minimi%2Fboy.png?alt=media&token=9497cbc4-b2b1-4000-9c03-fcba87f24998'
+                  })
+                  firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minimepat').doc(auth().currentUser.uid+ 'mid').set({
+                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
                   }).catch(error => {
                   console.log('Something went wrong with added user to firestore: ', error);
               })

@@ -30,7 +30,6 @@ import AppText from '../../components/Sns/AppText';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 
-
 const SearchSnsScreen = ({route}) => {
   const [refreshing, setRefreshing] = useState(false);
   const [posts, setPosts] = useState(null);

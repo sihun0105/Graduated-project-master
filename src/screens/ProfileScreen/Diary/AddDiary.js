@@ -27,7 +27,7 @@ const AddDiary = () =>{
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const {setPhotoName,SetBody,SetPost} = useStore();
+  const {setPhotoName,SetBody,SetPost,setDiaryPost,DiaryPost} = useStore();
   const [date2,setdate2]=useState(null);
 
   const {user, logout} = useContext(AuthContext);
@@ -73,7 +73,7 @@ const AddDiary = () =>{
     const imageUrl = await uploadImage();
     console.log('Image Url: ', imageUrl);
     console.log('Post: ', post);
-
+    setDiaryPost(post);
     firestore()
     .collection('Diary')
     .doc(firebase.auth().currentUser.uid)
@@ -100,7 +100,7 @@ const AddDiary = () =>{
 
   useEffect(() => {
     setDeleted(false);
-  }, [deleted,refreshing]);
+  }, [deleted,refreshing,DiaryPost]);
 
   const uploadImage = async () => {
     if( image == null ) {

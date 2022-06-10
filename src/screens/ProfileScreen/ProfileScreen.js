@@ -25,6 +25,7 @@ import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
 import { theme } from '../../Chat/ChatTheme';
 import moment from 'moment';
+import useStore from '../../../store/store';
 
 const ProfileScreen = ({navigation,route}) => {
 
@@ -41,7 +42,7 @@ const ProfileScreen = ({navigation,route}) => {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [CommentData, setCommentData] = useState([]);
-
+  const {countItem,BuyItem} = useStore();
   const getComment = async() => {
     const querySanp = await firestore()
     .collection('guestbook')
@@ -207,7 +208,7 @@ const ProfileScreen = ({navigation,route}) => {
     getRequest();
     getComment();
     navigation.addListener("focus", () => setLoading(!loading));
-  }, [navigation, loading]);
+  }, [navigation, loading,countItem,BuyItem]);
 
   const FriendRequest = () => {
     Alert.alert(
