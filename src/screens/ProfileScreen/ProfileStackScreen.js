@@ -227,7 +227,7 @@ const ProfileStackScreen = ({navigation}) => {
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                      fontFamily: 'Jalnan',
-                     color : 'orange'
+                     color : '#696969'
                     },
                     headerStyle: {
                       shadowColor: '#fff',
@@ -417,7 +417,26 @@ const ProfileStackScreen = ({navigation}) => {
                     options={{
                       headerShown : false
           
-                     
+                     /* title: '미니룸',
+                    headerTitleAlign: 'center',   
+                     headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    
+                    ),*/
                     
                     
                      }}

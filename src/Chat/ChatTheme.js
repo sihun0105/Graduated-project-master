@@ -18,9 +18,11 @@ export const theme = {
 		light: '#ccc',
 		halfOpacitySecondary: 'rgba(240, 149, 17, 0.5)',
 		halfOpacityPrimary: 'rgba(0, 132, 255, 0.5)',
-		storyBorder: "#00f"
+		storyBorder: "#00f",
+		fontfamily:'jalnan',
 	},
 	fontSize: {
+
 		title: 18,
 		subTitle: 13,
 		message: 15

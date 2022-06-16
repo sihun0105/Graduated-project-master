@@ -196,15 +196,16 @@ const AddPostScreen = () => {
         {image != null ? <AddImage source={{uri: image}} /> : null}
         <View style={styles.row}>
         <InputField
+        style={{textAlign: 'left',fontSize:18}}
           fontFamily="Jalnan"
           placeholder="게시물 내용을 작성하세요!"
           multiline
-          numberOfLines={3}
           value={post}
           onChangeText={(content) => setPost(content)}
         />
         </View>
-        <Text style={{marginTop : 20,marginBottom : 20,fontFamily : "Jalnan"}}>게시물의 주제를 선택하세요</Text>
+        <View style={{alignItems:'flex-start',width:'100%',marginLeft:40,}}>
+        <Text style={{marginTop : 20,marginBottom : 20,fontFamily : "Jalnan",}}>게시물의 주제를 선택하세요</Text>
         <SelectDropdown
            data={tags}
            onSelect={(selectedItem, index) => {
@@ -221,6 +222,8 @@ const AddPostScreen = () => {
       return item
    }}
 />
+        </View>
+        
         {uploading ? (
           <StatusWrapper>
             <Text>{transferred} % Completed!</Text>
@@ -261,8 +264,8 @@ export default AddPostScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   actionButtonIcon: {
     fontSize: 20,

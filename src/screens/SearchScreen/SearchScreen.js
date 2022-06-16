@@ -421,7 +421,11 @@ const styles = StyleSheet.create({
   },
   userBtnTxt: {
     fontFamily: "Jalnan",
+
+    color: '#3e3e3e',
+
     color: '#fff',
+
     textAlign:'center',  
     fontSize:15,
   },

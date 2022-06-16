@@ -199,7 +199,7 @@ const SNSProfileScreen = ({navigation, route}) => {
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
             <Text style={styles.userInfoTitle}>{posts.length}</Text>
-            <Text style={styles.userInfoSubTitle}>Posts</Text>
+            <Text style={styles.userInfoSubTitle}>게시물</Text>
           </View>
           <TouchableOpacity style={styles.userInfoTitle} onPress={() => navigation.navigate('ProfileScreen', {uid: userData.uid})}>
                 <Text style={styles.userInfoTitle}>미니홈피 방문</Text>
@@ -249,9 +249,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   userBtn: {
-    borderColor: '#2e64e5',
+    backgroundColor: '#ffa500',
+    borderColor:'#ffa500',
     borderWidth: 2,
-    borderRadius: 3,
+    borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginHorizontal: 5,
@@ -278,9 +279,10 @@ const styles = StyleSheet.create({
     fontFamily : "Jalnan",
     marginBottom: 5,
     textAlign: 'center',
+    justifyContent:'center'
   },
   userInfoSubTitle: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#666',
     textAlign: 'center',
     fontFamily : "Jalnan",

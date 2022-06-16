@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/FontAwesome5';
 import COLORS from '../StoreScreen/colors';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../utils/AuthProvider';
@@ -120,29 +121,10 @@ const StoreHome = ({navigation}) => {
         activeOpacity={0.8}
         onPress={() => navigation.navigate('Details', plant)}>
         <View style={style.card}>
-          <View style={{alignItems: 'flex-end'}}>
-            <View
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: //plant.like
-                  //? 'rgba(245, 42, 42,0.2)': 
-                  'rgba(0,0,0,0.2) ',
-              }}>
-              <Icon
-                name="favorite"
-                size={18}
-                //color={plant.like ? COLORS.red : COLORS.black}
-              />
-            </View>
-          </View>
-
           <View
             style={{
               height: 90,
+              marginTop:15,
               alignItems: 'center',
             }}>
             <Image
@@ -150,8 +132,8 @@ const StoreHome = ({navigation}) => {
               style={{flex: 1, resizeMode: 'contain',aspectRatio: 1.0,}}
             />
           </View>
-
-          <Text style={{ fontFamily : "Jalnan", fontSize: 17, marginTop: 10}}>
+          <View style={{marginTop:13}}>
+          <Text style={{ fontSize: 17, marginTop: 10, fontFamily: "Jalnan",}}>
             {plant.name}
           </Text>
           <View
@@ -160,24 +142,13 @@ const StoreHome = ({navigation}) => {
               justifyContent: 'space-between',
               marginTop: 5,
             }}>
-            <Text style={{fontSize: 19,  fontFamily : "Jalnan"}}>
+            <Text style={{fontSize: 19, fontFamily: "Jalnan",}}>
             ₩{plant.price}
             </Text>
-            <View
-              style={{
-                height: 25,
-                width: 25,
-                backgroundColor: COLORS.green,
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{fontSize: 22, color: COLORS.white, fontWeight: 'bold'}}>
-                +
-              </Text>
-            </View>
+            
           </View>
+          </View>
+          
         </View>
       </TouchableOpacity>
     );
@@ -186,13 +157,26 @@ const StoreHome = ({navigation}) => {
     <SafeAreaView
       style={{flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white}}>
       <View style={style.header}>
-        <View>        
-          <Text style={{fontSize: 25,  fontFamily : "Jalnan"}}>환영합니다 !</Text>
-          <Text style={{fontSize: 38, color: COLORS.orange,  fontFamily : "Jalnan"}}>
-            미니룸 상점
-          </Text>
+        <View style={{flexDirection:'row',width:'100%'}}>        
+          <Text style={{fontSize: 21, fontFamily: "Jalnan",}}>미니룸 스토어</Text>
+
         </View>
-        <Text style={{ fontFamily : "Jalnan"}}>보유 포인트 {userData ? userData.point : ''}</Text>
+      </View>
+      <View style={{alignSelf:'flex-end'}}>
+      <Text style={{fontSize: 18, fontFamily: "Jalnan",}}> <Icons
+                name="coins"
+                size={18}/>  {userData ? userData.point : ''}</Text>
+      </View>
+
+     
+      <View style={{marginTop: 30, flexDirection: 'row'}}>
+        <View style={style.searchContainer}>
+          <Icon name="search" size={25} style={{marginLeft: 20}} />
+          <TextInput placeholder="아이템찾기" style={style.input} />
+        </View>
+        <View style={style.sortBtn}>
+          <Icon name="sort" size={20} color={COLORS.white} />
+        </View>
       </View>
       
       <CategoryList />
@@ -227,7 +211,7 @@ const style = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'space-between',
   },
-  categoryText: {fontSize: 16, color: 'grey', fontFamily : "Jalnan"},
+  categoryText: {fontSize: 16, color: 'grey', fontFamily: "Jalnan", },
   categoryTextSelected: {
     color: COLORS.orange,
     paddingBottom: 5,
@@ -244,12 +228,13 @@ const style = StyleSheet.create({
     padding: 15,
   },
   header: {
-    marginTop: 30,
+    marginTop: 20,
+    width:'100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   searchContainer: {
-    height: 50,
+    height: 45,
     backgroundColor: COLORS.light,
     borderRadius: 10,
     flex: 1,
@@ -257,15 +242,15 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
     flex: 1,
+    fontFamily: "Jalnan",
     color: COLORS.dark,
   },
   sortBtn: {
     marginLeft: 10,
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 0,
     borderRadius: 10,
     backgroundColor: COLORS.green,
     justifyContent: 'center',

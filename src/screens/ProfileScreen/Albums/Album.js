@@ -34,7 +34,7 @@ const Album = ({navigation,route}) => {
      
         <TouchableOpacity style={styles.folderContainer} onPress={() => navigation.navigate('Photos',{uid : uid,name :route.params.name, fname : item.name } )}>
         <Icon name="folder"  size={23} color="orange"/>
-      <Text style={{fontSize : 18,fontFamily: 'DungGeunMo'}}> {item.name}</Text>
+      <Text style={{fontSize : 18,fontFamily: "Jalnan"}}> {item.name}</Text>
       </TouchableOpacity>
       
         

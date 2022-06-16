@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../StoreScreen/colors';
 import firebase from '@react-native-firebase/app'
 import firestore from '@react-native-firebase/firestore';
+import Icons from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../../utils/AuthProvider';
 import useStore from '../../../store/store';
 
@@ -120,54 +121,53 @@ const addItem = async () => {
     <View style={{flex:1}}>
       <View style={style.header}>
         <Icon name="arrow-back" size={28} onPress={() => navigation.goBack()} />
-        <Text style={{ fontFamily : "Jalnan"}}>Point {userData ? userData.point : ''}</Text>
+        <Text style={{fontSize:18,marginTop:3, fontFamily: "Jalnan",}}>
+        <Icons
+                name="coins"
+                size={18}/>  {userData ? userData.point : ''}</Text>
       </View>
       <View style={style.imageContainer}>
         
         <Image source={{uri:plant.address}} style={{resizeMode: 'contain', flex: 1,aspectRatio:1}} />
       </View>
       <View style={style.detailsContainer}>
+        
         <View
           style={{
             marginLeft: 20,
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-          }}>
-          <View style={style.line} />
-          <Text style={{fontSize: 18,  fontFamily : "Jalnan"}}>Best choice</Text>
-        </View>
-        <View
-          style={{
-            marginLeft: 20,
-            marginTop: 20,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 22,  fontFamily : "Jalnan"}}>{plant.name}</Text>
-          <View style={style.priceTag}>
+          <Text style={{fontSize: 21, fontFamily: "Jalnan",}}>{plant.name}</Text>
+         <View >
+         <View style={style.priceTag}>
             <Text
               style={{
                 marginLeft: 15,
                 color: COLORS.white,
-                fontWeight: 'bold',
-                fontSize: 16,
+                fontSize: 18,
+                marginRight:10,
+                fontFamily: "Jalnan",
               }}>
               ₩{plant.price}
             </Text>
           </View>
+         </View>
+          
         </View>
         <View style={{paddingHorizontal: 20, marginTop: 10}}>
           <View style={{height:80}}>
           <ScrollView>
-          <Text style={{fontSize: 20,  fontFamily : "Jalnan"}}>About</Text>
+          <Text style={{fontSize: 20,  fontFamily: "Jalnan",}}>About</Text>
           <Text
             style={{
+              fontFamily: "Jalnan",
               color: 'grey',
               fontSize: 16,
               lineHeight: 22,
               marginTop: 10,
-              fontFamily : "Jalnan"
+              
             }}>
             {plant.about}
           </Text>
@@ -190,6 +190,7 @@ const addItem = async () => {
               <Text
                 style={{
                   fontSize: 20,
+                  fontFamily: "Jalnan",
                   marginHorizontal: 10,
                   fontWeight: 'bold',
                 }}>
@@ -254,26 +255,28 @@ const style = StyleSheet.create({
     marginRight: 3,
   },
   borderBtn: {
-    borderColor: 'grey',
+    elevation: 2,
+    borderColor: 'rgba(255, 0, 0, 0)',
     borderWidth: 1,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f1f1f1',
     width: 60,
     height: 40,
   },
-  borderBtnText: {fontWeight: 'bold', fontSize: 28},
+  borderBtnText: {fontWeight: 'bold', fontSize: 28, fontFamily: "Jalnan",},
   buyBtn: {
     width: 90,
     height: 50,
     backgroundColor: 'orange',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 30,
+    borderRadius: 15,
   },
   priceTag: {
     backgroundColor: 'orange',
-    width: 80,
+    width: '100%',
     height: 40,
     justifyContent: 'center',
     borderTopLeftRadius: 25,
