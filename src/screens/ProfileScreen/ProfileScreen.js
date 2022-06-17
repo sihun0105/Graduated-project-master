@@ -337,6 +337,7 @@ const handleDelete = () => {};
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
         showsVerticalScrollIndicator={false}>
+          <View style={styles.guestBtn}>
         <View style={styles.titlecontainer}>
           <View style={styles.leftcontainer}>
             <TouchableOpacity onPress={() => onprofilePressed()}>
@@ -381,8 +382,8 @@ const handleDelete = () => {};
             
             </View>
           </View> 
-       
-        
+          </View>
+          <View style={styles.guestBtn}>
         
         <View style={styles.userInfoWrapper}>
         {route.params ? (
@@ -443,27 +444,37 @@ const handleDelete = () => {};
                 <Text style={styles.userBtnTxt}> 방명록</Text>
               </TouchableOpacity>
         </View>
+        </View>
+        <View style={styles.guestBtn}>
         <ViewShot ref={captureRef} options={{ format: 'jpg', quality: 0.9, backgroundColor : 'white' }}>
 
-        <TouchableOpacity style={styles.miniroom} onPress={() => onMiniroompress()}>
+      
         <View>
-        <Text style={{fontSize:20,textAlign:'center',marginTop : 70,marginBottom:10, fontFamily: "Jalnan", color: "#696969" }}>{userData ? userData.name : ''}님의 Mini Room</Text>
+        <Text style={{fontSize:20,textAlign:'center', fontFamily: "Jalnan", color: "#696969", marginTop : 10}}>{userData ? userData.name : ''}님의 Mini Room</Text>
+        <TouchableOpacity style={styles.miniroom} onPress={() => onMiniroompress()}>
+       
           <Image source={{ uri: userData ? userData.miniRoom || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
-       style={{width: 400, height: 300,marginBottom:0,resizeMode:'cover' }}>
+       style={{width: 400, height: 200,marginBottom:0,resizeMode:'cover' }}>
 
           </Image>
+          
+          </TouchableOpacity>
         </View>
         
-        </TouchableOpacity>
+        
         </ViewShot>
-        <Text style={{fontSize:20,marginTop:20,marginBottom:10, fontFamily: "Jalnan",}}>친구들의 방명록</Text>
+        </View>
+        <View style={styles.guestBtn2}>
+
+        <Text style={{fontSize:20,marginTop:5, fontFamily: "Jalnan",textAlign: "center"}}>친구들의 방명록</Text>
+        </View>
       
         {
               
               CommentData?.map((row, idx) => {
                 return (
                   
-                  <View style={styles.guestBtn}>
+                  <View style={styles.guestBtn3}>
                   <View style={styles.conversation}> 
                   
                 <TouchableOpacity 
@@ -538,7 +549,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f6f6f6',
     marginTop:10,
    
   },
@@ -609,9 +620,11 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   userBtnWrapper: {
+   
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
+    marginBottom : 10
       },
   userBtn: {
     width:120,
@@ -624,18 +637,48 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+
+
+
   },
   guestBtn: {
     width : 395,
-    backgroundColor:'#f6f6f6',
-    borderColor: '#f6f6f6',
+    backgroundColor:'#fff',
+    borderColor: '#fff',
     borderBottomColor:'#fff',
     borderWidth:1,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    marginBottom : 10,
+    marginTop: 10
+ 
+  },
+  guestBtn3: {
+    width : 395,
+    backgroundColor:'#fff',
+    borderColor: '#fff',
+    borderBottomColor:'#fff',
+    borderWidth:1,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    marginBottom: 10
+ 
+  },
+    guestBtn2: {
+    width : 395,
+    backgroundColor:'#fff',
+    borderColor: '#fff',
+    borderBottomColor:'#fff',
+    borderWidth:1,
+    marginTop : 10,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+
  
   },
   userBtnTxt: {
@@ -645,10 +688,11 @@ const styles = StyleSheet.create({
     fontSize:15,
   },
   userInfoWrapper: {
+    flex : 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    marginVertical: 20,
+    marginVertical: 10,
   },
   userInfoItem: {
     justifyContent: 'center',
@@ -675,13 +719,12 @@ const styles = StyleSheet.create({
   },
   miniroom: {
     width:'100%',
-    height:300,
+    height:200,
     justifyContent: 'space-around',
     alignItems:'center',
     paddingVertical: 8,
     paddingHorizontal: 8,
-    marginBottom : 70
-
+    marginBottom : 10
   },
 
 });

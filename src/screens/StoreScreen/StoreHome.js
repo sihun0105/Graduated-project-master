@@ -169,15 +169,7 @@ const StoreHome = ({navigation}) => {
       </View>
 
      
-      <View style={{marginTop: 30, flexDirection: 'row'}}>
-        <View style={style.searchContainer}>
-          <Icon name="search" size={25} style={{marginLeft: 20}} />
-          <TextInput placeholder="아이템찾기" style={style.input} />
-        </View>
-        <View style={style.sortBtn}>
-          <Icon name="sort" size={20} color={COLORS.white} />
-        </View>
-      </View>
+  
       
       <CategoryList />
       <FlatList

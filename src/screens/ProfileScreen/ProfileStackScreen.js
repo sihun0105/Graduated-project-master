@@ -415,9 +415,9 @@ const ProfileStackScreen = ({navigation}) => {
                     name="Miniroom"
                     component={Miniroom}
                     options={{
-                      headerShown : false
+                     
           
-                     /* title: '미니룸',
+                      title: '미니룸',
                     headerTitleAlign: 'center',   
                      headerTitleStyle: {
                       fontFamily: 'Jalnan',
@@ -436,7 +436,7 @@ const ProfileStackScreen = ({navigation}) => {
                     <Ionicons name="arrow-back" size={25} color="#2e64e5" />
                       </View>
                     
-                    ),*/
+                    ),
                     
                     
                      }}

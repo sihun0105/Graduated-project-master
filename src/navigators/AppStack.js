@@ -25,6 +25,9 @@ import PostComment from '../screens/SnsScreen/PostComment';
 import BestSnsScreen from '../screens/SnsScreen/BestSnsScreen';
 import PresentScreen from '../screens/ChatScreen/PresentScreen';
 import PresentDetailScreen from '../screens/ChatScreen/PresentDetailScreen'
+import Changepwd from '../screens/SettingScreen/Changepwd'
+import Icon from "react-native-vector-icons/FontAwesome";
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const FeedStack = ({navigation}) => (
@@ -66,7 +69,7 @@ const FeedStack = ({navigation}) => (
 
         headerTitleStyle: {
          fontFamily: 'Jalnan',
-
+         color : 'orange'
         },
         headerStyle: {
           shadowColor: '#fff',
@@ -286,6 +289,70 @@ const SearchStack = ({navigation}) => (
 
         headerTitleStyle: {
          fontFamily: 'Jalnan',
+         color: 'orange'
+
+        },
+        headerStyle: {
+          shadowColor: '#fff',
+          elevation: 0,
+          backgroundColor : '#fff'
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+            <Ionicons name="arrow-back" size={25} color="black" />
+          </View>
+        ),
+      }}
+    />   
+
+  </Stack.Navigator>
+);
+const SettingStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="SettingScreen"
+      component={SettingScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <Stack.Screen
+      name="Changepwd"
+      component={Changepwd}
+      options={{
+        title: '비밀번호 변경',
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontFamily: 'Jalnan',
+          color : '#696969'
+
+         },
+        headerStyle: {
+        backgroundColor: '#fff',
+        shadowColor: '#fff',
+        elevation: 0,
+                      
+            
+        },
+         headerBackTitleVisible: false,
+         headerBackImage: () => (
+         <View style={{marginLeft: 15}}>
+         <Ionicons name="arrow-back" size={25} color="#545454" />
+         </View>
+         ),
+         }}
+         />
+         <Stack.Screen
+      name="SerachBestSnsScreen"
+      component={BestSnsScreen}
+      options={{
+        title: 'Top 5 게시물 !',
+        headerTitleAlign: 'center',
+
+        headerTitleStyle: {
+         fontFamily: 'Jalnan',
+         color:'orange'
 
         },
         headerStyle: {
@@ -321,7 +388,7 @@ const AppStack = () => {
   return (
     <Tab.Navigator screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#2e64e5',
+        tabBarActiveTintColor: 'orange',
         tabBarHideOnKeyboard: true,
         
         
@@ -334,7 +401,7 @@ const AppStack = () => {
           
           // tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
-            <Ionicons name="person-outline" color={color} size={size} />
+            <Ionicons name="person" color={color} size={size} />
           ),
         }}
       />
@@ -345,7 +412,7 @@ const AppStack = () => {
       options={{
         
         tabBarIcon: ({color,size}) => (
-          <Feather name="search" size={size} color={color} />
+          <Icon name="search" size={size} color={color} />
         ),
       }}
     />
@@ -356,8 +423,7 @@ const AppStack = () => {
           tabBarLabel: 'SNS',
           // tabBarVisible: route.state && route.state.index === 0,
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="home-outline"
+            <Icon name="home"
               color={color}
               size={size}
             />
@@ -379,10 +445,7 @@ const AppStack = () => {
           // tabBarVisible: route.state && route.state.index === 0,
           // tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
-            <Ionicons
-              name="chatbox-ellipses-outline"
-              color={color}
-              size={size}
+            <Ionicons name="chatbubble-outline" color={color}size={size}
             />
           ),
         })}
@@ -393,18 +456,17 @@ const AppStack = () => {
       options={{
         
         tabBarIcon: ({size,color}) => (
-          <AntDesign name="hearto" size={size} color={color} />
+          <Icon name="shopping-bag" size={size} color={color} />
         ),
       }}
     />
          <Tab.Screen
       name="SETTING"
-      component={SettingScreen}
+      component={SettingStack}
       options={{
         
         tabBarIcon: ({size,color}) => (
-          <MaterialCommunityIcons
-            name="server"
+          <Ionicons name="settings"
             size={size}
             color={color}
           />

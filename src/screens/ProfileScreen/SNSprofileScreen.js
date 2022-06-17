@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   userBtnTxt: {
-    color: '#2e64e5',
+    color: '#fff',
     fontFamily : "Jalnan",
 
   },

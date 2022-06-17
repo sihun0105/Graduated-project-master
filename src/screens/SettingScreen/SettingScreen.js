@@ -8,37 +8,13 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/reducer';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { AuthContext } from '../../utils/AuthProvider';
+import { useNavigation } from "@react-navigation/native";
+
 const SettingScreen = () => {
     const {user, logout} = useContext(AuthContext);
-    const accessToken = useSelector((state: RootState) => state.user.accessToken);
-  const name = useSelector((state: RootState) => state.user.name);
-  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+
   
-  const onLogout = useCallback(async () => {
-    try {
-      await axios.post(
-        `${Config.API_URL}/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      Alert.alert('알림', '로그아웃 되었습니다.');
-      dispatch(
-        userSlice.actions.setUser({
-          name: '',
-          email: '',
-          accessToken: '',
-        }),
-      );
-      await EncryptedStorage.removeItem('refreshToken');
-    } catch (error) {
-      const errorResponse = (error as AxiosError).response;
-      console.error(errorResponse);
-    }
-  }, [accessToken, dispatch]);
     return (
         <ScrollView >
             <View >
@@ -57,7 +33,7 @@ const SettingScreen = () => {
                 </View>
                 
                 <View style={styles.row}>
-                    <TouchableOpacity style={styles.section}>
+                    <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Changepwd')}>
                     <Text style ={styles.TextStyle} >
                             비밀번호 변경
                         </Text>

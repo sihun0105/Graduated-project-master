@@ -153,12 +153,14 @@ export const AuthProvider = ({children}) => {
               firestore().collection('users').doc(auth().currentUser.uid)
               .set({
                   name: name,
+                  password : password,
                   email: email,
                   phone: phone,
                   age: age,
                   uid: auth().currentUser.uid,
                   point: 1000,
                   about: null,
+                  miniRoom : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/miniRoomImage%2FReactNative-snapshot-image76099903516454588181655454835737.jpg?alt=media&token=fbd3c5dd-82a1-45f5-a0ad-91d49b5d7adc',
                   birthday: birthday,
                   createdAt: firestore.Timestamp.fromDate(new Date()),
                   userImg: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/AppImage%2Fprofile.jpg?alt=media&token=719929c2-defb-4cbf-99ca-fddd21bfeaa4'
@@ -183,11 +185,10 @@ export const AuthProvider = ({children}) => {
                     address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45'
                   })
                   firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minime').doc(auth().currentUser.uid+ 'mid').set({
-                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Minimi%2Fboy.png?alt=media&token=9497cbc4-b2b1-4000-9c03-fcba87f24998'
+                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Animals%2FIMG_0062-removebg-preview.png?alt=media&token=1c4d1135-16f8-4575-ab69-83e55b8af684'
                   })
-                  firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minimepat').doc(auth().currentUser.uid+ 'mid').set({
-                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
-                  }).catch(error => {
+                 
+                  .catch(error => {
                   console.log('Something went wrong with added user to firestore: ', error);
               })
             })

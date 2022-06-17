@@ -23,10 +23,9 @@ const MiniroomBox =({test,name,x,y}) => {
   useEffect(() => {
     checktItem();
     return () => {
-      console.log('언마운트!');
-      console.log('x좌표 : ',dlatlx);
-      console.log('y좌표 : ',dlatly);
+      if(y !== dlatly){
       addItem(dlatlx,dlatly,tool,testname);
+    }
     }
   }, []);
   
@@ -35,12 +34,12 @@ const MiniroomBox =({test,name,x,y}) => {
     rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           //x=Math.floor(x/20)*20;
-          //y=Math.floor(y/20)*20;
+          
           //if(x>=360)x=370;
           //if(y>=320)y=320;
           doc.ref.update({
             getx:x,
-            gety:y,
+            gety:y-95,
             address:address,
             name:name,
           })
