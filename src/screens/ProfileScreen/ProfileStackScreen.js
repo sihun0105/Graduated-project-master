@@ -415,7 +415,7 @@ const ProfileStackScreen = ({navigation}) => {
                     name="Miniroom"
                     component={Miniroom}
                     options={{
-                      headerShown : false
+                      headerShown : true
           
                      
                     
