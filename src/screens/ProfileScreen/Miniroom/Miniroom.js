@@ -203,7 +203,6 @@ const getMinime = async () => {
     console.log('저장전',count);
     setMinipat(newaddress);
   }
-
    useEffect(() => {
      getBackgroundData();
      getMinime();
@@ -218,6 +217,9 @@ const getMinime = async () => {
     getBackgroundInven();
     getToolInven();
     getMinipatInven();
+    return () => {
+      onSave();
+    }
   }, [BuyItem]);
    
   
