@@ -3,7 +3,6 @@ import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app'
-import{ useAnimatedGestureHandler,withSpring } from 'react-native-reanimated';
 const MinimeBox =({test,name,x,y}) => {
   
   const tool = test;

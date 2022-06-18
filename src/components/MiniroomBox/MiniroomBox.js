@@ -3,7 +3,6 @@ import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app'
-import{ useAnimatedGestureHandler,withSpring } from 'react-native-reanimated';
 const MiniroomBox =({test,name,x,y}) => {
   
   const tool = test;
@@ -71,8 +70,6 @@ const MiniroomBox =({test,name,x,y}) => {
         dlatlx =gesture.moveX;
         dlatly =gesture.moveY;
         setplaceX(gesture.moveX);
-        //setHoldx(dlatlx);
-        //setHoldy(dlatly);
         console.log('아이템 : ',name);
         console.log('x좌표 : ',dlatlx);
         console.log('y좌표 : ',dlatly);
