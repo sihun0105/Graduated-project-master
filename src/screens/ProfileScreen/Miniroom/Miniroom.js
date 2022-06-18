@@ -288,9 +288,9 @@ const styles = StyleSheet.create({
     minipat: {
       resizeMode:'stretch',
       position: 'absolute',
-      transform: [{translateX: 350} , {translateY:90}],
+      transform: [{translateX: 350} , {translateY:120}],
       width:100,
-      height:0,
+      height:100,
     },
     Backimg: {
       width: '100%',
