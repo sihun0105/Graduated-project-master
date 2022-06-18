@@ -8,6 +8,16 @@ const store = (set => ({
     setBacksaddress: (input) => set({ Backaddress: input }),//상점 아이템 url주소값용
     isMinime: '', //상점 아이템 url주소값용
     setisMinime: (input) => set({ isMinime: input }),//상점 아이템 url주소값용
+
+    Minimeaddress: '', //상점 아이템 url주소값용
+    setMinimeaddress: (input) => set({ Minimeaddress: input }),//상점 아이템 url주소값용
+    Minimegetx: '', //상점 아이템 url주소값용
+    setMinimegetx: (input) => set({ Minimegetx: input }),//상점 아이템 url주소값용
+    Minimegety: '', //상점 아이템 url주소값용
+    setMinimegety: (input) => set({ Minimegety: input }),//상점 아이템 url주소값용
+    Minimename: '', //상점 아이템 url주소값용
+    setMinimename: (input) => set({ Minimename: input }),//상점 아이템 url주소값용
+
     isMinipat: '', //상점 아이템 url주소값용
     setisMinipat: (input) => set({ isMinime: input }),//상점 아이템 url주소값용
     

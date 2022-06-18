@@ -3,13 +3,13 @@ import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app'
-const MiniroomBox =({test,name,x,y}) => {
+const MinimeBox =({test,name,x,y}) => {
   
   const tool = test;
   const testname = name;
   let dlatlx= x;
   let dlatly= y;
-  const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
+  const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minime');
   const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
   
   const checktItem = () => {
@@ -32,10 +32,6 @@ const MiniroomBox =({test,name,x,y}) => {
     const rows = addminiroom.where('name', '==', name);  
     rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          //x=Math.floor(x/20)*20;
-          
-          //if(x>=360)x=370;
-          //if(y>=320)y=320;
           doc.ref.update({
             getx:x,
             gety:y-95,
@@ -94,4 +90,4 @@ const MiniroomBox =({test,name,x,y}) => {
             position:'absolute'
           },
     });
-    export default MiniroomBox
+    export default MinimeBox
