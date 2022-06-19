@@ -250,7 +250,7 @@ const Comment = ({navigation,route}) => {
       <View style={styles.container}>
          <View style={styles.row}>
          <Ionicons name="chatbubble-ellipses" size={25} color="gray" /> 
-         <Text style={{marginBottom : 20, marginLeft : 10, fontSize : 18}}><Text style={{color : 'black', fontWeight : 'bold',}}>{CommentData.length}</Text>개의 댓글이 있어요</Text>
+         <Text style={{marginBottom : 20, marginLeft : 10, fontSize : 18,fontFamily : 'Jalnan'}}><Text style={{color : 'black', fontWeight : 'bold',}}>{CommentData.length}</Text>개의 댓글이 있어요</Text>
        
          </View>
          
@@ -345,7 +345,8 @@ const styles = StyleSheet.create({
     username: {
       fontSize: theme.fontSize.title,
       color: theme.colors.title,
-      width: 210
+      width: 210,
+      fontFamily : 'Jalnan'
     },
     delete: {
       fontSize: theme.fontSize.title,
@@ -359,6 +360,7 @@ const styles = StyleSheet.create({
       width: 240,
       color: theme.colors.subTitle,
       marginTop : 5,
+      fontFamily : 'Jalnan'
     },
     imageContainer: {
       marginRight: 15,

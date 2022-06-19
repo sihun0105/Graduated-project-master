@@ -216,7 +216,7 @@ const Miniroom = () => {
   }, [tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime]);
   return (
 
-    <View style={{flex:1,width:'100%',height:'100%'}}>
+    <View style={{flex:1,width:'100%',height:'100%' , backgroundColor : 'white'}}>
       <View style={{flex:0.1,alignItems:'flex-end',justifyContent:'center'}}>
         <Text style={{fontFamily: "Jalnan"}}>횟수 : {MinipatCount}</Text>
       </View>        
