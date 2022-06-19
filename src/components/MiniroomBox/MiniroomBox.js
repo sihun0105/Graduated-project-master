@@ -28,9 +28,9 @@ const MiniroomBox =({test,name,x,y}) => {
     }
   }, []);
   
-  const addItem = (x,y,address,name) => {
+  const addItem = async(x,y,address,name) => {
     const rows = addminiroom.where('name', '==', name);  
-    rows.get().then(function (querySnapshot) {
+    await rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           //x=Math.floor(x/20)*20;
           
