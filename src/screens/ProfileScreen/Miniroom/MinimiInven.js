@@ -19,8 +19,8 @@ const MinimiInven = () => {
       console.log(error.message);
     }
   };
-  const updateMinime = (newaddress) => {
-    addBackground.collection('minime').doc(firebase.auth().currentUser.uid+ 'mid').update({address:newaddress});
+  const updateMinime = (newaddress,newname) => {
+    addBackground.collection('minime').doc(firebase.auth().currentUser.uid+ 'mid').update({address:newaddress, name:newname, getx:1,gety:1});
     console.log('저장완료');  
     console.log(newaddress);
     setisMinime(newaddress);
@@ -35,7 +35,7 @@ const MinimiInven = () => {
       {
         tool?.map((row, idx) => {
           {
-            return  <TouchableOpacity onPress={()=>{updateMinime(row.address)}} style={{borderWidth:1,}}>
+            return  <TouchableOpacity onPress={()=>{updateMinime(row.address,row.name)}} style={{borderWidth:1,}}>
             <Image source ={{uri:row.address}} style={{width:70,height:70,}} resizeMode="contain" ></Image>
             </TouchableOpacity>;} 
       })

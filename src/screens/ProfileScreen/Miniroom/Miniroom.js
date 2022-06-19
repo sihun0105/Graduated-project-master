@@ -10,6 +10,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 import {useNavigation} from '@react-navigation/native';
 import MiniroomBox from '../../../components/MiniroomBox/MiniroomBox';
+import MinimeBox from '../../../components/MiniroomBox/MinimeBox';
 import useStore from '../../../../store/store';
 import firestore from '@react-native-firebase/firestore'; 
 import firebase  from '@react-native-firebase/app';
@@ -63,9 +64,10 @@ const Miniroom = () => {
   const usersToolCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool'); 
   const usersMinipatCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minipat').doc(firebase.auth().currentUser.uid+ 'mid');
   const {tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime} = useStore();
+  const {setMinimeaddress,setMinimegetx,setMinimegety,setMinimename,Minimegetx,Minimegety,Minimeaddress,Minimename} = useStore();
   const [tool, setTool] = useState();
   const [Back, setBack] = useState(null);
-  const [Minime, setMinime] = useState(null);
+  const [Minime, setMinime] = useState();
   const [Minipat, setMinipat] = useState(null);
   const [MinipatCount, setMinipatCount] = useState(0);
 
@@ -174,6 +176,11 @@ const Miniroom = () => {
           try {
             const data = await usersMinimeCollection.get();
             setMinime(data._data.address);
+            setMinimeaddress(data._data.address);
+            setMinimename(data._data.name);
+            setMinimegetx(data._data.getx);
+            setMinimegety(data._data.gety);
+
           } catch (error) {
             console.log(error.message);
           }
@@ -213,13 +220,12 @@ const Miniroom = () => {
               <Text style={{fontFamily: "Jalnan"}}>횟수 : {MinipatCount}</Text>
 
             </View>        
-      <View style={{height: 200}}>
+      <View style={{height:200}}>
     <ViewShot style ={{flex : 1}} ref={captureRef} options={{ format: 'jpg', quality: 0.9 }}>
     <View style={styles.Backimg}>
           <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}></ ImageBackground>
 
     </View>
-          < Image style={styles.minime} source={{uri:`${Minime ? Minime : initial}`}}></ Image>
           <TouchableOpacity style={styles.minipat} onPress={onMinipatPress}>
           < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : initial}`}}></ Image>
           </TouchableOpacity>
@@ -230,6 +236,7 @@ const Miniroom = () => {
                   return  <MiniroomBox test={row.address} name={row.name} x={row.getx} y={row.gety}></MiniroomBox>} 
                 })
               }
+            <MinimeBox test={Minimeaddress} name={Minimename} x={Minimegetx} y={Minimegety}></MinimeBox>          
             </View>
             </ViewShot>
             </View>
@@ -281,9 +288,9 @@ const styles = StyleSheet.create({
     minipat: {
       resizeMode:'stretch',
       position: 'absolute',
-      transform: [{translateX: 350} , {translateY:90}],
+      transform: [{translateX: 350} , {translateY:120}],
       width:100,
-      height:0,
+      height:100,
     },
     Backimg: {
       width: '100%',
