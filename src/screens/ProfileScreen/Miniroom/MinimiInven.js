@@ -35,7 +35,7 @@ const MinimiInven = () => {
       {
         tool?.map((row, idx) => {
           {
-            return  <TouchableOpacity onPress={()=>{updateMinime(row.address,row.name)}} style={{borderWidth:1,}}>
+            return  <TouchableOpacity onPress={()=>{updateMinime(row.address,row.name)}} style={{}}>
             <Image source ={{uri:row.address}} style={{width:70,height:70,}} resizeMode="contain" ></Image>
             </TouchableOpacity>;} 
       })

@@ -301,7 +301,7 @@ useEffect(()=>{
 		</View>
     <TouchableOpacity onPress={handleSearchTextChange}>
     <View style={styles.serachBtn}>
-    <Text style={{color : theme.colors.searchText ,}}>검색</Text>
+    <Text style={{color : '#696969' , fontFamily : 'Jalnan'}}>검색</Text>
     
     </View>
     </TouchableOpacity>

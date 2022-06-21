@@ -215,7 +215,7 @@ const Miniroom = () => {
   }, [tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime]);
   return (
 
-    <View style={{flex:1,width:'100%',height:'100%'}}>
+    <View style={{flex:1,width:'100%',height:'100%' , backgroundColor : 'white'}}>
       <View style={{flex:0.1,alignItems:'flex-end',justifyContent:'center'}}>
         <Text style={{fontFamily: "Jalnan"}}>횟수 : {MinipatCount}</Text>
       </View>        
@@ -229,7 +229,6 @@ const Miniroom = () => {
           < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : initial}`}}></ Image>
           </TouchableOpacity>
     <View style={styles.item}>
-    <Text>{tool? tool.length : 'b'}</Text>
             {
               tool?.map((row, idx) => {
                 {

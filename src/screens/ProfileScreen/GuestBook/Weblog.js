@@ -200,7 +200,7 @@ const Weblog = ({navigation,route}) => {
       <View style={styles.container}>
          <View style={styles.row}>
          <Ionicons name="chatbubble-ellipses" size={25} color="gray" /> 
-         <Text style={{marginBottom : 20, marginLeft : 10, fontSize : 18}}><Text style={{color : 'black', fontWeight : 'bold',}}>{CommentData.length}</Text>개의 방명록이 있어요.</Text>
+         <Text style={{marginBottom : 20, marginLeft : 10, fontSize : 18,fontFamily : 'Jalnan'}}><Text style={{color : 'black', fontWeight : 'bold',}}>{CommentData.length}</Text>개의 방명록이 있어요.</Text>
        
          </View>
          

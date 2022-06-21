@@ -55,7 +55,7 @@ const RenderCard = ({item})=>{
         <TouchableOpacity>
         <View style={styles.folderContainer}>
       <Icon name="folder"  size={23} color="orange"/>
-      <Text style={{fontSize : 18,fontFamily: 'DungGeunMo'}}> {route.params.fname}</Text>
+      <Text style={{fontSize : 18,fontFamily: 'Jalnan'}}> {route.params.fname}</Text>
         
         
         
@@ -65,7 +65,7 @@ const RenderCard = ({item})=>{
 
         <View style={styles.titleConainer}>
       
-      <Text style={{fontSize : 25,fontFamily: 'DungGeunMo'}}>{route.params.name} 님의 사진첩</Text>
+      <Text style={{fontSize : 25,fontFamily: 'Jalnan'}}>{route.params.name} 님의 사진첩</Text>
 
       <Text style={{color : '#129fcd', fontSize : 20,fontFamily: 'DungGeunMo',marginTop : 5,}}>{posts.length}</Text>
         
