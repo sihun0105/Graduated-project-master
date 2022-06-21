@@ -16,6 +16,7 @@ import firestore from '@react-native-firebase/firestore';
 import firebase  from '@react-native-firebase/app';
 import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
+import COLORS from './colors';
 
 const initial = 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45';
 const Tab = createMaterialTopTabNavigator();
@@ -135,8 +136,8 @@ const Miniroom = () => {
           return uri;
         };
         
-        const onSave = () => {
-          const uri = getPhotoUri();
+        const onSave = async() => {
+          const uri = await getPhotoUri();
           const imageuri = uploadImage();
           console.log('Image Url: ', imageuri);
           
@@ -149,7 +150,7 @@ const Miniroom = () => {
           if(MinipatCount<8) //물주는 횟수
           {
             setMinipatCount(MinipatCount+1)  
-            updateMinipat(tlranf[MinipatCount].address,MinipatCount);
+            await updateMinipat(tlranf[MinipatCount].address,MinipatCount);
              }
             else {
               if(MinipatCount===8){setMinipatCount(0);
@@ -217,19 +218,18 @@ const Miniroom = () => {
 
     <View style={{flex:1,width:'100%',height:'100%'}}>
       <View style={{flex:0.1,alignItems:'flex-end',justifyContent:'center'}}>
-              <Text style={{fontFamily: "Jalnan"}}>횟수 : {MinipatCount}</Text>
-
-            </View>        
+        <Text style={{fontFamily: "Jalnan"}}>횟수 : {MinipatCount}</Text>
+      </View>        
       <View style={{height:200}}>
+        
     <ViewShot style ={{flex : 1}} ref={captureRef} options={{ format: 'jpg', quality: 0.9 }}>
     <View style={styles.Backimg}>
           <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}></ ImageBackground>
-
     </View>
           <TouchableOpacity style={styles.minipat} onPress={onMinipatPress}>
           < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : initial}`}}></ Image>
           </TouchableOpacity>
-            <View style={styles.item}>
+    <View style={styles.item}>
             {
               tool?.map((row, idx) => {
                 {
@@ -242,7 +242,14 @@ const Miniroom = () => {
             </View>
             
         <View style={styles.miniroom}>
-        <Tab.Navigator >
+        <Tab.Navigator tabBarOptions={{
+				activeTintColor: "orange",
+				inactiveTintColor: "gray",
+				labelStyle: {
+					fontSize: 15,
+          fontFamily: "Jalnan"
+				},
+			}}>
       <Tab.Screen name="가구" component={ToolInven} />
       <Tab.Screen name="미니미" component={MinimiInven} />
       <Tab.Screen name="배경" component={BackgroundInven} />

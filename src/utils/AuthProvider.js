@@ -186,8 +186,18 @@ export const AuthProvider = ({children}) => {
                   })
                   firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minime').doc(auth().currentUser.uid+ 'mid').set({
                     address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Animals%2FIMG_0062-removebg-preview.png?alt=media&token=1c4d1135-16f8-4575-ab69-83e55b8af684'
+                    ,getx : 1
+                    ,gety : 1
+                    ,name : '기본'
                   })
-                 
+                  firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minipat').doc(auth().currentUser.uid+ 'mid').set({
+                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
+                    ,count: 1
+                  })
+                  firestore().collection('Inventory').doc(auth().currentUser.uid).collection('minipat').doc().set({
+                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
+                    ,count:1
+                  })                 
                   .catch(error => {
                   console.log('Something went wrong with added user to firestore: ', error);
               })
