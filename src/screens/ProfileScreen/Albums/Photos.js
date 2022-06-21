@@ -1,6 +1,5 @@
 import { View, Text ,Image,FlatList,StyleSheet,TouchableOpacity,TextInput,Dimensions} from 'react-native'
 import React,{useState,useEffect,useContext} from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons'
 import firestore from '@react-native-firebase/firestore'
 import firebase  from '@react-native-firebase/app';
@@ -11,9 +10,7 @@ var { height, width } = Dimensions.get('window');
 const Photos = ({route,navigation}) => {
   const {PhotoName,Body,Post} = useStore();
   const [posts,setPosts] = useState([])
-  const [serachposts, searchsetPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [searchText, setSearchText] = useState('');
+
   const {uid} = route.params
   const getPosts = async ()=>{
     const querySanp = await firestore().collection('Albums').doc(route.params ? route.params.uid : user.uid).collection('groups').doc(route.params.fname).collection('photos').orderBy('postTime', 'desc').get()

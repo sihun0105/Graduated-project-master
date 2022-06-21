@@ -1,6 +1,5 @@
 import { View, Text ,Image,FlatList,StyleSheet,TouchableOpacity,TextInput,Dimensions,Alert} from 'react-native'
 import React,{useState,useEffect,useContext} from 'react'
-import SearchBar from "react-native-dynamic-search-bar";
 import firestore from '@react-native-firebase/firestore'
 import firebase  from '@react-native-firebase/app';
 import useStore from '../../../../store/store'

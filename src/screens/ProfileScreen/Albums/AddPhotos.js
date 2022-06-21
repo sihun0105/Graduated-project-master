@@ -6,8 +6,6 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
-  ScrollView,
-  RefreshControl
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -28,7 +26,6 @@ import {
 } from '../../../../styles/AddPost';
 
 import { AuthContext } from '../../../utils/AuthProvider';
-import { configureStore } from '@reduxjs/toolkit';
 
 const AddPhotos = ({route}) => {
   const [userData, setUserData] = useState(null);

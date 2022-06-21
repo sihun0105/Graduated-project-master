@@ -1,10 +1,8 @@
 import { View, Text ,Image,FlatList,StyleSheet,TouchableOpacity,TextInput,Dimensions,RefreshControl,Alert,TouchableWithoutFeedback} from 'react-native'
 import React, {useState, useEffect, useContext,useCallback} from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons'
 import firestore from '@react-native-firebase/firestore'
 import firebase  from '@react-native-firebase/app';
-import ActionButton from 'react-native-action-button';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import useStore from '../../../../store/store'

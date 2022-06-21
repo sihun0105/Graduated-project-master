@@ -2,13 +2,9 @@ import { View, Text,TouchableOpacity,StyleSheet,FlatList,Image,TextInput,Refresh
 import React, {useState, useEffect, useContext,useCallback} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import firebase  from '@react-native-firebase/app';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons'
-import {FAB} from 'react-native-paper'
 import { theme } from '../../../Chat/ChatTheme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import { AuthContext } from '../../../utils/AuthProvider';
 
 const Comment = ({navigation,route}) => {
   const [number, setNumber] = useState(0);

@@ -1,15 +1,11 @@
 import { View, Text,TouchableOpacity,StyleSheet,FlatList,Image,TextInput,RefreshControl,Alert} from 'react-native';
-import React, {useState, useEffect, useContext,useCallback} from 'react';
+import React, {useState, useEffect,useCallback} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import firebase  from '@react-native-firebase/app';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons'
-import {FAB} from 'react-native-paper'
 import { theme } from '../../../Chat/ChatTheme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { AuthContext } from '../../../utils/AuthProvider';
 
 const Weblog = ({navigation,route}) => {
   const [number, setNumber] = useState(0);
