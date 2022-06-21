@@ -12,15 +12,8 @@ const MiniroomBox =({test,name,x,y}) => {
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
   const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
   
-  const checktItem = () => {
-    try{
-    console.log('마운트!');
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  
   useEffect(() => {
-    checktItem();
     return () => {
       if(y !== dlatly){
       addItem(dlatlx,dlatly,tool,testname);

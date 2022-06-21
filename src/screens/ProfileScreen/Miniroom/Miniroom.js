@@ -204,7 +204,6 @@ const Miniroom = () => {
           }
         };
 
-
   useEffect(() => {
     getBackgroundData();
     getMinime();
@@ -230,10 +229,11 @@ const Miniroom = () => {
           < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : initial}`}}></ Image>
           </TouchableOpacity>
     <View style={styles.item}>
+    <Text>{tool? tool.length : 'b'}</Text>
             {
               tool?.map((row, idx) => {
                 {
-                  return  <MiniroomBox test={row.address} name={row.name} x={row.getx} y={row.gety}></MiniroomBox>} 
+                  return  <MiniroomBox test={row.address} name={row.name} x={row.getx} y={row.gety}></MiniroomBox>}
                 })
               }
             <MinimeBox test={Minimeaddress} name={Minimename} x={Minimegetx} y={Minimegety}></MinimeBox>          
