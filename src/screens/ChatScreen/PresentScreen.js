@@ -7,12 +7,15 @@ import PresentCard from '../../utils/PresentCard';
 import { theme } from '../../Chat/ChatTheme';
 import SearchInput from '../../Chat/Components/common/SearchInput'
 import firebase  from '@react-native-firebase/app'; 
+import { useIsFocused } from '@react-navigation/native';
+
 const MessagesScreen = ({navigation,item}) => {
     const [users,setUsers] = useState(null)
     const {user, logout} = useContext(AuthContext);
     const [friendData, setFriendData] = useState(null);
     const [ready, setReady] = useState(true)
-    
+    const isFocused = useIsFocused();
+
     const getUsers = async () => {
       try {
         const list = [];
@@ -53,7 +56,7 @@ const MessagesScreen = ({navigation,item}) => {
         setReady(false)
         },1000)   
         getUsers();
-    },[])
+    },[isFocused])
     
     
     

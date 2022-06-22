@@ -157,7 +157,7 @@ const addItem = async () => {
           
         </View>
         <View style={{paddingHorizontal: 20, marginTop: 10}}>
-          <View style={{height:80}}>
+          <View style={{height:150}}>
           <ScrollView>
           <Text style={{fontSize: 20,  fontFamily: "Jalnan",}}>About</Text>
           <Text
@@ -267,7 +267,7 @@ const style = StyleSheet.create({
   },
   borderBtnText: {fontWeight: 'bold', fontSize: 28, fontFamily: "Jalnan",},
   buyBtn: {
-    width: 90,
+    width: 80,
     height: 50,
     backgroundColor: 'orange',
     justifyContent: 'center',

@@ -1,5 +1,5 @@
-import { View, Text ,Image,FlatList,StyleSheet,TouchableOpacity,TextInput,Dimensions,ScrollView} from 'react-native'
-import React,{useState,useEffect,useContext} from 'react'
+import { View, Text ,Image,FlatList,StyleSheet,TouchableOpacity,TextInput,Dimensions,ScrollView,RefreshControl} from 'react-native'
+import React,{useState,useEffect,useContext,useCallback} from 'react'
 import SearchBar from "react-native-dynamic-search-bar";
 import firestore from '@react-native-firebase/firestore'
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,10 +8,12 @@ import useStore from '../../../store/store';
 import Loading from '../../utils/Loading';
 import { theme } from '../../Chat/ChatTheme';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from "@react-navigation/native";
+import { useIsFocused } from '@react-navigation/native';
 
 var { height, width } = Dimensions.get('window');
 
-const SearchScreen = ({props,navigation}) => {
+const SearchScreen = ({navigation}) => {
   const {Post} = useStore(); // 0522새로고침용
   const [posts,setPosts] = useState(null)
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,17 @@ const SearchScreen = ({props,navigation}) => {
   const {Lsearch, setLsearch,setLsearchcount,Lsearchcount}  = useStore()
   const [userData, setUserData] = useState(null);
   const [random, setRandom] = useState([]); 
+  const isFocused = useIsFocused();
 
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
   const tags = ["인물", "배경", "음식", "동물", "물건", "문화"]
   const [changepost,setchangePosts] = useState(null)
   const getRandomIndex = (length) => {
@@ -57,7 +69,7 @@ const handleSearchTextChange =  async () => {
 
     await firestore()
       .collection('posts')
-      .where('tag', '==' , Lsearch)
+      .where('tag', '==' , Lsearch.trim())
       .orderBy('postTime', 'desc')
       .get()
       .then((querySnapshot) => {
@@ -118,9 +130,8 @@ const SubmitSearch = async () => {
   .collection('users')
   .doc(firebase.auth().currentUser.uid)
   .update({
-    Lsearch : Lsearch
+    Lsearch : Lsearch.trim()
   })
-    setLsearchcount();  
  
 
     
@@ -251,13 +262,13 @@ useEffect(()=>{
     getBestPosts()
     getUser()
     getRandomIndex()
-  },[Post,Lsearchcount])
+  },[Post,isFocused])
 
   const RenderCard = ({item})=>{
     return (
       
       <TouchableOpacity 
-      onPress={() => props.navigation.navigate('SearchSnsScreen', { tag: item.tag, uid : item.uid, postimg : item.postImg, post: item.post, postTime : item.postTime })}
+      onPress={() => navigation.navigate('SearchSnsScreen', { tag: item.tag, uid : item.uid, postimg : item.postImg, post: item.post, postTime : item.postTime })}
       >
       <View  style={[{ width: (width) / 3 }, { height: (width) / 3 }, { marginBottom: 2 }]}>
       <Image 
@@ -282,7 +293,13 @@ useEffect(()=>{
   return (
     
     ready ? <Loading/> :  (
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }>
     <View style={{ backgroundColor: 'white', flex: 1 }}>
     <View style={styles.serach}>
     <TouchableOpacity style={{marginTop : 6,marginLeft : 5}} onPress={() => getPosts()}>

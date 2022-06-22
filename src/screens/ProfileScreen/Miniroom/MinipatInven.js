@@ -37,7 +37,7 @@ const MinipatInven = () => {
         tool?.map((row, idx) => {
           {
             return  <TouchableOpacity onPress={()=>{updateMinime(row.address)}} style={{}}>
-            <Image source ={{uri:row.address}} style={{width:70,height:70,}} resizeMode="contain" ></Image>
+            <Image source ={{uri:row.address}} style={{width:70,height:70,}} resizeMode="contain" resizeMethod = 'resize' ></Image>
             </TouchableOpacity>;} 
       })
       }

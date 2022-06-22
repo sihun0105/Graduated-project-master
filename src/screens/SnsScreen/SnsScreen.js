@@ -37,6 +37,7 @@ const SnsScreen = ({props}) => {
   const [ready, setReady] = useState(true)
   const [Bestposts,setBestPosts] = useState(null)
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -115,7 +116,7 @@ const SnsScreen = ({props}) => {
     fetchPosts();
     setDeleted(false);
     getBestPosts();
-  }, [deleted,refreshing,Post]);
+  }, [deleted,refreshing,Post,isFocused]);
 
   const handleDelete = (postId) => {
     Alert.alert(

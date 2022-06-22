@@ -160,10 +160,7 @@ const RenderCard = ({item})=>{
         </View>
         <View style={styles.row2}>
         <View style={styles.title3}>
-        <TouchableOpacity style={{marginLeft: 15, justifyContent : 'center'}} onPress={() => navigation.goBack()}>
-         
-         
-         </TouchableOpacity>
+        
          <View style={{marginTop : 23, marginBottom : 15}}>
         </View>
         <TouchableOpacity style={{justifyContent : 'center'}} onPress={() => navigation.navigate('Comment',{uid : uid, postid: item.postid, name : item.post, foldername : route.params.foldername } )}>

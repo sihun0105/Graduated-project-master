@@ -296,8 +296,10 @@ const styles = StyleSheet.create({
       fontSize: theme.fontSize.title,
       color: theme.colors.title,
       width: 210,
-      marginLeft : 50,
-      fontSize : 30
+      marginLeft : 30,
+      fontSize : 30,
+      
+      
     },
     message: {
       fontSize: theme.fontSize.message,
@@ -322,7 +324,7 @@ const styles = StyleSheet.create({
       borderBottomColor: 'orange',
       borderColor:'rgba(0,0,0,0)',
       height: 45,
-      width : 340,
+      width : 320,
       fontFamily:'Jalnan',
       fontSize:16,
       borderWidth: 1
@@ -336,7 +338,7 @@ const styles = StyleSheet.create({
       color: 'black'
     },
     userBtn: {
-      width : 395,
+      width : '100%',
       backgroundColor:'#ffffff',
       borderColor: '#ffffff',
       borderBottomColor:'#fff',

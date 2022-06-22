@@ -5,12 +5,14 @@ import firestore from '@react-native-firebase/firestore'
 import firebase  from '@react-native-firebase/app';
 import ActionButton from 'react-native-action-button';
 import useStore from '../../../../store/store'
+import { useIsFocused } from '@react-navigation/native';
+
 var { height, width } = Dimensions.get('window');
 
 const Photos = ({route,navigation}) => {
   const {PhotoName,Body,Post} = useStore();
   const [posts,setPosts] = useState([])
-
+  const isFocused = useIsFocused();
   const {uid} = route.params
   const getPosts = async ()=>{
     const querySanp = await firestore().collection('Albums').doc(route.params ? route.params.uid : user.uid).collection('groups').doc(route.params.fname).collection('photos').orderBy('postTime', 'desc').get()
@@ -23,7 +25,7 @@ const Photos = ({route,navigation}) => {
 
 useEffect(()=>{
     getPosts()
-},[PhotoName,Post,Body])
+},[PhotoName,Post,Body,isFocused])
 
 const RenderCard = ({item})=>{
     return (

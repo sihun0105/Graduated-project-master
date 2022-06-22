@@ -23,40 +23,33 @@ const Tab = createMaterialTopTabNavigator();
 const tlranf = [
   {
     id:0,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'
   },
   {
     id:1,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=7629c9c4-45f9-4d44-b091-b645d803c20e'
   },
   {
     id:2,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F2.png?alt=media&token=d5c4f039-dd12-44f4-b4a7-2830c47f0f9a'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=c0e352ab-b872-4e3b-a123-111d31e9d24a'
   },
   {
     id:3,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F3.png?alt=media&token=aeb9d714-6666-4e03-ae57-1b1b75e5f6ad'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=46989365-b704-476e-8672-2bbda9f6dc53'
   },
   {
     id:4,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F4.png?alt=media&token=c389d522-673f-41e1-8187-2d28c5893538'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=71377e1d-9556-4edb-8f79-9ae734502232'
   },
   {
     id:5,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F5.png?alt=media&token=02bcfaa9-a313-4568-8d1a-e7603a580578'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F6.png?alt=media&token=ab4e7685-a5e7-4181-b2f8-b00a2539a502'
   },
   {
     id:6,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F6.png?alt=media&token=e3a9f6af-8c79-44ac-a8d2-7c4c2fc06754'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F7.png?alt=media&token=1f975777-f8de-4211-9931-4aaf5c1f91be'
   },
-  {
-    id:7,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F7.png?alt=media&token=627aa75a-9f3d-49b6-bd95-486087f3d39a'
-  },
-  {
-    id:8,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
-  },
+  
 ]
 const gestureRootViewStyle = { flex: 1};
 const Miniroom = () => {  
@@ -70,7 +63,7 @@ const Miniroom = () => {
   const [Back, setBack] = useState(null);
   const [Minime, setMinime] = useState();
   const [Minipat, setMinipat] = useState(null);
-  const [MinipatCount, setMinipatCount] = useState(0);
+  const [MinipatCount, setMinipatCount] = useState(1);
 
   const captureRef = useRef();
   const [image, setImage] = useState(null);
@@ -132,34 +125,36 @@ const Miniroom = () => {
         }; 
         const getPhotoUri = async () => {
           const uri = await captureRef.current.capture();
-          console.log('👂👂 Image saved to', uri);
+          
           return uri;
         };
         
         const onSave = async() => {
           const uri = await getPhotoUri();
           const imageuri = uploadImage();
-          console.log('Image Url: ', imageuri);
+        
           
         };
         const updateMinipat = async(newaddress,count) => {
           await usersMinipatCollection.update({address:newaddress,count : count});
           setMinipat(newaddress);
+          console.log('저장완료');
         }
         const onMinipatPress = async() => {
-          if(MinipatCount<8) //물주는 횟수
+          if(MinipatCount<6) //물주는 횟수
           {
             setMinipatCount(MinipatCount+1)  
-            await updateMinipat(tlranf[MinipatCount].address,MinipatCount);
+            updateMinipat(tlranf[MinipatCount].address,MinipatCount);
              }
             else {
-              if(MinipatCount===8){setMinipatCount(0);
-              
-              updateMinipat(tlranf[MinipatCount].address,MinipatCount);
+              if(MinipatCount==6)
+              {
+                setMinipatCount(0);
+              updateMinipat(tlranf[0].address,0);
             }
               Alert.alert(
               '알림',
-              `이미 다 컸어요${MinipatCount}`,
+              `이미 다 컸어요`,
               );
             }
           }
@@ -204,7 +199,6 @@ const Miniroom = () => {
           }
         };
 
-
   useEffect(() => {
     getBackgroundData();
     getMinime();
@@ -227,13 +221,13 @@ const Miniroom = () => {
           <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}></ ImageBackground>
     </View>
           <TouchableOpacity style={styles.minipat} onPress={onMinipatPress}>
-          < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : initial}`}}></ Image>
+          < Image resizeMethod = 'resize' style={{borderWidth:1,flex:1,}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'}`}}></ Image>
           </TouchableOpacity>
     <View style={styles.item}>
             {
               tool?.map((row, idx) => {
                 {
-                  return  <MiniroomBox test={row.address} name={row.name} x={row.getx} y={row.gety}></MiniroomBox>} 
+                  return  <MiniroomBox test={row.address} name={row.name} x={row.getx} y={row.gety}></MiniroomBox>}
                 })
               }
             <MinimeBox test={Minimeaddress} name={Minimename} x={Minimegetx} y={Minimegety}></MinimeBox>          
@@ -295,9 +289,9 @@ const styles = StyleSheet.create({
     minipat: {
       resizeMode:'stretch',
       position: 'absolute',
-      transform: [{translateX: 350} , {translateY:120}],
-      width:100,
-      height:100,
+      transform: [{translateX: 310} , {translateY:135}],
+      width:70,
+      height:70,
     },
     Backimg: {
       width: '100%',

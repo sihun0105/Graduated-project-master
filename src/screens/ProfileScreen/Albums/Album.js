@@ -4,11 +4,15 @@ import firestore from '@react-native-firebase/firestore';
 import firebase  from '@react-native-firebase/app';
 import Icon from 'react-native-vector-icons/Ionicons'
 import useStore from '../../../../store/store'
+import { useIsFocused } from '@react-navigation/native';
+
 const Album = ({navigation,route}) => {
   const [FolderData, setFolderdData] = useState(null);
   const [Name, setName] = useState('');
   const {FolderName} = useStore();
   const name = route.params.name
+  const isFocused = useIsFocused();
+
   const getFolder = async() => {
     const querySanp = await firestore()
     .collection('Albums')
@@ -24,7 +28,7 @@ const Album = ({navigation,route}) => {
 
   useEffect(() => {
     getFolder();
-  }, [FolderName]);
+  }, [FolderName,isFocused]);
   const {uid} = route.params
 
   const RenderCard = ({item})=>{

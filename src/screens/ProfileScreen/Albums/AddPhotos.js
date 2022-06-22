@@ -133,9 +133,10 @@ const AddPhotos = ({route}) => {
               point :  userData.point + 10
             })
         })
+        navigation.goBack();
       console.log('Post Added!');
       Alert.alert(
-        '게시물 업데이트 완료!',
+        '사진 업데이트 완료!',
       );
       setPhotoName(imageUrl);
       SetBody(body);
@@ -143,7 +144,7 @@ const AddPhotos = ({route}) => {
       setDeleted(true);
       setPost(null);
       
-      navigation.goBack();
+      
     })
     .catch((error) => {
       console.log('Something went wrong with added post to firestore.', error);

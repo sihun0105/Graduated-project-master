@@ -154,7 +154,7 @@ const FeedStack = ({navigation}) => (
        }}
        />
       <Stack.Screen
-        name="ProfileScreen"
+        name="SNSProfileScreen"
         component={ProfileScreen}
         options={{
         headerShown: false,

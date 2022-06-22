@@ -27,7 +27,7 @@ LocaleConfig.defaultLocale = 'fr';
 
 
 
-const Diary = ({onDelete}) => {
+const Diary = ({route}) => {
   const {DiaryPost,Checkday,setCheckday2} = useStore();
   const [posts, setPosts] = useState(null);
   const navigation = useNavigation();
@@ -52,7 +52,7 @@ const Diary = ({onDelete}) => {
     console.log(Checkday);
     const querySanp = await firestore()
     .collection('Diary')
-    .doc(firebase.auth().currentUser.uid)
+    .doc(route.params ? route.params.uid : firebase.auth().currentUser.uid)
     .collection('DiaryDetails')
     .doc(Checkday)
     .get()
@@ -162,11 +162,10 @@ const Diary = ({onDelete}) => {
 
   <Text style={styles.checkday}>{checkday}</Text>
   <View style={{flexDirection: 'row', alignSelf : 'flex-end'}}>
-  <TouchableOpacity style={styles.button} onPress={() => DeleteFriendCheck(item)}>
-  <Text style={styles.Buttontxt}>수정</Text>
-  </TouchableOpacity>
+
   <TouchableOpacity style={styles.button} onPress={() => handleDelete()}>
   <Text style={styles.Buttontxt}>삭제</Text>
+  
   </TouchableOpacity>
 </View>
   </View>

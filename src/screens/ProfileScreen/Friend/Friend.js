@@ -116,11 +116,11 @@ const Friend = () => {
           </View>
           
           <View style={{flexDirection:'row',flex: 1, justifyContent: "space-between", alignItems: "center"}}>
-          <Text style={{marginRight:10,flex: 1,fontFamily : "Jalnan"}}>{item.name}</Text>
-          <TouchableOpacity style={{marginRight:10,}} onPress={() => ChangeSname(item)}>
-          <Text style={{fontFamily : "Jalnan"}}>{item.sname}</Text>
+          <Text style={{fontFamily : "Jalnan",marginLeft : 10}}>{item.name}</Text>
+          <TouchableOpacity style={{}} onPress={() => ChangeSname(item)}>
+          <Text style={{fontFamily : "Jalnan",marginLeft : 30}}>{item.sname}</Text>
           </TouchableOpacity>
-          <Text style={{flex: 1,fontFamily : "Jalnan",marginLeft : 20}}>{item.birthday}</Text>
+          <Text style={{fontFamily : "Jalnan",marginLeft : 20}}>{item.birthday}</Text>
           <TouchableOpacity style={styles.button} onPress={() => DeleteFriendCheck(item)}>
               <Text style={styles.userBtnTxt}>삭제</Text>
           </TouchableOpacity>
@@ -169,12 +169,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column', // 혹은 'column'
       backgroundColor: '#fff',
-      padding: 20,
+      padding: 10,
       alignItems: 'center',
     },
     title:{
       flexDirection: 'row', // 혹은 'column'
-      
+      marginBottom:10,
     },
     title2:{
       flexDirection: 'row', // 혹은 'column'
@@ -200,13 +200,7 @@ const styles = StyleSheet.create({
       height: 40,
       width: 40
     },
-    userBtnTxt: {
-      fontFamily: "DungGeunMo",
-      color: '#fff',
-      textAlign:'center',  
-      fontSize:15,
-      
-    },
+    
     textInput: {
       marginTop: 20,
       marginBottom: 10,
@@ -217,6 +211,7 @@ const styles = StyleSheet.create({
       borderWidth: 1
     },
     button: {
+      marginRight:10,
       width: 50,
       height: 30,
       backgroundColor: "orange",
@@ -228,6 +223,7 @@ const styles = StyleSheet.create({
       borderBottomColor:'#fff',
       justifyContent: "center",
       alignItems: "center"
+     
     },
     userBtnTxt: {
       fontFamily: "Jalnan",
