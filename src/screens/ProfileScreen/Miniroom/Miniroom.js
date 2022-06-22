@@ -1,7 +1,5 @@
 import { View, Text,TouchableOpacity,StyleSheet,Image,SafeAreaView,Dimensions,Animated,PanResponder, ImageBackground,Alert} from 'react-native';
 import React,{useState,useEffect,useRef} from 'react'
-import { DraxView,DraxProvider,DraxList } from 'react-native-drax';
-import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import ToolInven from './ToolInven';
 import MinimiInven from './MinimiInven';
 import BackgroundInven from './BackgroundInven';
@@ -51,7 +49,6 @@ const tlranf = [
   },
   
 ]
-const gestureRootViewStyle = { flex: 1};
 const Miniroom = () => {  
   const usersBackgroundCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('background').doc(firebase.auth().currentUser.uid+ 'mid');
   const usersMinimeCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minime').doc(firebase.auth().currentUser.uid+ 'mid');
@@ -63,7 +60,7 @@ const Miniroom = () => {
   const [Back, setBack] = useState(null);
   const [Minime, setMinime] = useState();
   const [Minipat, setMinipat] = useState(null);
-  const [MinipatCount, setMinipatCount] = useState(1);
+  const [MinipatCount, setMinipatCount] = useState(0);
 
   const captureRef = useRef();
   const [image, setImage] = useState(null);
@@ -135,16 +132,16 @@ const Miniroom = () => {
           console.log('Image Url: ', imageuri);
           
         };
-        const updateMinipat = async(newaddress,count) => {
-          await usersMinipatCollection.update({address:newaddress,count : count});
+        const updateMinipat = async(newaddress,count2) => {
+          await usersMinipatCollection.update({address:newaddress,count : count2});
           setMinipat(newaddress);
           console.log('저장완료');
         }
         const onMinipatPress = async() => {
           if(MinipatCount<6) //물주는 횟수
           {
-            setMinipatCount(MinipatCount+1)  
-            updateMinipat(tlranf[MinipatCount].address,MinipatCount);
+          setMinipatCount(MinipatCount+1);  
+          updateMinipat(tlranf[MinipatCount].address,MinipatCount);
              }
             else {
               if(MinipatCount==6)
@@ -207,7 +204,7 @@ const Miniroom = () => {
     return () => {
       onSave();
     }
-  }, [tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime]);
+  }, [tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime,MinipatCount]);
   return (
 
     <View style={{flex:1,width:'100%',height:'100%' , backgroundColor : 'white'}}>
@@ -218,13 +215,13 @@ const Miniroom = () => {
         
     <ViewShot style ={{flex : 1}} ref={captureRef} options={{ format: 'jpg', quality: 0.9 }}>
     <View style={styles.Backimg}>
-          <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}></ ImageBackground>
+          <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}} resizeMethod='resize'></ ImageBackground>
     </View>
       <View style={{width:41,height:70,borderWidth:1,position:'absolute',transform:[{translateX:0},{translateY:131}]}}>
         <Text>쓰레기통</Text>
       </View>
           <TouchableOpacity style={styles.minipat} onPress={onMinipatPress}>
-          < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'}`}}></ Image>
+          < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'}`}} resizeMethod='resize'></ Image>
           </TouchableOpacity>
     <View style={styles.item}>
             {

@@ -1,4 +1,4 @@
-import {View ,StyleSheet,Animated,PanResponder,Image,Button} from 'react-native';
+import {View ,StyleSheet,Animated,PanResponder,Image,Text} from 'react-native';
 import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
@@ -64,7 +64,6 @@ const MiniroomBox =({test,name,x,y}) => {
         {
         addItem(dlatlx,dlatly,tool,testname);
       }
-      console.log('ㅁㅁㅇㄴㄹㄴㅁㅇㄹㄹㄹㅁㄴㄹㄹㄴㄹㅁㄴㄹ',gesture.moveX,gesture.moveY);
       },
     })
   ).current;
@@ -72,7 +71,8 @@ const MiniroomBox =({test,name,x,y}) => {
       <View style={{position:'absolute',transform: [{translateX: x} , {translateY:y}]}}>
         <Animated.View style={{width:10,height:10,backgroundColor:'red',position:'absolute',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
             <View style={styles.box}>
-                <Image source={{uri:`${test}`}} resizeMode='stretch' style={{flex:1}}></Image>
+                {/* <Text>{name}</Text> */}
+                <Image source={{uri:`${test}`}} style={{flex:1}} resizeMethod='resize'></Image>
             </View>
       </Animated.View>
       </View>
@@ -81,8 +81,8 @@ const MiniroomBox =({test,name,x,y}) => {
 
     const styles =StyleSheet.create({
         box:{
-            height: 80,
-            width: 80,
+            height: 70,
+            width: 70,
             position:'absolute'
           },
     });

@@ -76,7 +76,7 @@ const MinimeBox =({test,name,x,y}) => {
       <View style={{transform: [{translateX: x} , {translateY:y}]}}>
         <Animated.View style={{width:10,height:10,backgroundColor:'red',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
             <View style={styles.box}>
-                <Image source={{uri:`${test}`}} resizeMode='stretch' style={{flex:1}}></Image>
+                <Image source={{uri:`${test}`}} resizeMode='stretch' style={{flex:1}} resizeMethod='resize'></Image>
             </View>
       </Animated.View>
       </View>

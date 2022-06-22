@@ -31,6 +31,8 @@ const store = (set => ({
 
     BuyItem:'',
     setBuyItem: (input) => set({BuyItem:input}), //상점 - > 미니룸 랜더링용
+    whfmrl:'',
+    setwhfmrl: (input) => set({whfmrl:input}), //상점 - > 미니룸 랜더링용
     Itemhold:'',
     setItemhold: (input) => set({Itemhold:input}), //상점 - > 미니룸 랜더링용
 

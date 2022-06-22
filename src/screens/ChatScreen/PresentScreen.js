@@ -8,6 +8,8 @@ import PresentCard from '../../utils/PresentCard';
 import { theme } from '../../Chat/ChatTheme';
 import SearchInput from '../../Chat/Components/common/SearchInput'
 import firebase  from '@react-native-firebase/app'; 
+import useStore from '../../../store/store';
+
 const MessagesScreen = ({navigation,item}) => {
     const [users,setUsers] = useState(null)
     const {user, logout} = useContext(AuthContext);
@@ -15,6 +17,8 @@ const MessagesScreen = ({navigation,item}) => {
     const friend = friendData
     const [ready, setReady] = useState(true)
     const [presentData, setPresent]= useState(null)
+    const {whfmrl} = useStore();
+
     /*
     const getUsers = async ()=>{
              const querySanp = await firestore().collection('users').where('uid','!=', user.uid).get()
@@ -113,7 +117,7 @@ const fetchFriends = async () => {
         setReady(false)
         },1000)   
         getUsers();
-    },[])
+    },[whfmrl])
     /*
     const showStoryCircle = () => {
       if (hasStory) {

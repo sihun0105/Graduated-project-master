@@ -11,7 +11,7 @@ import useStore from '../../../store/store';
 
 const DetailsScreen = ({navigation, route}) => {  
 const {user, logout} = useContext(AuthContext);
-const {isPoint,setPoint,BuyItem,setBuyItem} = useStore();
+const {isPoint,setPoint,BuyItem,setBuyItem,setwhfmrl} = useStore();
 const [userData, setUserData] = useState(null);
 
 const plant = route.params;
@@ -103,7 +103,7 @@ const addItem = async () => {
        name: plant.name,
        price: plant.price,
       })
-      
+      setwhfmrl(Item);
       navigation.navigate('StoreHome');
      
     } catch (error) {
