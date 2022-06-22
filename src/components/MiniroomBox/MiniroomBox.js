@@ -11,24 +11,23 @@ const MiniroomBox =({test,name,x,y}) => {
   let dlatly= y;
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
   const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
-  
-  
+  const [load,setload] = useState(0);
   useEffect(() => {
     return () => {
       if(y !== dlatly){
       addItem(dlatlx,dlatly,tool,testname);
     }
     }
-  }, []);
+  }, [load]);
   
   const addItem = async(x,y,address,name) => {
     const rows = addminiroom.where('name', '==', name);  
     await rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          //x=Math.floor(x/20)*20;
-          
-          //if(x>=360)x=370;
-          //if(y>=320)y=320;
+          if(x<40&&y>135){
+            doc.ref.delete();
+            setload(2);
+          }
           doc.ref.update({
             getx:x,
             gety:y-95,
@@ -37,8 +36,6 @@ const MiniroomBox =({test,name,x,y}) => {
           })
         });
       });
-      console.log('----------------------');
-      console.log('save complete');
   };
     const pan = useRef(new Animated.ValueXY()).current;
     const panResponder = useRef(
@@ -63,15 +60,17 @@ const MiniroomBox =({test,name,x,y}) => {
         dlatlx =gesture.moveX;
         dlatly =gesture.moveY;
         setplaceX(gesture.moveX);
-        console.log('아이템 : ',name);
-        console.log('x좌표 : ',dlatlx);
-        console.log('y좌표 : ',dlatly);
+        if(gesture.moveX<40&&gesture.moveY>130)
+        {
+        addItem(dlatlx,dlatly,tool,testname);
+      }
+      console.log('ㅁㅁㅇㄴㄹㄴㅁㅇㄹㄹㄹㅁㄴㄹㄹㄴㄹㅁㄴㄹ',gesture.moveX,gesture.moveY);
       },
     })
   ).current;
     return(
       <View style={{position:'absolute',transform: [{translateX: x} , {translateY:y}]}}>
-        <Animated.View style={{width:10,height:10,position:'absolute',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
+        <Animated.View style={{width:10,height:10,backgroundColor:'red',position:'absolute',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
             <View style={styles.box}>
                 <Image source={{uri:`${test}`}} resizeMode='stretch' style={{flex:1}}></Image>
             </View>
