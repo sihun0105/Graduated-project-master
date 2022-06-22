@@ -71,8 +71,7 @@ const MiniroomBox =({test,name,x,y}) => {
       <View style={{position:'absolute',transform: [{translateX: x} , {translateY:y}]}}>
         <Animated.View style={{width:10,height:10,backgroundColor:'red',position:'absolute',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
             <View style={styles.box}>
-                {/* <Text>{name}</Text> */}
-                <Image source={{uri:`${test}`}} style={{flex:1}} resizeMethod='resize'></Image>
+                <Image source={{uri:`${test}`}} resizeMode='stretch' resizeMethod = 'resize' style={{flex:1}}></Image>
             </View>
       </Animated.View>
       </View>

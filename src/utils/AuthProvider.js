@@ -36,20 +36,9 @@ export const AuthProvider = ({children}) => {
         login: async (email, password) => {
           try {
             await auth().signInWithEmailAndPassword(email, password)
-            .then(() => {
-             
-              firestore()
-              .collection('users')
-              .doc(firebase.auth().currentUser.uid)
-              .update({
-                point :  userData.point + 10
-              })
-              Alert.alert(
-                '10 포인트가 지급 되었습니다.',
-              ).catch(error => {
-                  console.log('Something went wrong with added user to firestore: ', error);
-              })
-            })
+           
+              
+            
           
           
         
@@ -152,6 +141,7 @@ export const AuthProvider = ({children}) => {
             .then(() => {
               firestore().collection('users').doc(auth().currentUser.uid)
               .set({
+                  
                   name: name,
                   password : password,
                   email: email,
@@ -160,7 +150,7 @@ export const AuthProvider = ({children}) => {
                   uid: auth().currentUser.uid,
                   point: 1000,
                   about: null,
-                  miniRoom : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/miniRoomImage%2FReactNative-snapshot-image76099903516454588181655454835737.jpg?alt=media&token=fbd3c5dd-82a1-45f5-a0ad-91d49b5d7adc',
+                  miniRoom : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/miniRoomImage%2FReactNative-snapshot-image76099903516454588181655454835737.jpg?alt=media&token=a21f2503-6475-4d80-9acb-7f1aa8f8646d',
                   birthday: birthday,
                   createdAt: firestore.Timestamp.fromDate(new Date()),
                   userImg: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/AppImage%2Fprofile.jpg?alt=media&token=719929c2-defb-4cbf-99ca-fddd21bfeaa4'

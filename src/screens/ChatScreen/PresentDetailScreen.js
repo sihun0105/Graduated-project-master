@@ -81,10 +81,11 @@ const addItem = async () => {
       console.log(`update 완료`);
       console.log(`이름 : ${route.params.name} 가격: ${route.params.price} 주소 : ${route.params.img} `);
       setBuyItem(route.params.name);
-      navigation.navigate('Message');
+      
       Alert.alert(
         '선물 완료!',
         );
+        navigation.navigate('Message');
      
     } catch (error) {
       console.log(error.message);

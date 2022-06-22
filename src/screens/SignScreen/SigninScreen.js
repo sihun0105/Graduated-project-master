@@ -3,7 +3,6 @@ import {View, Text, SafeAreaView,StyleSheet,Image} from 'react-native';
 import FormInput_2 from '../../components/shared/FormInput_2';
 import { COLORS } from '../../components/constants/theme';
 import SocialButton from '../../components/shared/SocialButton';
-import { Klogin } from '../../utils/auth';
 import FormButton_2 from '../../components/shared/FormButton_2';
 import {AuthContext} from '../../utils/AuthProvider';
 

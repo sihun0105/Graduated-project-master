@@ -267,7 +267,7 @@ const onMusicPressed = () => {
     navigation.navigate('Music');
 };
 const onEditFriendPressed = () => {
-  navigation.navigate('Friend');
+  navigation.navigate('Friend', );
 };
 
 const onRequsetPressed = () => {
@@ -278,7 +278,7 @@ const onRequsetPressed = () => {
 };
 
 const onDiarypress = () => {
-  navigation.navigate('Diary');
+  navigation.navigate('Diary',{name : userData.name ,uid : route.params ? route.params.uid : user.uid});
 };
 const onalbumpress = () => {
   navigation.navigate('Album', {name : userData.name ,uid : route.params ? route.params.uid : user.uid});
@@ -454,7 +454,7 @@ const handleDelete = () => {};
         <TouchableOpacity style={styles.miniroom} onPress={() => onMiniroompress()}>
        
           <Image source={{ uri: userData ? userData.miniRoom || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
-       style={{width: 395, height: 200,marginBottom:0,resizeMode:'cover',borderRadius: 25,}}>
+       style={{width: '100%', height: 200,marginBottom:0,resizeMode:'cover',}}>
 
           </Image>
           
@@ -476,11 +476,13 @@ const handleDelete = () => {};
                   <View style={styles.guestBtn3}>
                   <View style={styles.conversation}> 
                   
-                <TouchableOpacity 
-                      onPress={() => setModalVisible()}
+                <View 
+                     
                       style={[styles.imageContainer]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen', {uid: row.uid})}>
                       <Image source={{ uri: row.userImg }} style={styles.img} />
-                    </TouchableOpacity>
+                      </TouchableOpacity>
+                    </View>
                     <View style={{
                         marginLeft : 15,
                         flex: 1,

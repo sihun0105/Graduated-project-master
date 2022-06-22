@@ -60,7 +60,7 @@ const Miniroom = () => {
   const [Back, setBack] = useState(null);
   const [Minime, setMinime] = useState();
   const [Minipat, setMinipat] = useState(null);
-  const [MinipatCount, setMinipatCount] = useState(0);
+  const [MinipatCount, setMinipatCount] = useState(1);
 
   const captureRef = useRef();
   const [image, setImage] = useState(null);
@@ -122,14 +122,14 @@ const Miniroom = () => {
         }; 
         const getPhotoUri = async () => {
           const uri = await captureRef.current.capture();
-          console.log('👂👂 Image saved to', uri);
+          
           return uri;
         };
         
         const onSave = async() => {
           const uri = await getPhotoUri();
           const imageuri = uploadImage();
-          console.log('Image Url: ', imageuri);
+        
           
         };
         const updateMinipat = async(newaddress,count2) => {

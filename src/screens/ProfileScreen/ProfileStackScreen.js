@@ -17,7 +17,6 @@ import SNSProfileScreen from './SNSprofileScreen';
 import AlbumSetting from './Albums/AlbumSetting';
 import AddFolder from './Albums/AddFolder';
 import AddPhotos from './Albums/AddPhotos';
-import UserAllPhotos from './Albums/UserAllPhotos';
 import PhotoDetail from './Albums/PhotoDetail';
 import Comment from './Albums/Comment';
 import PointGuide from '../SettingScreen/PointGuide';

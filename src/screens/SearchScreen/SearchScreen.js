@@ -8,10 +8,12 @@ import useStore from '../../../store/store';
 import Loading from '../../utils/Loading';
 import { theme } from '../../Chat/ChatTheme';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from "@react-navigation/native";
+import { useIsFocused } from '@react-navigation/native';
 
 var { height, width } = Dimensions.get('window');
 
-const SearchScreen = ({props,navigation}) => {
+const SearchScreen = ({navigation}) => {
   const {Post} = useStore(); // 0522새로고침용
   const [posts,setPosts] = useState(null)
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,8 @@ const SearchScreen = ({props,navigation}) => {
   const {Lsearch, setLsearch,setLsearchcount,Lsearchcount}  = useStore()
   const [userData, setUserData] = useState(null);
   const [random, setRandom] = useState([]); 
-  
+  const isFocused = useIsFocused();
+
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -259,13 +262,13 @@ useEffect(()=>{
     getBestPosts()
     getUser()
     getRandomIndex()
-  },[Post])
+  },[Post,isFocused])
 
   const RenderCard = ({item})=>{
     return (
       
       <TouchableOpacity 
-      onPress={() => props.navigation.navigate('SearchSnsScreen', { tag: item.tag, uid : item.uid, postimg : item.postImg, post: item.post, postTime : item.postTime })}
+      onPress={() => navigation.navigate('SearchSnsScreen', { tag: item.tag, uid : item.uid, postimg : item.postImg, post: item.post, postTime : item.postTime })}
       >
       <View  style={[{ width: (width) / 3 }, { height: (width) / 3 }, { marginBottom: 2 }]}>
       <Image 
