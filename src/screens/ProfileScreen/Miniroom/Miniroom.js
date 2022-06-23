@@ -22,32 +22,30 @@ const Tab = createMaterialTopTabNavigator();
 const tlranf = [
   {
     id:0,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'
   },
   {
     id:1,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=7629c9c4-45f9-4d44-b091-b645d803c20e'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'
   },
   {
     id:2,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=c0e352ab-b872-4e3b-a123-111d31e9d24a'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=ef1f1a60-01e8-47ac-ba86-82b53c547028'
   },
   {
     id:3,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=46989365-b704-476e-8672-2bbda9f6dc53'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=a11901a1-272e-41fa-90e0-a9cc33c07849'
   },
   {
     id:4,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=71377e1d-9556-4edb-8f79-9ae734502232'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=3f8e5aaf-1a44-45f8-8dc6-c91a11092fdb'
   },
   {
     id:5,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F6.png?alt=media&token=ab4e7685-a5e7-4181-b2f8-b00a2539a502'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=745e9ee1-b0dc-4090-afd6-c6879abf451b'
   },
-  {
-    id:6,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F7.png?alt=media&token=1f975777-f8de-4211-9931-4aaf5c1f91be'
-  },
+  
+    
   
 ]
 const Miniroom = () => {  
@@ -256,7 +254,7 @@ const Miniroom = () => {
           <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}resizeMethod = 'resize'></ ImageBackground>
     </View>
           <TouchableOpacity style={styles.minipat} onPress={onMinipatPress}>
-          < Image  style={{borderWidth:1,flex:1,}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'}`}} resizeMethod = 'resize'></ Image>
+          < Image  style={{borderWidth:1,flex:1,}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'}`}} resizeMethod = 'resize'></ Image>
           </TouchableOpacity>
     <View style={styles.item}>
             {
@@ -324,9 +322,9 @@ const styles = StyleSheet.create({
     minipat: {
       resizeMode:'stretch',
       position: 'absolute',
-      transform: [{translateX: 310} , {translateY:135}],
-      width:70,
-      height:70,
+      transform: [{translateX: 310} , {translateY:90}],
+      width: 100,
+      height: 100,
     },
     Backimg: {
       width: '100%',
