@@ -153,20 +153,7 @@ const Miniroom = () => {
           {
             setMinipatCount(MinipatCount+1)  
             updateMinipat(tlranf[MinipatCount].address,MinipatCount);
-            if(MinipatCount == 3)
-            {
-              firestore()
-              .collection('users')
-              .doc(firebase.auth().currentUser.uid)
-              .update({
-                point :  userData.point + 100
-              })
-              
-              Alert.alert(
-                '식물 성장 중간 보너스',
-                `100 포인트를 얻었습니다!`,
-                );
-            }
+       
             if(MinipatCount == 5)
             {
               firestore()
