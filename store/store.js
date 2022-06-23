@@ -37,8 +37,9 @@ const store = (set => ({
     countItem:0,
     setcountItem: () => set(state => ({countItem:state.countItem+1})), //상점 - > 미니룸 랜더링용
 
-    MinipatCount:0,
-    setMinipatCount: () => set(state => ({MinipatCount:state.MinipatCount+1})), //상점 - > 미니룸 랜더링용
+    isMinipatCount:0,
+    issetMinipatCount: () => set(state => ({isMinipatCount:state.isMinipatCount+1})), //상점 - > 미니룸 랜더링용
+    isClearCount:(input) => set({isMinipatCount:input}),
 
     DiaryPost:'',
     setDiaryPost: (input) => set({DiaryPost:input}), //상점 - > 미니룸 랜더링용

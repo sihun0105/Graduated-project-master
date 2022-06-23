@@ -3,39 +3,32 @@ import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app'
-const MiniroomBox =({test,name,x,y}) => {
-  
+const MiniroomBox =({test,name,x,y,toolwid=70,toolhei=70}) => {
+
   const tool = test;
   const testname = name;
   let dlatlx= x;
   let dlatly= y;
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
   const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
+  const [load,setload] = useState(0);
   
-  const checktItem = () => {
-    try{
-    console.log('마운트!');
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
   useEffect(() => {
-    checktItem();
     return () => {
       if(y !== dlatly){
       addItem(dlatlx,dlatly,tool,testname);
     }
     }
-  }, []);
+  }, [load]);
   
   const addItem = async(x,y,address,name) => {
     const rows = addminiroom.where('name', '==', name);  
     await rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          //x=Math.floor(x/20)*20;
-          
-          //if(x>=360)x=370;
-          //if(y>=320)y=320;
+          if(x<40&&y>135){
+            doc.ref.delete();
+            setload(2);
+          }
           doc.ref.update({
             getx:x,
             gety:y-95,
@@ -44,8 +37,7 @@ const MiniroomBox =({test,name,x,y}) => {
           })
         });
       });
-      console.log('----------------------');
-      console.log('save complete');
+
   };
     const pan = useRef(new Animated.ValueXY()).current;
     const panResponder = useRef(
@@ -70,16 +62,17 @@ const MiniroomBox =({test,name,x,y}) => {
         dlatlx =gesture.moveX;
         dlatly =gesture.moveY;
         setplaceX(gesture.moveX);
-        console.log('아이템 : ',name);
-        console.log('x좌표 : ',dlatlx);
-        console.log('y좌표 : ',dlatly);
+        if(gesture.moveX<40&&gesture.moveY>130)
+        {
+        addItem(dlatlx,dlatly,tool,testname);
+      }
       },
     })
   ).current;
     return(
       <View style={{position:'absolute',transform: [{translateX: x} , {translateY:y}]}}>
         <Animated.View style={{width:10,height:10,position:'absolute',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
-            <View style={styles.box}>
+        <View style={dstyles(toolwid,toolhei).dynamicbox}>
                 <Image source={{uri:`${test}`}} resizeMode='stretch' resizeMethod = 'resize' style={{flex:1}}></Image>
             </View>
       </Animated.View>
@@ -89,9 +82,16 @@ const MiniroomBox =({test,name,x,y}) => {
 
     const styles =StyleSheet.create({
         box:{
-            height: 80,
-            width: 80,
+            height: 90,
+            width: 90,
             position:'absolute'
-          },
-    });
+          },	
+        });	
+        const dstyles = (param1, param2) => StyleSheet.create({	
+          dynamicbox: {    	
+            width: param1,	
+            height: param2,
+            position:'absolute'
+          }	
+        });
     export default MiniroomBox

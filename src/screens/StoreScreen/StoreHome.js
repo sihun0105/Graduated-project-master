@@ -129,7 +129,7 @@ const StoreHome = ({navigation}) => {
             }}>
             <Image
               source={{uri:plant.address}}
-              style={{flex: 1, resizeMode: 'contain',aspectRatio: 1.0,}}
+              style={{flex: 1, resizeMode: 'contain',aspectRatio: 1.0,}} resizeMethod='resize'
             />
           </View>
           <View style={{marginTop:13}}>
