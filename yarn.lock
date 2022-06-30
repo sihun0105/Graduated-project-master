@@ -6777,6 +6777,13 @@
   "resolved" "https://registry.npmjs.org/react-native-config/-/react-native-config-1.4.5.tgz"
   "version" "1.4.5"
 
+"react-native-draggable@^3.3.0":
+  "integrity" "sha512-aU20CaKBmzXrwE9eTJZ+GDOr52mXLchg5Vydbx5rz8nYXlN+ppHIoTPgyXduyWNwpZ/DR6tyFtMwdgUHpuN6oA=="
+  "resolved" "https://registry.npmjs.org/react-native-draggable/-/react-native-draggable-3.3.0.tgz"
+  "version" "3.3.0"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-drax@^0.9.3":
   "integrity" "sha512-+yxMJFS9Nhs5oofnjyMI+FVaSI82fmUO2s7wxzlMBkfoXHUYoeBigw1lT0YLLYEWXJ4J21ftgTWJ2M4gmYknaA=="
   "resolved" "https://registry.npmjs.org/react-native-drax/-/react-native-drax-0.9.3.tgz"

@@ -1,12 +1,12 @@
 import { View, Text,TouchableOpacity,StyleSheet,Image,SafeAreaView,Dimensions,Animated,PanResponder, ImageBackground,Alert} from 'react-native';
 import React,{useState,useEffect,useRef} from 'react'
+
 import ToolInven from './ToolInven';
 import MinimiInven from './MinimiInven';
 import BackgroundInven from './BackgroundInven';
 import MinipatInven from './MinipatInven';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import {useNavigation} from '@react-navigation/native';
 import MiniroomBox from '../../../components/MiniroomBox/MiniroomBox';
 import MinimeBox from '../../../components/MiniroomBox/MinimeBox';
 import useStore from '../../../../store/store';
@@ -14,39 +14,37 @@ import firestore from '@react-native-firebase/firestore';
 import firebase  from '@react-native-firebase/app';
 import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
-import COLORS from './colors';
 
+import Draggable from 'react-native-draggable';
 const initial = 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45';
 const Tab = createMaterialTopTabNavigator();
 const tlranf = [
   {
     id:0,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'
   },
   {
     id:1,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=7629c9c4-45f9-4d44-b091-b645d803c20e'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'
   },
   {
     id:2,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=c0e352ab-b872-4e3b-a123-111d31e9d24a'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=ef1f1a60-01e8-47ac-ba86-82b53c547028'
   },
   {
     id:3,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=46989365-b704-476e-8672-2bbda9f6dc53'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=a11901a1-272e-41fa-90e0-a9cc33c07849'
   },
   {
     id:4,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=71377e1d-9556-4edb-8f79-9ae734502232'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=3f8e5aaf-1a44-45f8-8dc6-c91a11092fdb'
   },
   {
     id:5,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F6.png?alt=media&token=ab4e7685-a5e7-4181-b2f8-b00a2539a502'
+    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=745e9ee1-b0dc-4090-afd6-c6879abf451b'
   },
-  {
-    id:6,
-    address:'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F7.png?alt=media&token=1f975777-f8de-4211-9931-4aaf5c1f91be'
-  },
+  
+    
   
 ]
 const Miniroom = () => {  
@@ -61,12 +59,24 @@ const Miniroom = () => {
   const [Minime, setMinime] = useState();
   const [Minipat, setMinipat] = useState(null);
   const [MinipatCount, setMinipatCount] = useState(1);
+  const [userData, setUserData] = useState(null);
 
   const captureRef = useRef();
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
-
+  const getUser = async() => {
+    await firestore()
+    .collection('users')
+    .doc(firebase.auth().currentUser.uid)
+    .get()
+    .then((documentSnapshot) => {
+      if( documentSnapshot.exists ) {
+        console.log('User Data', documentSnapshot.data());
+        setUserData(documentSnapshot.data());
+      }
+    })
+  }
   const uploadImage = async () => {
     
     const uploadUri = await getPhotoUri();
@@ -128,26 +138,39 @@ const Miniroom = () => {
         
         const onSave = async() => {
           const uri = await getPhotoUri();
-          const imageuri = uploadImage();
+          const imageuri = await uploadImage();
         
           
         };
-        const updateMinipat = async(newaddress,count2) => {
-          await usersMinipatCollection.update({address:newaddress,count : count2});
+        const updateMinipat = async(newaddress,count) => {
+          await usersMinipatCollection.update({address:newaddress,count : count});
           setMinipat(newaddress);
           console.log('저장완료');
         }
         const onMinipatPress = async() => {
           if(MinipatCount<6) //물주는 횟수
           {
-          setMinipatCount(MinipatCount+1);  
-          updateMinipat(tlranf[MinipatCount].address,MinipatCount);
+            setMinipatCount(MinipatCount+1)  
+            updateMinipat(tlranf[MinipatCount].address,MinipatCount);
+       
+            if(MinipatCount == 5)
+            {
+              firestore()
+              .collection('users')
+              .doc(firebase.auth().currentUser.uid)
+              .update({
+                point :  userData.point + 300
+              })
+              Alert.alert(
+                '식물 성장 최종 보너스',
+                `300 포인트를 얻었습니다!`,
+                );
+            }
              }
             else {
-              if(MinipatCount==6)
+              if(MinipatCount==5)
               {
-                setMinipatCount(0);
-              updateMinipat(tlranf[0].address,0);
+                
             }
               Alert.alert(
               '알림',
@@ -161,10 +184,10 @@ const Miniroom = () => {
         try {
       const datatool = await usersToolCollection.get();
       setTool(datatool._docs.map(doc => ({ ...doc.data(), id: doc.id, })));
-        } catch (error) {
+            } catch (error) {
       console.log(error.message);
-      }
-      };
+    }
+  };
         const getMinime = async () => {
           try {
             const data = await usersMinimeCollection.get();
@@ -201,37 +224,28 @@ const Miniroom = () => {
     getMinime();
     getTool();
     getMinipat();
+    getUser();
     return () => {
       onSave();
     }
-  }, [tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime,MinipatCount]);
+  }, [countItem,isMinime,Backaddress]);
   return (
 
     <View style={{flex:1,width:'100%',height:'100%' , backgroundColor : 'white'}}>
-      <View style={{flex:0.1,alignItems:'flex-end',justifyContent:'center'}}>
-        <Text style={{fontFamily: "Jalnan"}}>횟수 : {MinipatCount}</Text>
-      </View>        
+      
       <View style={{height:200}}>
         
     <ViewShot style ={{flex : 1}} ref={captureRef} options={{ format: 'jpg', quality: 0.9 }}>
     <View style={styles.Backimg}>
-          <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}} resizeMethod='resize'></ ImageBackground>
+          <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}resizeMethod = 'resize'></ ImageBackground>
     </View>
-      <View style={{width:41,height:70,borderWidth:1,position:'absolute',transform:[{translateX:0},{translateY:131}]}}>
-        <Text>쓰레기통</Text>
-      </View>
           <TouchableOpacity style={styles.minipat} onPress={onMinipatPress}>
-          < Image style={{borderWidth:1,flex:1}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=136d17be-739b-4abf-8eb5-4b0eb1d72549'}`}} resizeMethod='resize'></ Image>
+          < Image  style={{borderWidth:1,flex:1,}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'}`}} resizeMethod = 'resize'></ Image>
           </TouchableOpacity>
     <View style={styles.item}>
-            {
-              tool?.map((row, idx) => {
-                {
-                  return  <MiniroomBox test={row.address} name={row.name} x={row.getx} y={row.gety}></MiniroomBox>}
-                })
-              }
+            <MiniroomBox></MiniroomBox>   
             <MinimeBox test={Minimeaddress} name={Minimename} x={Minimegetx} y={Minimegety}></MinimeBox>          
-            </View>
+    </View>
             </ViewShot>
             </View>
             
@@ -277,7 +291,6 @@ const styles = StyleSheet.create({
     },
     item: {
       position: 'absolute',
-
     },
     minime: {
       resizeMode:'stretch',
@@ -289,9 +302,9 @@ const styles = StyleSheet.create({
     minipat: {
       resizeMode:'stretch',
       position: 'absolute',
-      transform: [{translateX: 340} , {translateY:135}],
-      width:70,
-      height:70,
+      transform: [{translateX: 310} , {translateY:90}],
+      width: 100,
+      height: 100,
     },
     Backimg: {
       width: '100%',

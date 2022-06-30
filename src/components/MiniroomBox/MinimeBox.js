@@ -10,17 +10,8 @@ const MinimeBox =({test,name,x,y}) => {
   let dlatlx= x;
   let dlatly= y;
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minime');
-  const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
   
-  const checktItem = () => {
-    try{
-    console.log('마운트!');
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
   useEffect(() => {
-    checktItem();
     return () => {
       if(y !== dlatly){
       addItem(dlatlx,dlatly,tool,testname);
@@ -65,7 +56,6 @@ const MinimeBox =({test,name,x,y}) => {
       onPanResponderEnd: (evt , gesture) => {
         dlatlx =gesture.moveX;
         dlatly =gesture.moveY;
-        setplaceX(gesture.moveX);
         console.log('아이템 : ',name);
         console.log('x좌표 : ',dlatlx);
         console.log('y좌표 : ',dlatly);

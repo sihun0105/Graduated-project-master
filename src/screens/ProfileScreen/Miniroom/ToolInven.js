@@ -9,7 +9,7 @@ import useStore from '../../../../store/store';
 
 const ToolInven = () => {
 
-  const {tooladdress,settooladdress,BuyItem,countItem,setcountItem,} = useStore();
+  const {settooladdress,BuyItem,countItem,setcountItem,} = useStore();
   const usersCollection = firestore().collection('Inventory').doc(firebase.auth().currentUser.uid).collection('tool'); 
   const [tool, setTool] = useState();
   const getShopData = async () => {
@@ -29,11 +29,8 @@ const ToolInven = () => {
       address:address,
       getx:1,
       gety:1});
-    console.log('추가완료');
-    console.log(name);
     settooladdress(address);
     setcountItem();
-    console.log(countItem);
   }
   return (
     <View style={{}}>
