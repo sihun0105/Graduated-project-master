@@ -198,6 +198,7 @@ const Miniroom = () => {
 
     <View style={{flex:1,width:'100%',height:'100%' , backgroundColor : 'white'}}>
     <View style={{height:200}}>
+      
     <ViewShot style ={{flex : 1}} ref={captureRef} options={{ format: 'jpg', quality: 0.9 }}>
     <View style={styles.Backimg}>
           <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}resizeMethod = 'resize'></ ImageBackground>

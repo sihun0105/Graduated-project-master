@@ -4,6 +4,7 @@ import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import Draggable from 'react-native-draggable';
+import Toast from 'react-native-toast-message';
 
 const MiniroomBox =({}) => {
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
@@ -18,6 +19,13 @@ const MiniroomBox =({}) => {
         } catch (error) {
   console.log(error.message);
 }
+};
+const showToast = (name) => {
+  Toast.show({
+    type: 'success',
+    text1: '삭제완료!',
+    text2: `${name}을 정상적으로 삭제했습니다!👋` 
+  });
 }
   useEffect(() => {
     getTool();
@@ -61,7 +69,11 @@ const MiniroomBox =({}) => {
                         text:'아니요',
                         onPress: () => console.log('안사욧')
                         ,},
-                    {text:'네',onPress: () => DeleteItem(row.name)}
+                    {text:'네',onPress: () => {
+                      showToast(row.name);
+                    DeleteItem(row.name);
+                  }
+                  }
                 ],
                 {cancelable:false}
                   );}
