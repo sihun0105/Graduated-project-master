@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
 	input: {
 		fontSize: 15,
 		height: 45,
-    width : 250,
+    width : 230,
    
 		color: theme.colors.searchText
 	}

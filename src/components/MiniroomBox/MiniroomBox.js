@@ -91,6 +91,6 @@ const showToast = (name) => {
             height: 70,
             width: 70,
             position:'absolute'
-          },
-    });
+          }	
+        });
     export default MiniroomBox

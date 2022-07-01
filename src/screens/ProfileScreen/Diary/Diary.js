@@ -174,6 +174,21 @@ const Diary = ({route}) => {
 <Image  source={{uri: DiaryData.img}} style={styles.pic}/> 
   </View>
   <Text style={{fontSize : 20,fontFamily: "Jalnan",}}>{DiaryData.body}</Text>
+  <View style={{flexDirection: 'row',}}>
+  <View style={{marginTop : 23, marginBottom : 15}}>
+        </View>
+        <TouchableOpacity style={{justifyContent : 'center'}} onPress={() => navigation.navigate('Comment',{uid : uid, postid: item.postid, name : item.post, foldername : route.params.foldername } )}>
+         
+         <View style={{  marginTop : 10, marginBottom : 15,marginRight : 10}}>
+          <Ionicons name="chatbubble-ellipses" size={25} color="gray" />
+         </View>
+         </TouchableOpacity>
+         <View style={{marginTop : 20, marginBottom : 15}}>
+         <TouchableOpacity style={{}} onPress={() => navigation.navigate('Comment',{uid : uid, postid: item.postid, name : item.post, foldername : route.params.foldername} )}>  
+        <Text style={{fontSize : 17, fontFamily: 'Jalnan'}}>댓글</Text>
+        </TouchableOpacity>
+        </View>
+</View>
     </View>
   </View>
    
@@ -212,7 +227,7 @@ itemConstainer:{
     fontSize : 20,
     alignSelf: 'flex-end',
     fontSize:18,
-    fontFamily: 'DungGeunMo',
+    fontFamily: 'Jalnan',
     color : 'white',
     alignSelf : 'center'
 
@@ -229,7 +244,7 @@ itemConstainer:{
     borderBottomColor:'#fff',
     justifyContent: "center",
     alignItems: "flex-end",
-    marginLeft : 10
+    marginTop : 10
   },
   diaryTitle:{
     marginBottom:10,

@@ -26,6 +26,7 @@ import storage from '@react-native-firebase/storage';
 import { theme } from '../../Chat/ChatTheme';
 import moment from 'moment';
 import useStore from '../../../store/store';
+import { useIsFocused } from '@react-navigation/native';
 
 const ProfileScreen = ({navigation,route}) => {
 
@@ -43,6 +44,8 @@ const ProfileScreen = ({navigation,route}) => {
   const [transferred, setTransferred] = useState(0);
   const [CommentData, setCommentData] = useState([]);
   const {countItem,BuyItem} = useStore();
+  const isFocused = useIsFocused();
+
   const getComment = async() => {
     const querySanp = await firestore()
     .collection('guestbook')
@@ -208,7 +211,7 @@ const ProfileScreen = ({navigation,route}) => {
     getRequest();
     getComment();
     navigation.addListener("focus", () => setLoading(!loading));
-  }, [navigation, loading,countItem,BuyItem]);
+  }, [navigation, loading,countItem,BuyItem,isFocused]);
 
   const FriendRequest = () => {
     Alert.alert(
@@ -330,9 +333,7 @@ const handleDelete = () => {};
           )}
         </View>
 
-      <TouchableOpacity style={styles.music} onPress={() => onMusicPressed()}>
-      <Text style={{ fontSize: 15, textAlign: 'center',fontFamily : "Jalnan",}}>{songs[songIndex].title} - {songs[songIndex].artist}</Text>
-            </TouchableOpacity>
+      
       <ScrollView
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
