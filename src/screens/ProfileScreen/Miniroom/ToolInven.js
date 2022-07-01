@@ -23,12 +23,13 @@ const ToolInven = () => {
   useEffect(() => {
     getShopData();
   }, [BuyItem,countItem]);
-  const pushTool =(address,name) => {
+  const pushTool =(address,name,size) => {
     firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool').doc(name).set({
       name:name,
       address:address,
       getx:1,
-      gety:1});
+      gety:1,
+      size:size});
     settooladdress(address);
     setcountItem();
   }
@@ -39,7 +40,7 @@ const ToolInven = () => {
       {
         tool?.map((row, idx) => {
          {
-            return  <TouchableOpacity onPress={()=>{pushTool(row.address,row.name)}} style={{}}>
+            return  <TouchableOpacity onPress={()=>{pushTool(row.address,row.name,row.size)}} style={{}}>
             <Image source ={{uri:row.address}} style={{width:70,height:70,}} resizeMode="contain" resizeMethod = 'resize' ></Image>
             </TouchableOpacity>;} 
       })

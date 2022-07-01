@@ -1,4 +1,4 @@
-import {View ,StyleSheet,Animated,PanResponder,Image,Text} from 'react-native';
+import {View ,StyleSheet,Animated,PanResponder,Image,Text,Alert} from 'react-native';
 import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
@@ -6,11 +6,9 @@ import firebase from '@react-native-firebase/app';
 import Draggable from 'react-native-draggable';
 
 const MiniroomBox =({}) => {
-  let test = 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Furniture%2F5Furni.png?alt=media&token=498686e8-35a9-4b28-90b8-7497b30d7fc4'
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
 
-  const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
-  const [load,setload] = useState(0);
+  const {countItem,setcountItem} = useStore();
   const [tool, setTool] = useState();
   
   const getTool = async() => {
@@ -24,6 +22,7 @@ const MiniroomBox =({}) => {
   useEffect(() => {
     getTool();
     return () => {
+      console.log('언마운트');
     }
   }, [countItem]);
   const addItem = async(x,y,address,name) => {
@@ -35,16 +34,39 @@ const MiniroomBox =({}) => {
             gety:y,
             address:address,
             name:name,
-          })
+          });
         });
       });
   };
+  const DeleteItem = async(name) => {
+    const rows = addminiroom.where('name', '==', name);  
+    await rows.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+          setcountItem();
+        });
+      });
+  };
+
     return(
       <View style={{position:'absolute'}}>
         {
               tool?.map((row, idx) => {
                 {
-                  return <Draggable x={row.getx} y={row.gety}z={idx} renderSize={110} imageSource={{uri:`${row.address}`}} onDragRelease={(e,g,b) => {addItem(b.left,b.top,row.address,row.name)}}  debug={true}></Draggable>}
+                  return <Draggable x={row.getx} y={row.gety}z={idx} renderSize={row.size} imageSource={{uri:`${row.address}`}} onDragRelease={(e,g,b) => {addItem(b.left,b.top,row.address,row.name)}}
+                  debug={true}
+                  onLongPress={()=>{Alert.alert(
+                    '알림',
+                    '삭제하시겠습니까?',[{
+                        text:'아니요',
+                        onPress: () => console.log('안사욧')
+                        ,},
+                    {text:'네',onPress: () => DeleteItem(row.name)}
+                ],
+                {cancelable:false}
+                  );}
+              }
+                    ></Draggable>}
                 })
               }
         

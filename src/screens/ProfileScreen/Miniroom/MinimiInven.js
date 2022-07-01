@@ -8,7 +8,7 @@ import useStore from '../../../../store/store';
 const MinimiInven = () => {
   const usersCollection = firestore().collection('Inventory').doc(firebase.auth().currentUser.uid).collection('minime');
   const addBackground = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid);
-  const {isMinime,setisMinime,BuyItem} = useStore();
+  const {isMinime,setisMinime,BuyItem,setcountItem} = useStore();
   const [tool, setTool] = useState();
    
   const getShopData = async () => {
@@ -19,11 +19,10 @@ const MinimiInven = () => {
       console.log(error.message);
     }
   };
-  const updateMinime = (newaddress,newname) => {
-    addBackground.collection('minime').doc(firebase.auth().currentUser.uid+ 'mid').update({address:newaddress, name:newname, getx:1,gety:1});
-    console.log('저장완료');  
-    console.log(newaddress);
+  const updateMinime = (newaddress,newname,size) => {
+    addBackground.collection('minime').doc(firebase.auth().currentUser.uid+ 'mid').update({address:newaddress, name:newname,size:size});
     setisMinime(newaddress);
+    setcountItem();
   };
   useEffect(() => {
     getShopData();
@@ -35,7 +34,7 @@ const MinimiInven = () => {
       {
         tool?.map((row, idx) => {
           {
-            return  <TouchableOpacity onPress={()=>{updateMinime(row.address,row.name)}} style={{}}>
+            return  <TouchableOpacity onPress={()=>{updateMinime(row.address,row.name,row.size)}} >
             <Image source ={{uri:row.address}} style={{width:70,height:70,}} resizeMode="contain" resizeMethod = 'resize'></Image>
             </TouchableOpacity>;} 
       })

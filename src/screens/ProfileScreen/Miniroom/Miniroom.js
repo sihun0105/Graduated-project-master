@@ -1,6 +1,5 @@
-import { View, Text,TouchableOpacity,StyleSheet,Image,SafeAreaView,Dimensions,Animated,PanResponder, ImageBackground,Alert} from 'react-native';
 import React,{useState,useEffect,useRef} from 'react'
-
+import { View, Text,TouchableOpacity,StyleSheet,Image,Button, ImageBackground,Alert} from 'react-native';
 import ToolInven from './ToolInven';
 import MinimiInven from './MinimiInven';
 import BackgroundInven from './BackgroundInven';
@@ -15,7 +14,6 @@ import firebase  from '@react-native-firebase/app';
 import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
 
-import Draggable from 'react-native-draggable';
 const initial = 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45';
 const Tab = createMaterialTopTabNavigator();
 const tlranf = [
@@ -52,7 +50,7 @@ const Miniroom = () => {
   const usersMinimeCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minime').doc(firebase.auth().currentUser.uid+ 'mid');
   const usersToolCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool'); 
   const usersMinipatCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minipat').doc(firebase.auth().currentUser.uid+ 'mid');
-  const {tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime} = useStore();
+  const {tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime,} = useStore();
   const {setMinimeaddress,setMinimegetx,setMinimegety,setMinimename,Minimegetx,Minimegety,Minimeaddress,Minimename} = useStore();
   const [tool, setTool] = useState();
   const [Back, setBack] = useState(null);
@@ -147,13 +145,14 @@ const Miniroom = () => {
           setMinipat(newaddress);
           console.log('저장완료');
         }
-        const onMinipatPress = async() => {
+        const onMinipatPress = () => {
+          console.log(MinipatCount);
           if(MinipatCount<6) //물주는 횟수
           {
             setMinipatCount(MinipatCount+1)  
             updateMinipat(tlranf[MinipatCount].address,MinipatCount);
-       
-            if(MinipatCount == 5)
+          }
+          if(MinipatCount == 5)
             {
               firestore()
               .collection('users')
@@ -165,42 +164,10 @@ const Miniroom = () => {
                 '식물 성장 최종 보너스',
                 `300 포인트를 얻었습니다!`,
                 );
-            }
-             }
-            else {
-              if(MinipatCount==5)
-              {
-                
-            }
-              Alert.alert(
-              '알림',
-              `이미 다 컸어요`,
-              );
+                setMinipatCount(0);  
+                updateMinipat(tlranf[MinipatCount].address,MinipatCount);
             }
           }
-        
-      
-      const getTool = async() => {
-        try {
-      const datatool = await usersToolCollection.get();
-      setTool(datatool._docs.map(doc => ({ ...doc.data(), id: doc.id, })));
-            } catch (error) {
-      console.log(error.message);
-    }
-  };
-        const getMinime = async () => {
-          try {
-            const data = await usersMinimeCollection.get();
-            setMinime(data._data.address);
-            setMinimeaddress(data._data.address);
-            setMinimename(data._data.name);
-            setMinimegetx(data._data.getx);
-            setMinimegety(data._data.gety);
-
-          } catch (error) {
-            console.log(error.message);
-          }
-        };
         const getBackgroundData = async () => {
           try {
             const data = await usersBackgroundCollection.get();
@@ -221,30 +188,34 @@ const Miniroom = () => {
 
   useEffect(() => {
     getBackgroundData();
-    getMinime();
-    getTool();
     getMinipat();
     getUser();
     return () => {
-      onSave();
+      //onSave();
     }
-  }, [countItem,isMinime,Backaddress]);
+  }, [countItem,Minimeaddress,Backaddress]);
   return (
 
     <View style={{flex:1,width:'100%',height:'100%' , backgroundColor : 'white'}}>
-      
-      <View style={{height:200}}>
-        
+    <View style={{height:200}}>
     <ViewShot style ={{flex : 1}} ref={captureRef} options={{ format: 'jpg', quality: 0.9 }}>
     <View style={styles.Backimg}>
           <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}resizeMethod = 'resize'></ ImageBackground>
     </View>
-          <TouchableOpacity style={styles.minipat} onPress={onMinipatPress}>
+      <TouchableOpacity onPress={()=>{
+        onSave();
+        Alert.alert('저장완료');
+        }
+        } style={{position:'absolute',width:50,height:40,borderWidth:1,alignItems:'center',justifyContent:'center'}}>
+        <Text>저장</Text>
+      </TouchableOpacity>
+    
+          <TouchableOpacity style={styles.minipat} onPress={()=>onMinipatPress()}>
           < Image  style={{borderWidth:1,flex:1,}} source={{uri:`${Minipat ? Minipat : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'}`}} resizeMethod = 'resize'></ Image>
           </TouchableOpacity>
     <View style={styles.item}>
             <MiniroomBox></MiniroomBox>   
-            <MinimeBox test={Minimeaddress} name={Minimename} x={Minimegetx} y={Minimegety}></MinimeBox>          
+            <MinimeBox></MinimeBox>          
     </View>
             </ViewShot>
             </View>
