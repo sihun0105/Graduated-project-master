@@ -13,6 +13,7 @@ import firestore from '@react-native-firebase/firestore';
 import firebase  from '@react-native-firebase/app';
 import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
+import Toast from 'react-native-toast-message';
 
 const initial = 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45';
 const Tab = createMaterialTopTabNavigator();
@@ -194,6 +195,13 @@ const Miniroom = () => {
       //onSave();
     }
   }, [countItem,Minimeaddress,Backaddress]);
+  const showToast = (name) => {
+    Toast.show({
+      type: 'success',
+      text1: '저장완료!',
+      text2: `정상적으로 저장했습니다!👋` 
+    });
+  }
   return (
 
     <View style={{flex:1,width:'100%',height:'100%' , backgroundColor : 'white'}}>
@@ -205,7 +213,7 @@ const Miniroom = () => {
     </View>
       <TouchableOpacity onPress={()=>{
         onSave();
-        Alert.alert('저장완료');
+        showToast();
         }
         } style={{position:'absolute',width:50,height:40,borderWidth:1,alignItems:'center',justifyContent:'center'}}>
         <Text>저장</Text>
