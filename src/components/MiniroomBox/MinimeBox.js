@@ -1,40 +1,41 @@
-import {View ,StyleSheet,Animated,PanResponder,Image,Button} from 'react-native';
+import {View ,StyleSheet,Animated,PanResponder,Image,Text} from 'react-native';
 import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
-import firebase from '@react-native-firebase/app'
-const MinimeBox =({test,name,x,y}) => {
-  
-  const tool = test;
-  const testname = name;
-  let dlatlx= x;
-  let dlatly= y;
+import firebase from '@react-native-firebase/app';
+import Draggable from 'react-native-draggable';
+
+const MinimeBox =({}) => {
+  const usersMinimeCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minime').doc(firebase.auth().currentUser.uid+ 'mid');
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minime');
-  const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
-  
-  const checktItem = () => {
-    try{
-    console.log('마운트!');
+  const {setMinimeaddress,setMinimegetx,setMinimegety,setMinimename} = useStore();
+  const {Minimegetx,Minimegety,Minimeaddress,Minimename,countItem} = useStore();
+
+  const [Minime] = useState();
+  const getMinime = async () => {
+    try {
+      const data = await usersMinimeCollection.get();
+      setMinimeaddress(data._data.address);
+      setMinimename(data._data.name);
+      setMinimegetx(data._data.getx);
+      setMinimegety(data._data.gety);
+
     } catch (error) {
       console.log(error.message);
     }
   };
   useEffect(() => {
-    checktItem();
+    getMinime();
     return () => {
-      if(y !== dlatly){
-      addItem(dlatlx,dlatly,tool,testname);
     }
-    }
-  }, []);
-  
+  }, [countItem]);
   const addItem = async(x,y,address,name) => {
     const rows = addminiroom.where('name', '==', name);  
     await rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           doc.ref.update({
             getx:x,
-            gety:y-95,
+            gety:y,
             address:address,
             name:name,
           })
@@ -43,50 +44,17 @@ const MinimeBox =({test,name,x,y}) => {
       console.log('----------------------');
       console.log('save complete');
   };
-    const pan = useRef(new Animated.ValueXY()).current;
-    const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        pan.setOffset({
-          x: pan.x._value,
-          y: pan.y._value
-        });
-      },
-      onPanResponderMove: Animated.event(
-        [
-          null,
-          { dx: pan.x, dy: pan.y,}
-        ],{ useNativeDriver: false }, //오류 메시지를 없애기용 
-      ),
-      onPanResponderRelease: () => {
-        pan.flattenOffset();
-      },
-      onPanResponderEnd: (evt , gesture) => {
-        dlatlx =gesture.moveX;
-        dlatly =gesture.moveY;
-        setplaceX(gesture.moveX);
-        console.log('아이템 : ',name);
-        console.log('x좌표 : ',dlatlx);
-        console.log('y좌표 : ',dlatly);
-      },
-    })
-  ).current;
     return(
-      <View style={{transform: [{translateX: x} , {translateY:y}]}}>
-        <Animated.View style={{width:10,height:10,transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
-            <View style={styles.box}>
-            <Image source={{uri:`${test}`}} resizeMode='stretch' style={{flex:1}} resizeMethod='resize'></Image>
-            </View>
-      </Animated.View>
-      </View>
+      <View style={{position:'absolute'}}>
+                  <Draggable x={Minimegetx} y={Minimegety}z={0} renderSize={80} imageSource={{uri:`${Minimeaddress}`}} onDragRelease={(e,g,b) => {addItem(b.left,b.top,Minimeaddress,Minimename)}}  debug={true}></Draggable>
+        </View>
         )
     }
 
     const styles =StyleSheet.create({
         box:{
-            height: 50,
-            width: 50,
+            height: 70,
+            width: 70,
             position:'absolute'
           },
     });

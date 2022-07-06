@@ -76,12 +76,14 @@ const updatePoint = () => {
     setPoint(userData.point-plant.price);
   }
 const addItem = async () => {
-    try {
+    if(plant.type=='tool'){
+  try {
       console.log(Item);
         await firestore().collection('Inventory').doc(firebase.auth().currentUser.uid).collection(`${Item}`).add({
         name: plant.name,
         price: plant.price,
         address: plant.address,
+        size: plant.size,
       })
       updatePoint();
       console.log(`update 완료`);
@@ -89,9 +91,28 @@ const addItem = async () => {
       setBuyItem(plant.name);
       navigation.navigate('StoreHome');
      
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error.message);
     }
+  }
+  try {
+    console.log(Item);
+      await firestore().collection('Inventory').doc(firebase.auth().currentUser.uid).collection(`${Item}`).add({
+      name: plant.name,
+      price: plant.price,
+      address: plant.address,
+    })
+    updatePoint();
+    console.log(`update 완료`);
+    console.log(`이름 : ${plant.name} 가격: ${plant.price} 주소 : ${plant.address} `);
+    setBuyItem(plant.name);
+    navigation.navigate('StoreHome');
+   
+  }
+  catch (error) {
+    console.log(error.message);
+  }
   };
   const addPresentItem = async () => {
     try {

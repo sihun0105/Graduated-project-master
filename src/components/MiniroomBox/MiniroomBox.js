@@ -1,96 +1,95 @@
-import {View ,StyleSheet,Animated,PanResponder,Image,Button} from 'react-native';
+import {View ,StyleSheet,Animated,PanResponder,Image,Text,Alert} from 'react-native';
 import React,{useRef, useState,useEffect} from 'react'
 import useStore from '../../../store/store';
 import firestore from '@react-native-firebase/firestore';
-import firebase from '@react-native-firebase/app'
-const MiniroomBox =({test,name,x,y,toolwid=70,toolhei=70}) => {
+import firebase from '@react-native-firebase/app';
+import Draggable from 'react-native-draggable';
+import Toast from 'react-native-toast-message';
 
-  const tool = test;
-  const testname = name;
-  let dlatlx= x;
-  let dlatly= y;
+const MiniroomBox =({}) => {
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
-  const {placeX,setplaceX,Itemhold,setItemhold,countItem} = useStore();
-  const [load,setload] = useState(0);
+
+  const {countItem,setcountItem} = useStore();
+  const [tool, setTool] = useState();
   
+  const getTool = async() => {
+    try {
+  const datatool = await addminiroom.get();
+  setTool(datatool._docs.map(doc => ({ ...doc.data(), id: doc.id, })));
+        } catch (error) {
+  console.log(error.message);
+}
+};
+const showToast = (name) => {
+  Toast.show({
+    type: 'success',
+    text1: '삭제완료!',
+    text2: `${name}을 정상적으로 삭제했습니다!👋` 
+  });
+}
   useEffect(() => {
+    getTool();
     return () => {
-      if(y !== dlatly){
-      addItem(dlatlx,dlatly,tool,testname);
+      console.log('언마운트');
     }
-    }
-  }, [load]);
-  
+  }, [countItem]);
   const addItem = async(x,y,address,name) => {
     const rows = addminiroom.where('name', '==', name);  
     await rows.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          if(x<40&&y>135){
-            doc.ref.delete();
-            setload(2);
-          }
           doc.ref.update({
             getx:x,
-            gety:y-95,
+            gety:y,
             address:address,
             name:name,
-          })
+          });
         });
       });
-
   };
-    const pan = useRef(new Animated.ValueXY()).current;
-    const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        pan.setOffset({
-          x: pan.x._value,
-          y: pan.y._value
+  const DeleteItem = async(name) => {
+    const rows = addminiroom.where('name', '==', name);  
+    await rows.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+          setcountItem();
         });
-      },
-      onPanResponderMove: Animated.event(
-        [
-          null,
-          { dx: pan.x, dy: pan.y,}
-        ],{ useNativeDriver: false }, //오류 메시지를 없애기용 
-      ),
-      onPanResponderRelease: () => {
-        pan.flattenOffset();
-      },
-      onPanResponderEnd: (evt , gesture) => {
-        dlatlx =gesture.moveX;
-        dlatly =gesture.moveY;
-        setplaceX(gesture.moveX);
-        if(gesture.moveX<40&&gesture.moveY>130)
-        {
-        addItem(dlatlx,dlatly,tool,testname);
-      }
-      },
-    })
-  ).current;
+      });
+  };
+
     return(
-      <View style={{position:'absolute',transform: [{translateX: x} , {translateY:y}]}}>
-        <Animated.View style={{width:10,height:10,position:'absolute',transform: [{ translateX: pan.x }, { translateY: pan.y }]}}{...panResponder.panHandlers}>
-        <View style={dstyles(toolwid,toolhei).dynamicbox}>
-                <Image source={{uri:`${test}`}} resizeMode='stretch' resizeMethod = 'resize' style={{flex:1}}></Image>
-            </View>
-      </Animated.View>
-      </View>
+      <View style={{position:'absolute'}}>
+        {
+              tool?.map((row, idx) => {
+                {
+                  return <Draggable x={row.getx} y={row.gety}z={idx} renderSize={row.size} imageSource={{uri:`${row.address}`}} onDragRelease={(e,g,b) => {addItem(b.left,b.top,row.address,row.name)}}
+                  debug={true}
+                  onLongPress={()=>{Alert.alert(
+                    '알림',
+                    '삭제하시겠습니까?',[{
+                        text:'아니요',
+                        onPress: () => console.log('안사욧')
+                        ,},
+                    {text:'네',onPress: () => {
+                      showToast(row.name);
+                    DeleteItem(row.name);
+                  }
+                  }
+                ],
+                {cancelable:false}
+                  );}
+              }
+                    ></Draggable>}
+                })
+              }
+        
+        </View>
         )
     }
 
     const styles =StyleSheet.create({
         box:{
-            height: 90,
-            width: 90,
-            position:'absolute'
-          },	
-        });	
-        const dstyles = (param1, param2) => StyleSheet.create({	
-          dynamicbox: {    	
-            width: param1,	
-            height: param2,
+            height: 70,
+            width: 70,
             position:'absolute'
           }	
         });

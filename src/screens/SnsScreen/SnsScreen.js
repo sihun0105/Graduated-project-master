@@ -187,7 +187,14 @@ const SnsScreen = ({props}) => {
  
   return (
     ready ? <Loading/> :  (
-<ScrollView style={{flex: 1}}>
+<ScrollView style={{flex: 1}} 
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
         <Container>
           <Text style={{fontSize : 20, marginLeft : 5, fontFamily : 'Jalnan',marginTop : 5, color : 'orange'}}>🎉인기 게시물 Top 5🎉</Text>
     <View style={{flexDirection : 'row', marginBottom : 10}}>
@@ -227,12 +234,6 @@ const SnsScreen = ({props}) => {
             )}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />
-            }
           />
         </Container>
         </ScrollView>
@@ -241,3 +242,5 @@ const SnsScreen = ({props}) => {
 };
 
 export default SnsScreen;
+const styles = StyleSheet.create({
+});

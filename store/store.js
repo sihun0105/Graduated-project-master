@@ -31,6 +31,8 @@ const store = (set => ({
 
     BuyItem:'',
     setBuyItem: (input) => set({BuyItem:input}), //상점 - > 미니룸 랜더링용
+    whfmrl:'',
+    setwhfmrl: (input) => set({whfmrl:input}), //상점 - > 미니룸 랜더링용
     Itemhold:'',
     setItemhold: (input) => set({Itemhold:input}), //상점 - > 미니룸 랜더링용
 
@@ -40,7 +42,6 @@ const store = (set => ({
     isMinipatCount:0,
     issetMinipatCount: () => set(state => ({isMinipatCount:state.isMinipatCount+1})), //상점 - > 미니룸 랜더링용
     isClearCount:(input) => set({isMinipatCount:input}),
-
     DiaryPost:'',
     setDiaryPost: (input) => set({DiaryPost:input}), //상점 - > 미니룸 랜더링용
     Checkday: new Date(),
