@@ -53,17 +53,23 @@ const Miniroom = () => {
   const usersMinipatCollection = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('minipat').doc(firebase.auth().currentUser.uid+ 'mid');
   const {tooladdress,Backaddress,BuyItem,placeX,countItem,isMinime,} = useStore();
   const {setMinimeaddress,setMinimegetx,setMinimegety,setMinimename,Minimegetx,Minimegety,Minimeaddress,Minimename} = useStore();
-  const [tool, setTool] = useState();
   const [Back, setBack] = useState(null);
-  const [Minime, setMinime] = useState();
   const [Minipat, setMinipat] = useState(null);
   const [MinipatCount, setMinipatCount] = useState(1);
   const [userData, setUserData] = useState(null);
-
+  
   const captureRef = useRef();
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
+  useEffect(() => {
+    getBackgroundData();
+    getMinipat();
+    getUser();
+    return () => {
+      //onSave();
+    }
+  }, [countItem,Minimeaddress,Backaddress]);
   const getUser = async() => {
     await firestore()
     .collection('users')
@@ -136,9 +142,10 @@ const Miniroom = () => {
         };
         
         const onSave = async() => {
+          
           const uri = await getPhotoUri();
           const imageuri = await uploadImage();
-        
+          showToast();
           
         };
         const updateMinipat = async(newaddress,count) => {
@@ -187,14 +194,7 @@ const Miniroom = () => {
           }
         };
 
-  useEffect(() => {
-    getBackgroundData();
-    getMinipat();
-    getUser();
-    return () => {
-      //onSave();
-    }
-  }, [countItem,Minimeaddress,Backaddress]);
+  
   const showToast = (name) => {
     Toast.show({
       type: 'success',
@@ -211,10 +211,7 @@ const Miniroom = () => {
     <View style={styles.Backimg}>
           <ImageBackground style={styles.background} source={{uri:`${Back ? Back : initial}`}}resizeMethod = 'resize'></ ImageBackground>
     </View>
-      <TouchableOpacity onPress={()=>{
-        onSave();
-        showToast();
-        }
+      <TouchableOpacity onPress={()=>{onSave();}
         } style={{position:'absolute',width:50,height:40,borderWidth:1,alignItems:'center',justifyContent:'center'}}>
         <Text>저장</Text>
       </TouchableOpacity>

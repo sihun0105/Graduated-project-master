@@ -5,13 +5,15 @@ import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import Draggable from 'react-native-draggable';
 import Toast from 'react-native-toast-message';
+import {useNavigation} from '@react-navigation/native';
 
 const MiniroomBox =({}) => {
   const addminiroom = firestore().collection('miniroom').doc(firebase.auth().currentUser.uid).collection('room').doc(firebase.auth().currentUser.uid).collection('tool');
 
   const {countItem,setcountItem} = useStore();
   const [tool, setTool] = useState();
-  
+  const navigation = useNavigation();
+
   const getTool = async() => {
     try {
   const datatool = await addminiroom.get();
@@ -43,8 +45,10 @@ const showToast = (name) => {
             address:address,
             name:name,
           });
+          
         });
       });
+      navigation.reset('Weblog');
   };
   const DeleteItem = async(name) => {
     const rows = addminiroom.where('name', '==', name);  
@@ -59,9 +63,10 @@ const showToast = (name) => {
     return(
       <View style={{position:'absolute'}}>
         {
-              tool?.map((row, idx) => {
+              tool?.map((row, idx) => {     
                 {
-                  return <Draggable x={row.getx} y={row.gety}z={idx} renderSize={row.size} imageSource={{uri:`${row.address}`}} onDragRelease={(e,g,b) => {addItem(b.left,b.top,row.address,row.name)}}
+                  return <Draggable x={row.getx} y={row.gety}z={idx} renderSize={row.size} imageSource={{uri:`${row.address}`}} 
+                  onDragRelease={(e,g,b) => {addItem(b.left,b.top,row.address,row.name)}}
                   debug={true}
                   onLongPress={()=>{Alert.alert(
                     '알림',
@@ -93,4 +98,4 @@ const showToast = (name) => {
             position:'absolute'
           }	
         });
-    export default MiniroomBox
+    export default MiniroomBox;
