@@ -21,8 +21,8 @@ const store = (set => ({
     isMinipat: '', //상점 아이템 url주소값용
     setisMinipat: (input) => set({ isMinime: input }),//상점 아이템 url주소값용
     
-    placeX: '', //미니룸 아이템 배치 좌표저장용
-    setplaceX: (input) => set({placeX:input}), //미니룸 아이템 배치 좌표저장용
+    placeX: 0, //미니룸 아이템 배치 좌표저장용
+    setplaceX: () => set(state => ({placeX:state.placeX+1})), //미니룸 아이템 배치 좌표저장용
     placeY: '', //미니룸 아이템 배치 좌표저장용
     setplaceY: (input) => set({placeY:input}), //미니룸 아이템 배치 좌표저장용
     isPoint: '', //미니룸 아이템 배치 좌표저장용
