@@ -28,6 +28,9 @@ const store = (set => ({
     isPoint: '', //미니룸 아이템 배치 좌표저장용
     setPoint: (input) => set({isPoint:input}), //미니룸 아이템 배치 좌표저장용
 
+    SnsDotsRef: 0,
+    setSnsDotsRef: (input) => set({SnsDotsRef:input}),
+
 
     BuyItem:'',
     setBuyItem: (input) => set({BuyItem:input}), //상점 - > 미니룸 랜더링용
