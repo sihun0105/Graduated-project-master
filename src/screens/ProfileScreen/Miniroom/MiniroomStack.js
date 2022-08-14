@@ -13,7 +13,6 @@ const MiniroomStack = () => {
         component={Miniroom}
         options={{
           headerShown: true,
-
           title: '미니룸',
           headerTitleAlign: 'center',
           headerTitleStyle: {

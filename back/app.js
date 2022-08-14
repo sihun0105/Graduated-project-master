@@ -30,15 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 const bodyParser = require("body-parser");
 //const port = 3001; // react의 기본값은 3000이니까 3000이 아닌 아무 수
 
-const connection = mysql.createPool({
-  host : "localhost",
-  port : '3306',
-  user : "root", //mysql의 id
-  password : "dkskdksk23A!", //mysql의 password
-  database : "sihun", //사용할 데이터베이스
-  //acquireTimeout:6000000
-});
-
 app.get('/sihun', function(req, res,next){
   connection.query('SELECT * FROM test', function (error, results, fields) {
           if (error) res.send(error);

@@ -25,6 +25,10 @@ import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
 import Toast from 'react-native-toast-message';
 import HeaderLeftGoBack from '../../../components/HeaderLeftGoBack';
+import { useAppDispatch } from '../../../../store';
+import counterSlice from '../../../../slices/counter';
+import { useDispatch, useSelector } from 'react-redux';
+import {up} from '../../../../slices/counter';
 const initial =
   'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45';
 const Tab = createMaterialTopTabNavigator();
@@ -37,33 +41,36 @@ const tlranf = [
   {
     id: 1,
     address:
-      'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d',
+    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d',
   },
   {
     id: 2,
     address:
-      'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=ef1f1a60-01e8-47ac-ba86-82b53c547028',
+    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=ef1f1a60-01e8-47ac-ba86-82b53c547028',
   },
   {
     id: 3,
     address:
-      'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=a11901a1-272e-41fa-90e0-a9cc33c07849',
+    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=a11901a1-272e-41fa-90e0-a9cc33c07849',
   },
   {
     id: 4,
     address:
-      'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=3f8e5aaf-1a44-45f8-8dc6-c91a11092fdb',
+    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=3f8e5aaf-1a44-45f8-8dc6-c91a11092fdb',
   },
   {
     id: 5,
     address:
-      'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=745e9ee1-b0dc-4090-afd6-c6879abf451b',
+    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=745e9ee1-b0dc-4090-afd6-c6879abf451b',
   },
 ];
 const Miniroom = () => {
+  const dispatch = useDispatch();
+  const count = useSelector(state => {return state.count.value});
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => HeaderLeftGoBack(navigation),
+      headerLeft: () => 
+      HeaderLeftGoBack(navigation)
     });
   }, [navigation]);
 
@@ -95,13 +102,14 @@ const Miniroom = () => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
+  
   useEffect(() => {
     getBackgroundData();
     getMinipat();
     getUser();
     return () => {
       //onSave();
-    };
+    }; 
   }, [countItem, Minimeaddress, Backaddress]);
 
   const getUser = async () => {
@@ -245,9 +253,14 @@ const Miniroom = () => {
               resizeMethod="resize"></ImageBackground>
           </View>
           <TouchableOpacity
+            // onPress={() => {
+            //   onSave();
+            // }}
             onPress={() => {
-              onSave();
+              //dispatch(up(2));
+              dispatch(counterSlice.actions.up(2));
             }}
+            
             style={{
               position: 'absolute',
               width: 50,
@@ -256,7 +269,7 @@ const Miniroom = () => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text>저장</Text>
+            <Text>저장 = {count}</Text>
           </TouchableOpacity>
           
 

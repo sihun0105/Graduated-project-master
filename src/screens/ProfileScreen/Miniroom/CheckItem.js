@@ -19,8 +19,7 @@ import useStore from '../../../../store/store';
 
 const CheckItem = ({navigation, route}) => {
   const {user, logout} = useContext(AuthContext);
-  const {settooladdress, BuyItem, countItem, setcountItem, setwhfmrl} =
-    useStore();
+  const {settooladdress, BuyItem, countItem, setcountItem, setwhfmrl} =useStore();
   const [userData, setUserData] = useState(null);
 
   const plant = route.params;
@@ -48,7 +47,6 @@ const CheckItem = ({navigation, route}) => {
     Checktype();
     getUser();
   }, []);
-  //const addTool = firestore().collection('Inventory').doc(firebase.auth().currentUser.uid).collection('tool');
 
   const Disposition = () => {
     Alert.alert(
@@ -106,11 +104,11 @@ const CheckItem = ({navigation, route}) => {
       }}>
       <View style={{flex: 1}}>
         <View style={style.header}>
-          <Icon
+          {/* <Icon
             name="arrow-back"
             size={28}
             onPress={() => navigation.goBack()}
-          />
+          /> */}
           <Text style={{fontSize: 18, marginTop: 3, fontFamily: 'Jalnan'}}>
             <Icons name="coins" size={18} /> {userData ? userData.point : ''}
           </Text>
