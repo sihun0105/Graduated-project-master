@@ -1,15 +1,35 @@
 import {createSlice} from '@reduxjs/toolkit';
-
+import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 const initialState = {
   name: '',
-  value : '',
+  value : 0,
 };
 const counterSlice = createSlice({
-  name: 'counterSlice',
-  initialState:{value:0},
+  name: 'count',
+  initialState,
   reducers: {
     up:(state, action)=> {
-      state.value = state.value+action.payload;
+      if(state.value<5){
+        state.value = state.value+action.payload;
+      } else {
+        state.value = initialState.value;
+        firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then(documentSnapshot => {
+          if (documentSnapshot.exists) {
+            console.log('User Data exists');
+            firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .update({
+              point: documentSnapshot.data().point + 300,
+        });
+          }
+        });
+      }
     },
     down:(state, action)=> {
       state.value = state.value-action.payload;

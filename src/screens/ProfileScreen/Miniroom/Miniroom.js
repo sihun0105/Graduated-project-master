@@ -18,6 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import MiniroomBox from '../../../components/MiniroomBox/MiniroomBox';
 import MinimeBox from '../../../components/MiniroomBox/MinimeBox';
+import MinipatBox from '../../../components/MiniroomBox/MinipatBox';
 import useStore from '../../../../store/store';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
@@ -25,54 +26,47 @@ import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
 import Toast from 'react-native-toast-message';
 import HeaderLeftGoBack from '../../../components/HeaderLeftGoBack';
-import { useAppDispatch } from '../../../../store';
-import counterSlice from '../../../../slices/counter';
 import { useDispatch, useSelector } from 'react-redux';
-import {up} from '../../../../slices/counter';
 const initial =
   'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45';
 const Tab = createMaterialTopTabNavigator();
-const tlranf = [
-  {
-    id: 0,
-    address:
-      'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d',
-  },
-  {
-    id: 1,
-    address:
-    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d',
-  },
-  {
-    id: 2,
-    address:
-    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F2.png?alt=media&token=ef1f1a60-01e8-47ac-ba86-82b53c547028',
-  },
-  {
-    id: 3,
-    address:
-    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F3.png?alt=media&token=a11901a1-272e-41fa-90e0-a9cc33c07849',
-  },
-  {
-    id: 4,
-    address:
-    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F4.png?alt=media&token=3f8e5aaf-1a44-45f8-8dc6-c91a11092fdb',
-  },
-  {
-    id: 5,
-    address:
-    'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F5.png?alt=media&token=745e9ee1-b0dc-4090-afd6-c6879abf451b',
-  },
-];
+
 const Miniroom = () => {
   const dispatch = useDispatch();
   const count = useSelector(state => {return state.count.value});
+  const useruid = useSelector(state => {return state.user.uid});
+  const navigation = useNavigation();
+  const captureRef = useRef();
+
+  const {Backaddress, countItem} = useStore();
+  const {Minimeaddress} = useStore();
+  const [Back, setBack] = useState(null);
+  const [Minipat, setMinipat] = useState(null);
+  const [MinipatCount, setMinipatCount] = useState(0);
+  const [userData, setUserData] = useState(null);
+
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => 
       HeaderLeftGoBack(navigation)
     });
   }, [navigation]);
+  
+  const successMinipat = async() => {
+    if (count==5) {
+      firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          point: userData.point + 300,
+        });
+      console.log('식물 성장 최종 보너스', `300 포인트를 얻었습니다!`);
+    }
+  };
 
   const usersBackgroundCollection = firestore()
     .collection('miniroom')
@@ -89,28 +83,15 @@ const Miniroom = () => {
     .doc(firebase.auth().currentUser.uid)
     .collection('minipat')
     .doc(firebase.auth().currentUser.uid + 'mid');
-  const navigation = useNavigation();
-
-  const {Backaddress, countItem} = useStore();
-  const {Minimeaddress} = useStore();
-  const [Back, setBack] = useState(null);
-  const [Minipat, setMinipat] = useState(null);
-  const [MinipatCount, setMinipatCount] = useState(1);
-  const [userData, setUserData] = useState(null);
-
-  const captureRef = useRef();
-  const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [transferred, setTransferred] = useState(0);
   
   useEffect(() => {
     getBackgroundData();
     getMinipat();
     getUser();
     return () => {
-      //onSave();
+        onSave();  
     }; 
-  }, [countItem, Minimeaddress, Backaddress]);
+  }, [countItem, Minimeaddress, Backaddress,Minipat]);
 
   const getUser = async () => {
     await firestore()
@@ -163,10 +144,6 @@ const Miniroom = () => {
         .update({
           miniRoom: url,
         });
-      // Alert.alert(
-      //   'Image uploaded!',
-      //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
-      // );
       return url;
     } catch (e) {
       console.log(e);
@@ -184,30 +161,9 @@ const Miniroom = () => {
     const imageuri = await uploadImage();
     showToast();
   };
-  const updateMinipat = async (newaddress, count) => {
-    await usersMinipatCollection.update({address: newaddress, count: count});
-    setMinipat(newaddress);
-    console.log('저장완료');
-  };
-  const onMinipatPress = () => {
-    console.log(MinipatCount);
-    if (MinipatCount < 6) {
-      //물주는 횟수
-      setMinipatCount(MinipatCount + 1);
-      updateMinipat(tlranf[MinipatCount].address, MinipatCount);
-    }
-    if (MinipatCount == 5) {
-      firestore()
-        .collection('users')
-        .doc(firebase.auth().currentUser.uid)
-        .update({
-          point: userData.point + 300,
-        });
-      Alert.alert('식물 성장 최종 보너스', `300 포인트를 얻었습니다!`);
-      setMinipatCount(0);
-      updateMinipat(tlranf[MinipatCount].address, MinipatCount);
-    }
-  };
+  
+  
+  
   const getBackgroundData = async () => {
     try {
       const data = await usersBackgroundCollection.get();
@@ -226,13 +182,14 @@ const Miniroom = () => {
     }
   };
 
-  const showToast = name => {
+  const showToast =() => {
     Toast.show({
       type: 'success',
       text1: '저장완료!',
       text2: `정상적으로 저장했습니다!👋`,
     });
   };
+  
   return (
     <View
       style={{
@@ -253,14 +210,9 @@ const Miniroom = () => {
               resizeMethod="resize"></ImageBackground>
           </View>
           <TouchableOpacity
-            // onPress={() => {
-            //   onSave();
-            // }}
             onPress={() => {
-              //dispatch(up(2));
-              dispatch(counterSlice.actions.up(2));
+              onSave();
             }}
-            
             style={{
               position: 'absolute',
               width: 50,
@@ -269,31 +221,17 @@ const Miniroom = () => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text>저장 = {count}</Text>
+            <Text>저장</Text>
           </TouchableOpacity>
-          
-
-          <TouchableOpacity
-            style={styles.minipat}
-            onPress={() => onMinipatPress()}>
-            <Image
-              style={{borderWidth: 1, flex: 1}}
-              source={{
-                uri: `${
-                  Minipat
-                    ? Minipat
-                    : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'
-                }`,
-              }}
-              resizeMethod="resize"></Image>
-          </TouchableOpacity>
+        
           <View style={styles.item}>
             <MiniroomBox></MiniroomBox>
             <MinimeBox></MinimeBox>
+            <MinipatBox></MinipatBox>
           </View>
         </ViewShot>
       </View>
-
+      
       <View style={styles.miniroom}>
         <Tab.Navigator
           tabBarOptions={{

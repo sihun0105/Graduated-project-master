@@ -25,7 +25,9 @@ import {theme} from '../../Chat/ChatTheme';
 import moment from 'moment';
 import useStore from '../../../store/store';
 import {useIsFocused} from '@react-navigation/native';
-
+import { useDispatch, useSelector } from 'react-redux';
+import counterSlice, { up } from '../../../slices/counter';
+import Toast from 'react-native-toast-message';
 const ProfileScreen = ({navigation, route}) => {
   const {user, logout} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
@@ -42,7 +44,31 @@ const ProfileScreen = ({navigation, route}) => {
   const [CommentData, setCommentData] = useState([]);
   const {countItem, BuyItem} = useStore();
   const isFocused = useIsFocused();
+  const count = useSelector(state => {return state.count.value});
+  const dispatch = useDispatch();
 
+  useEffect(()=>{
+    //let timer;
+    
+    if(user){
+      const timer = setInterval(() => {
+      dispatch(counterSlice.actions.up(1)); //로그인후 앱스택 접속시 시작, 미니룸 펫 키우기용
+      console.log(count);
+    }, 300000); // 5분에 한번씨 포인트 지급  수정해야 할 사항 : 리랜더링시 타이머가 2개가 돌아가서 2중지급됨
+  }
+  },[]);
+  useEffect(()=>{
+    if(count==5){
+      console.log('asdasddsa');
+  }
+  },[]);
+  const showToast = name => {
+    Toast.show({
+      type: 'success',
+      text1: '저장완료!',
+      text2: `정상적으로 저장했습니다!👋`,
+    });
+  };
   const getComment = async () => {
     const querySanp = await firestore()
       .collection('guestbook')
@@ -267,12 +293,19 @@ const ProfileScreen = ({navigation, route}) => {
   const onMiniroompress = () => {
     navigation.navigate('MiniroomStack');
   };
-
+  const minipatToast =() => {
+    Toast.show({
+      type: 'success',
+      text1: '저장완료!',
+      text2: `300포인트 ㅊㅊ!👋`,
+    });
+  };
   const handleDelete = () => {};
   return ready ? (
     <Loading />
   ) : (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      {count==5? minipatToast() : <></>}
       <View style={styles.title}>
         {route.params ? (
           <>

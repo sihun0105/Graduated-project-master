@@ -34,16 +34,16 @@ const MiniroomBox = ({}) => {
       console.log(error.message);
     }
   };
-  const showToast = name => {
+  useEffect(() => {
+      getTool();
+  }, [countItem]);
+  const DeleteToast = name => {
     Toast.show({
       type: 'success',
       text1: '삭제완료!',
       text2: `${name}을 정상적으로 삭제했습니다!👋`,
     });
   };
-  useEffect(() => {
-      getTool();
-  }, [countItem]);
 
   const addItem = async (x, y, address, name) => {
     const rows = addminiroom.where('name', '==', name);
@@ -100,7 +100,7 @@ const MiniroomBox = ({}) => {
                       {
                         text: '네',
                         onPress: () => {
-                          showToast(row.name);
+                          DeleteToast(row.name);
                           DeleteItem(row.name);
                         },
                       },
