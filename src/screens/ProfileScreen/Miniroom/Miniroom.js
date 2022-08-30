@@ -27,6 +27,7 @@ import storage from '@react-native-firebase/storage';
 import Toast from 'react-native-toast-message';
 import HeaderLeftGoBack from '../../../components/HeaderLeftGoBack';
 import { useDispatch, useSelector } from 'react-redux';
+import Config from 'react-native-config';
 const initial =
   'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/Background%2Fbackground1.png?alt=media&token=f59b87fe-3a69-46b9-aed6-6455dd80ba45';
 const Tab = createMaterialTopTabNavigator();
@@ -55,18 +56,6 @@ const Miniroom = () => {
       HeaderLeftGoBack(navigation)
     });
   }, [navigation]);
-  
-  const successMinipat = async() => {
-    if (count==5) {
-      firestore()
-        .collection('users')
-        .doc(firebase.auth().currentUser.uid)
-        .update({
-          point: userData.point + 300,
-        });
-      console.log('식물 성장 최종 보너스', `300 포인트를 얻었습니다!`);
-    }
-  };
 
   const usersBackgroundCollection = firestore()
     .collection('miniroom')
@@ -88,9 +77,7 @@ const Miniroom = () => {
     getBackgroundData();
     getMinipat();
     getUser();
-    return () => {
-        onSave();  
-    }; 
+    console.log(Config);
   }, [countItem, Minimeaddress, Backaddress,Minipat]);
 
   const getUser = async () => {
@@ -209,20 +196,6 @@ const Miniroom = () => {
               source={{uri: `${Back ? Back : initial}`}}
               resizeMethod="resize"></ImageBackground>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              onSave();
-            }}
-            style={{
-              position: 'absolute',
-              width: 50,
-              height: 40,
-              borderWidth: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text>저장</Text>
-          </TouchableOpacity>
         
           <View style={styles.item}>
             <MiniroomBox></MiniroomBox>

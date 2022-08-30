@@ -12,6 +12,7 @@ const counterSlice = createSlice({
     up:(state, action)=> {
       if(state.value<5){
         state.value = state.value+action.payload;
+        console.log('현재 카운트',state.value);
       } else {
         state.value = initialState.value;
         firestore()
@@ -20,7 +21,6 @@ const counterSlice = createSlice({
         .get()
         .then(documentSnapshot => {
           if (documentSnapshot.exists) {
-            console.log('User Data exists');
             firestore()
             .collection('users')
             .doc(firebase.auth().currentUser.uid)
