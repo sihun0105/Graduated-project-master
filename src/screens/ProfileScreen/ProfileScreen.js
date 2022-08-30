@@ -48,16 +48,16 @@ const ProfileScreen = ({navigation, route}) => {
   const count = useSelector(state => {return state.count.value});
   const dispatch = useDispatch();
 
-  const timer = useCallback(() => {
-    setInterval(() => {
-    dispatch(counterSlice.actions.up(1)); //로그인후 앱스택 접속시 시작, 미니룸 펫 키우기용
-    }, 5000);// 5*5(25)분에 한번씨 포인트 지급  수정해야 할 사항 : 리랜더링시 타이머가 2개가 돌아가서 2중지급됨
-  },[count])
-  useEffect(()=>{
-    if(user){
-      timer();
-  }
-  },[]);
+  // const timer = useCallback(() => {
+  //   setInterval(() => {
+  //   dispatch(counterSlice.actions.up(1)); //로그인후 앱스택 접속시 시작, 미니룸 펫 키우기용
+  //   }, 5000);// 5*5(25)분에 한번씨 포인트 지급  수정해야 할 사항 : 리랜더링시 타이머가 2개가 돌아가서 2중지급됨
+  // },[count])
+  // useEffect(()=>{
+  //   if(user){
+  //     timer();
+  // }
+  // },[]);
 
   const showToast = name => {
     Toast.show({
