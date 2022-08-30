@@ -5,12 +5,15 @@ import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import firebase from '@react-native-firebase/app'
 import { useCardAnimation } from '@react-navigation/stack';
+import { useDispatch} from 'react-redux';
+import userSlice from '../../slices/user';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState(null);
+  const dispatch = useDispatch();
 
   const getUser = async() => {
     const currentUser = await firestore()
@@ -20,6 +23,11 @@ export const AuthProvider = ({children}) => {
     .then((documentSnapshot) => {
       if( documentSnapshot.exists ) {
         console.log('User Data', documentSnapshot.data());
+        dispatch(userSlice.actions.setUser({
+          name : documentSnapshot.data().name,
+          email : documentSnapshot.data().email,
+          uid : documentSnapshot.data().uid,
+        }))
         setUserData(documentSnapshot.data());
       }
     })
@@ -36,14 +44,6 @@ export const AuthProvider = ({children}) => {
         login: async (email, password) => {
           try {
             await auth().signInWithEmailAndPassword(email, password)
-           
-              
-            
-          
-          
-        
-           
-           
           } catch (e) {
             console.log(e);
           }
@@ -187,7 +187,7 @@ export const AuthProvider = ({children}) => {
                   firestore().collection('Inventory').doc(auth().currentUser.uid).collection('minipat').doc().set({
                     address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
                     ,count:1
-                  })                 
+                  })
                   .catch(error => {
                   console.log('Something went wrong with added user to firestore: ', error);
               })
