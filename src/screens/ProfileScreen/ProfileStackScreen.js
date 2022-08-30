@@ -20,7 +20,9 @@ import AddPhotos from './Albums/AddPhotos';
 import PhotoDetail from './Albums/PhotoDetail';
 import Comment from './Albums/Comment';
 import PointGuide from '../SettingScreen/PointGuide';
-
+import UserScreen from './Admin/UserScreen';
+import ReportScreen from './Admin/ReportScreen';
+import AddStore from './Admin/AddStore';
 const Stack = createNativeStackNavigator();
 const ProfileStackScreen = ({navigation}) => {
   return (
@@ -442,11 +444,89 @@ const ProfileStackScreen = ({navigation}) => {
                     
                      }}
                   />
+                  <Stack.Screen
+                    name="UserScreen"
+                    component={UserScreen}
+                    options={{
+                    title: '회원 관리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ReportScreen"
+                    component={ReportScreen}
+                    options={{
+                    title: '신고 게시물 관리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+
+<Stack.Screen
+                    name="AddStore"
+                    component={AddStore}
+                    options={{
+                    title: '상점 관리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
 
                 
 
                 
             </Stack.Navigator>
+
+            
   );
 };
 
