@@ -22,7 +22,9 @@ import PointGuide from '../SettingScreen/PointGuide';
 import Miniroom from './Miniroom/Miniroom';
 import CheckItem from './Miniroom/CheckItem';
 import MiniroomStack from './Miniroom/MiniroomStack';
-
+import UserScreen from './Admin/UserScreen';
+import ReportScreen from './Admin/ReportScreen';
+import AddStore from './Admin/AddStore';
 const Stack = createNativeStackNavigator();
 const ProfileStackScreen = ({navigation}) => {
   return (
@@ -258,79 +260,87 @@ const ProfileStackScreen = ({navigation}) => {
         }}
       />
 
-      <Stack.Screen
-        name="AddFolder"
-        component={AddFolder}
-        options={{
-          title: '폴더 관리',
-          headerTitleAlign: 'center',
-          headerStyle: {
-            backgroundColor: '#fff',
-            shadowColor: '#fff',
-            elevation: 0,
-          },
-          headerBackTitleVisible: false,
-          headerBackImage: () => (
-            <View style={{marginLeft: 15}}>
-              <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-            </View>
-          ),
-        }}
-      />
+                  <Stack.Screen
+                    name="AddFolder"
+                    component={AddFolder}
+                    options={{
+                    title: '폴더 관리',
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+                 
+                  <Stack.Screen
+                    name="Photos"
+                    component={Photos}
+                    options={{
+                    title: '사진',
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AddPhotos"
+                    component={AddPhotos}
+                    options={{
+                    title: '사진을 올려보세요!',
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : 'orange'
+                     },
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="PhotoDetail"
+                    component={PhotoDetail}
+                    options={{
+                      headerShown: false,
 
-      <Stack.Screen
-        name="Photos"
-        component={Photos}
-        options={{
-          title: '사진',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: 'Jalnan',
-            color: '#696969',
-          },
-          headerStyle: {
-            backgroundColor: '#fff',
-            shadowColor: '#fff',
-            elevation: 0,
-          },
-          headerBackTitleVisible: false,
-          headerBackImage: () => (
-            <View style={{marginLeft: 15}}>
-              <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-            </View>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="AddPhotos"
-        component={AddPhotos}
-        options={{
-          title: '사진을 올려보세요!',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: 'Jalnan',
-            color: 'orange',
-          },
-          headerStyle: {
-            backgroundColor: '#fff',
-            shadowColor: '#fff',
-            elevation: 0,
-          },
-          headerBackTitleVisible: false,
-          headerBackImage: () => (
-            <View style={{marginLeft: 15}}>
-              <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-            </View>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="PhotoDetail"
-        component={PhotoDetail}
-        options={{
-          headerShown: false,
-        }}
-      />
+                 
+                    }}
+                  />
 
       <Stack.Screen
         name="Comment"
@@ -427,6 +437,82 @@ const ProfileStackScreen = ({navigation}) => {
           ),
         }}
       />
+                  <Stack.Screen
+                    name="UserScreen"
+                    component={UserScreen}
+                    options={{
+                    title: '회원 관리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ReportScreen"
+                    component={ReportScreen}
+                    options={{
+                    title: '신고 게시물 관리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+
+<Stack.Screen
+                    name="AddStore"
+                    component={AddStore}
+                    options={{
+                    title: '상점 관리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
       <Stack.Screen
         name="MiniroomStack"
         component={MiniroomStack}
@@ -436,6 +522,8 @@ const ProfileStackScreen = ({navigation}) => {
         }}
       />
     </Stack.Navigator>
+
+            
   );
 };
 
