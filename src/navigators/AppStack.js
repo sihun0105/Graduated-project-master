@@ -308,6 +308,8 @@ const SearchStack = ({navigation}) => (
 
   </Stack.Navigator>
 );
+
+
 const SettingStack = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
@@ -373,6 +375,8 @@ const SettingStack = ({navigation}) => (
   
   
 );
+
+
 const AppStack = () => {
   const getTabBarVisibility = (route) => {
     const routeName = route.state

@@ -22,7 +22,9 @@ const SearchScreen = ({navigation}) => {
   const {Lsearch, setLsearch,setLsearchcount,Lsearchcount}  = useStore()
   const [userData, setUserData] = useState(null);
   const [random, setRandom] = useState([]); 
+  
   const isFocused = useIsFocused();
+
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -35,21 +37,101 @@ const SearchScreen = ({navigation}) => {
   }, []);
   const tags = ["인물", "배경", "음식", "동물", "물건", "문화"]
   const [changepost,setchangePosts] = useState(null)
+  const [allpost,setallpost] = useState(null)
+  const [Count,setCounts] = useState(null)
+
   const getRandomIndex = (length) => {
     var random =  parseInt(Math.random() * length);
     return random;
     }
     
 
+      
+  
 
-  const getPosts = async ()=>{
-    const querySanp = await firestore().collection('posts').orderBy('postTime', 'desc').get()
-    const allposts = querySanp.docs.map(docSnap=>docSnap.data())
-   //  console.log(allusers)
-   setchangePosts(allposts)
+const getCounts = async() => {
+  await firestore()
+  .collection('SearchCount')
+  .doc(firebase.auth().currentUser.uid)
+  .get()
+  .then((documentSnapshot) => {
+    if( documentSnapshot.exists ) {
+      console.log('User Data', documentSnapshot.data());
+      setCounts(documentSnapshot.data());
+    }
+        
+    
+          
+  })
+  
+}
+
+
+
+const getPosts = async ()=>{
+    
+  const querySanp = await firestore().collection('posts').where('tag', '==' , '동물').orderBy('postTime', 'desc').get()
+  const allposts = querySanp.docs.map(docSnap=>docSnap.data())
+ setchangePosts(allposts)
 
 
 }
+
+const getAllPosts = async ()=>{
+    
+  const querySanp = await firestore().collection('posts').orderBy('postTime', 'desc').get()
+  const allposts = querySanp.docs.map(docSnap=>docSnap.data())
+  setallpost(allposts)
+
+
+}
+const ALlPosts =  async (tags) => {
+  try {
+    const list = [];
+    
+    await firestore().collection('posts').orderBy('postTime', 'desc').get()
+      .then((querySnapshot) => {
+        // console.log('Total Posts: ', querySnapshot.size);
+        querySnapshot.forEach((doc) => {
+          const {
+            postid,
+            uid,
+            post,
+            postImg,
+            postTime,
+            tag,
+            likes,
+            comments,
+          } = doc.data();
+          list.push({
+            id: doc.id,
+            uid,
+            postid,
+            postTime: postTime,
+            tag,
+            post,
+            postImg,
+            likes,
+            comments,
+          });
+        });
+      }).then(() => {
+        
+        setchangePosts(list);
+
+        
+      })
+     
+
+    if (loading) {
+      setLoading(false);
+    }
+
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const getBestPosts = async ()=>{
   const querySanp = await firestore()
   .collection('posts')
@@ -60,6 +142,55 @@ const getBestPosts = async ()=>{
  //  console.log(allusers)
  setBestPosts(allposts)
 }
+const AllBestPosts =  async () => {
+  try {
+    const list = [];
+    
+    await firestore()
+      .collection('posts')
+      .orderBy('likes', 'desc')
+      .get()
+      .then((querySnapshot) => {
+        // console.log('Total Posts: ', querySnapshot.size);
+        querySnapshot.forEach((doc) => {
+          const {
+            postid,
+            uid,
+            post,
+            postImg,
+            postTime,
+            tag,
+            likes,
+            comments,
+          } = doc.data();
+          list.push({
+            id: doc.id,
+            uid,
+            postid,
+            postTime: postTime,
+            tag,
+            post,
+            postImg,
+            likes,
+            comments,
+          });
+        });
+      }).then(() => {
+        
+        setchangePosts(list);
+
+        
+      })
+     
+
+    if (loading) {
+      setLoading(false);
+    }
+
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 
 const handleSearchTextChange =  async () => {
@@ -110,8 +241,59 @@ const handleSearchTextChange =  async () => {
   .update({
     Lsearch : Lsearch
   })
+
     setLsearchcount();  
-      
+
+  {(() => { 
+    if (Lsearch === '동물')    
+    return  firestore()
+    .collection('SearchCount')
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      동물 : Count.동물 + 1
+    })
+    else if (Lsearch === '음식'){
+      return firestore()
+      .collection('SearchCount')
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        음식 : Count.음식 +1
+      })
+    }
+    else if (Lsearch === '문화'){
+      return firestore()
+      .collection('SearchCount')
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        문화 : Count.문화 +1
+      })
+    }
+      else if (Lsearch === '배경'){
+        return firestore()
+        .collection('SearchCount')
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          배경 : Count.배경 +1
+        })
+      }
+      else if (Lsearch === '인물'){
+        return firestore()
+        .collection('SearchCount')
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          인물 : Count.인물 +1
+        })
+      }
+        else if (Lsearch === '물건'){
+          return firestore()
+          .collection('SearchCount')
+          .doc(firebase.auth().currentUser.uid)
+          .update({
+            물건 : Count.물건 +1
+          })
+        }
+        })()} 
+    
       
       
     if (loading) {
@@ -123,20 +305,7 @@ const handleSearchTextChange =  async () => {
   }
   
 };
-const SubmitSearch = async () => {
-    
-    
-  firestore()
-  .collection('users')
-  .doc(firebase.auth().currentUser.uid)
-  .update({
-    Lsearch : Lsearch.trim()
-  })
- 
 
-    
-
-}
 
 const getUser = async() => {
   await firestore()
@@ -201,56 +370,7 @@ const TagList =  async (tags) => {
   }
 };
 
-const getBesttagPosts =  async () => {
-  try {
-    const list = [];
-    
-    await firestore()
-      .collection('posts')
-      .orderBy('likes', 'desc')
-      .get()
-      .then((querySnapshot) => {
-        // console.log('Total Posts: ', querySnapshot.size);
-        querySnapshot.forEach((doc) => {
-          const {
-            postid,
-            uid,
-            post,
-            postImg,
-            postTime,
-            tag,
-            likes,
-            comments,
-          } = doc.data();
-          list.push({
-            id: doc.id,
-            uid,
-            userName: 'Test Name',
-            userImg:
-              'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-            postTime: postTime,
-            tag,
-            post,
-            postImg,
-            liked: false,
-            likes,
-            comments,
-            postid
-          });
-        });
-      })
-     
-    setchangePosts(list);
 
-    if (loading) {
-      setLoading(false);
-    }
-
-    console.log('Posts: ', posts);
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 
 
@@ -262,6 +382,8 @@ useEffect(()=>{
     getBestPosts()
     getUser()
     getRandomIndex()
+    getCounts()
+    getAllPosts()
   },[Post,isFocused])
 
   const RenderCard = ({item})=>{
@@ -356,15 +478,15 @@ useEffect(()=>{
           horizontal={true}
           showsHorizontalScrollIndicator = {false}>
         
-          <TouchableOpacity style={styles.button2} onPress={() => getPosts()}>
+          <TouchableOpacity style={styles.button2} onPress={() => ALlPosts()}>
               <Text style={styles.userBtnTxt2}>전체 게시물</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button2} onPress={() => TagList(userData ? userData.Lsearch : '')}>
               <Text style={styles.userBtnTxt2}>최근 검색어</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button2} onPress={() => TagList(tags[getRandomIndex(tags.length)])}>
-              <Text style={styles.userBtnTxt2}>추천 게시물</Text>
+          <TouchableOpacity style={styles.button2} onPress={() => AllBestPosts()}>
+              <Text style={styles.userBtnTxt2}>인기 게시물</Text>
           </TouchableOpacity>
 
           </ScrollView>
