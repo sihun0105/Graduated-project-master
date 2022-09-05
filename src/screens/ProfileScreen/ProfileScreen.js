@@ -303,7 +303,7 @@ const AddStorePressed = () => {
       
     <View style={{flex: 1, backgroundColor: '#fff'}}>
         {(() => { 
-    if (true)    
+    if (LoginuserData.email === "admin@gmail.com")    
     return  <View style={{flex: 1, backgroundColor: '#fff'}}>
     <View style={styles.title}>
   
@@ -330,22 +330,22 @@ const AddStorePressed = () => {
         source={require('../../../assets/logo2.png')}
         style={styles.logo}
       />  
-      <View style={styles.userBtnWrapper}>
+      <View style={styles.userBtnWrapper2}>
                  <View style={{marginTop : 10, marginBottom : 20, alignItems : 'center'}}>
                 <TouchableOpacity style={{flexDirection : 'row'}} onPress={() => UserScreenPressed()}>
-                <Ionicons name="person" size = {30}/><Text style={styles.userBtnTxt}> 회원 관리</Text>
+                <Ionicons name="person" size = {30}/><Text style={styles.userBtnTxt2}> 회원 관리</Text>
                 </TouchableOpacity>
                 
                 </View>
                 <View style={{marginBottom : 20, alignItems : 'center'}}>
                 <TouchableOpacity style={{flexDirection : 'row'}} onPress={() => ReportScreenPressed()}>
-                <Icon name="emoji-sad" size = {30}/><Text style={styles.userBtnTxt}> 신고 게시글 관리</Text>
+                <Icon name="emoji-sad" size = {30}/><Text style={styles.userBtnTxt2}> 신고 게시글 관리</Text>
                 </TouchableOpacity>
               
                 </View>
                 <View style={{marginBottom : 20, alignItems : 'center'}}>
                 <TouchableOpacity style={{flexDirection : 'row'}} onPress={() => AddStorePressed()}>
-                <Icon name="shop" size = {30}/><Text style={styles.userBtnTxt}> 상점 아이템 관리</Text>
+                <Icon name="shop" size = {30}/><Text style={styles.userBtnTxt2}> 상점 아이템 관리</Text>
                 </TouchableOpacity>
                 </View>
           </View>
@@ -353,7 +353,7 @@ const AddStorePressed = () => {
    
     </View>
 
-    else if (true) {
+    else  {
       return (
         <View style={{flex: 1, backgroundColor: '#fff'}}>
         <View style={styles.title}>
@@ -692,6 +692,11 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   userBtnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+      },
+  userBtnWrapper2: {
    
     
     justifyContent: 'center',
@@ -780,6 +785,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
   },
   userBtnTxt: {
+    fontFamily : 'Jalnan',
+    color: '#696969',
+    textAlign:'center',  
+    fontSize:15,
+  },
+  userBtnTxt2: {
     fontFamily: 'Jalnan',
     color: '#696969',
     fontSize:25,

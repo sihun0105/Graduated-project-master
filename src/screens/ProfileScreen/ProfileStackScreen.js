@@ -25,6 +25,7 @@ import MiniroomStack from './Miniroom/MiniroomStack';
 import UserScreen from './Admin/UserScreen';
 import ReportScreen from './Admin/ReportScreen';
 import AddStore from './Admin/AddStore';
+import UserPointScreen from './Admin/UserPointScreen';
 const Stack = createNativeStackNavigator();
 const ProfileStackScreen = ({navigation}) => {
   return (
@@ -440,6 +441,32 @@ const ProfileStackScreen = ({navigation}) => {
                   <Stack.Screen
                     name="UserScreen"
                     component={UserScreen}
+                    options={{
+                    title: '회원 관리',
+                    headerTitleStyle: {
+                      fontFamily: 'Jalnan',
+                      color : '#696969'
+                     },
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                    backgroundColor: '#fff',
+                    shadowColor: '#fff',
+                    elevation: 0,
+                    
+          
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                    <View style={{marginLeft: 15}}>
+                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    }}
+                  />
+
+<Stack.Screen
+                    name="UserPointScreen"
+                    component={UserPointScreen}
                     options={{
                     title: '회원 관리',
                     headerTitleStyle: {
