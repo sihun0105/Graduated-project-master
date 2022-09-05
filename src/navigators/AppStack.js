@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -27,6 +27,8 @@ import PresentScreen from '../screens/ChatScreen/PresentScreen';
 import PresentDetailScreen from '../screens/ChatScreen/PresentDetailScreen'
 import Changepwd from '../screens/SettingScreen/Changepwd'
 import Icon from "react-native-vector-icons/FontAwesome";
+
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -378,6 +380,7 @@ const SettingStack = ({navigation}) => (
 
 
 const AppStack = () => {
+  
   const getTabBarVisibility = (route) => {
     const routeName = route.state
       ? route.state.routes[route.state.index].name
