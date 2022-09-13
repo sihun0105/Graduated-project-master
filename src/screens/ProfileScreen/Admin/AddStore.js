@@ -22,6 +22,11 @@ import { AuthContext } from '../../../utils/AuthProvider';
 import FormButton_2 from '../../../components/shared/FormButton_2';
 import SelectDropdown from 'react-native-select-dropdown'
 
+import {
+
+  AddImage,
+
+} from '../../../../styles/AddPost';
 const width = Dimensions.get('window').width / 2 - 30;
 
 const AddStore = ({navigation}) => {
@@ -128,12 +133,13 @@ const AddStore = ({navigation}) => {
     
     <View style={{flex: 1, backgroundColor : "#fff"}}>
       <View style={{alignItems : "center",marginTop : 10}}>
-      <TouchableOpacity style={{}} onPress={() => choosePhotoFromLibrary()}> 
-      <Icon name="add-a-photo" size={180}  ></Icon>
-      </TouchableOpacity> 
+      
+      {image != null ? <AddImage source={{uri: image}} /> : null}
+      
       </View>
+      <TouchableOpacity style={{}} onPress={() => choosePhotoFromLibrary()}> 
       <Text style={{alignSelf : "flex-end", fontFamily : "Jalnan", marginRight : 10, fontSize : 20}}>이미지 추가</Text>
-
+      </TouchableOpacity> 
       <View style={style.action}>
           <TextInput
           fontFamily = 'Jalnan'

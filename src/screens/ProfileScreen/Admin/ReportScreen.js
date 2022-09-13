@@ -9,7 +9,8 @@ import {
   Alert,
   RefreshControl,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
@@ -32,7 +33,6 @@ const ReportScreen = ({props}) => {
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
   const [currentUserLike, setCurrentUserLike] = useState(false)
-  const {Post,SetPost} = useStore(); // 0522새로고침용
   const [ready, setReady] = useState(true)
   const [Bestposts,setBestPosts] = useState(null)
   const navigation = useNavigation();
@@ -64,32 +64,30 @@ const ReportScreen = ({props}) => {
       
       await firestore()
         
-      .collection("posts")
-      .orderBy('postTime', 'desc')
+      .collection("ReportPost")
       .get()
         .then((querySnapshot) => {
           // console.log('Total Posts: ', querySnapshot.size);
 
           querySnapshot.forEach((doc) => {
             const {
-              post,
               uid,
-              postImg,
-              postTime,
-              likes,  
-              comments,
+              userimg,
+              post,
+              postimg,
+              name,
               postid,
+              report,
             } = doc.data();
             list.push({
               id: doc.id,
               uid,
-              postTime: postTime,
-              postImg,
+              userimg,
+              postimg,
               post,
-              liked: false,
-              likes,
+              name,
               postid,
-              comments,
+              report,
             });
           });
         });
@@ -115,7 +113,7 @@ const ReportScreen = ({props}) => {
     fetchPosts();
     setDeleted(false);
     getBestPosts();
-  }, [deleted,refreshing,Post,isFocused]);
+  }, [deleted,refreshing,isFocused]);
 
   const handleDelete = (postId) => {
     Alert.alert(
@@ -174,6 +172,10 @@ const ReportScreen = ({props}) => {
       .doc(postId)
       .delete()
       .then(() => {
+        firestore()
+      .collection('ReportPost')
+      .doc(postId)
+      .delete()
         Alert.alert(
           '글이 삭제되었습니다.',
           '당신의 글이 성공적으로 삭제되었습니다!',
@@ -183,42 +185,111 @@ const ReportScreen = ({props}) => {
       .catch((e) => console.log('Error deleting posst.', e));
   };
 
- 
+  const RenderCard = ({item})=>{
+    return (
+      <View style={{flex : 1 , backgroundColor : 'white'}}>
+      <ScrollView>
+            
+            <View style={styles.container}>
+            <View style={styles.nameContainer}>
+              <Image
+                source={{uri: item.userimg,
+              }}
+                style={styles.personImage}
+              />
+              <View>
+              <TouchableOpacity>
+                <Text style={styles.personName}> {item.name} </Text>
+                
+                </TouchableOpacity>
+              </View>
+              
+              
+              
+            </View>
+            
+            </View>
+            <Image source={{uri: item.postimg}} style={styles.postImg} />
+            <View style={{marginTop : 10,marginLeft : 10}}>
+              <View style={{flexDirection : 'row',justifyContent: 'space-between'}}>
+            <Text style={{fontFamily : "Jalnan"}}>{item.post}</Text>
+            <View style={{marginRight : 10}}>
+            <TouchableOpacity onPress={() => handleDelete(item.id)}>
+            <Ionicons name="trash" size={23} />
+            </TouchableOpacity>
+            </View>
+            </View>
+            <Text style={{marginTop : 10,fontFamily: "Jalnan", color : 'red'}}>신고 사유 : {item.report}</Text>
+
+            </View>
+            </ScrollView>
+</View>
+    )
+}
   return (
     ready ? <Loading/> :  (
-<ScrollView style={{flex: 1}} 
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }>
-        <Container>
+
    
-          <FlatList
-            data={posts}
-            renderItem={({item}) => (
-              <PostCard
-                item={item}
-                onDelete={handleDelete}
-                onPress={() =>
-                  {
-                  navigation.navigate('SNSProfile', {uid: item.uid})
-                  
-                  }
-                }
-              />
-            )}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-          />
-        </Container>
-        </ScrollView>
+      <FlatList 
+      data={posts}
+      renderItem={({item})=> {return <RenderCard item={item} />
+    
+    }}
+    keyExtractor={(item) => item.id}
+    refreshControl={
+      <RefreshControl
+         refreshing={refreshing}
+         onRefresh={onRefresh}
+       />
+     }
+    />
+    
     )
   );
 };
 
 export default ReportScreen;
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+    marginBottom: 6,
+    marginStart: 10,
+    marginEnd: 10,
+    alignItems: 'center',
+  },
+  
+  nameContainer: {
+    width:'100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  personImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 30,
+  },
+  postImg: {
+    height: Dimensions.get('screen').height / 3,
+    width: Dimensions.get('screen').width,
+    
+  },
+  textInput: {
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    marginBottom : 20,
+    paddingLeft: 10,
+    color: 'orange',
+    fontFamily: "Jalnan",
+    fontSize : 20
+  },
+
+  personName: {
+    color: 'red',
+    marginStart: 10,
+    fontFamily : 'Jalnan'
+  },
 });

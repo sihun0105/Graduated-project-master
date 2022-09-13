@@ -303,7 +303,7 @@ const AddStorePressed = () => {
       
     <View style={{flex: 1, backgroundColor: '#fff'}}>
         {(() => { 
-    if (LoginuserData.email === "admin@gmail.com")    
+    if (true)    
     return  <View style={{flex: 1, backgroundColor: '#fff'}}>
     <View style={styles.title}>
   
