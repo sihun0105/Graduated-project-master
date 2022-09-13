@@ -166,7 +166,7 @@ const ReportScreen = ({props}) => {
       });
   };
 
-  const deleteFirestoreData = (postId) => {
+  const deleteFirestoreData = (postId,userId) => {
     firestore()
       .collection('posts')
       .doc(postId)
@@ -176,6 +176,15 @@ const ReportScreen = ({props}) => {
       .collection('ReportPost')
       .doc(postId)
       .delete()
+
+      firestore()
+      .collection('ReportRecord')
+      .doc(item.uid)
+      .set({
+        postTime: firestore.Timestamp.fromDate(new Date()),
+
+      })
+      
         Alert.alert(
           '글이 삭제되었습니다.',
           '당신의 글이 성공적으로 삭제되었습니다!',
@@ -211,12 +220,18 @@ const ReportScreen = ({props}) => {
             </View>
             <Image source={{uri: item.postimg}} style={styles.postImg} />
             <View style={{marginTop : 10,marginLeft : 10}}>
-              <View style={{flexDirection : 'row',justifyContent: 'space-between'}}>
+              <View style={{flex : 1,flexDirection : 'row',justifyContent: 'space-between'}}>
             <Text style={{fontFamily : "Jalnan"}}>{item.post}</Text>
             <View style={{marginRight : 10}}>
+            <TouchableOpacity onPress={() =>  navigation.navigate('UserPointReportScreen',{uid : item.uid , name : item.name,  } )}>
+            <Ionicons name="md-sad-outline" size={23} />
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => handleDelete(item.id)}>
             <Ionicons name="trash" size={23} />
             </TouchableOpacity>
+            
+
             </View>
             </View>
             <Text style={{marginTop : 10,fontFamily: "Jalnan", color : 'red'}}>신고 사유 : {item.report}</Text>
