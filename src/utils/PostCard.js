@@ -221,7 +221,15 @@ const getComment = async(item) => {
         <TouchableOpacity onPress={() => navigation.navigate('PostComment',{uid : item.uid, postid: item.postid, name : item.post} )}>  
           <Ionicons name="chatbubble-ellipses" size={23} color={'#545454'}  />
         </TouchableOpacity>
+        
         </View>
+        <View style={{marginLeft: 5}}>
+        <TouchableOpacity onPress={() => navigation.navigate('ReportScreeninfo',{uid : item.uid, postid: item.postid, name : item.post, img : item.postImg} )}>  
+          <Ionicons name="megaphone" size={23} color={'#545454'}  />
+        </TouchableOpacity>
+        
+        </View>
+        
         <View style={{marginLeft: 5}}>
         <TouchableOpacity onPress={() => onDelete(item.id)}>
         {user.uid == item.uid ? (
