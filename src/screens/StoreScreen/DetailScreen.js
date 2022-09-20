@@ -96,24 +96,36 @@ const addItem = async () => {
       console.log(error.message);
     }
   }
-  try {
-    console.log(Item);
-      await firestore().collection('Inventory').doc(firebase.auth().currentUser.uid).collection(`${Item}`).add({
-      name: plant.name,
-      price: plant.price,
-      address: plant.address,
-    })
-    updatePoint();
-    console.log(`update 완료`);
-    console.log(`이름 : ${plant.name} 가격: ${plant.price} 주소 : ${plant.address} `);
-    setBuyItem(plant.name);
-    navigation.navigate('StoreHome');
-   
-  }
-  catch (error) {
-    console.log(error.message);
-  }
+  if(plant.type=='minipat'){
+try {
+  await firestore()
+  .collection('Inventory')
+  .doc(firebase.auth()
+  .currentUser.uid)
+  .collection(`${Item}`)
+  .add({
+  name: plant.name,
+  price: plant.price,
+  address1: plant.address1,
+  address2: plant.address2,
+  address3: plant.address3,
+  address4: plant.address4,
+  address5: plant.address5,
+  address6: plant.address6,
+})
+updatePoint();
+console.log(`update 완료`);
+console.log(`이름 : ${plant.name} 가격: ${plant.price} 주소 : ${plant.address} `);
+setBuyItem(plant.name);
+navigation.navigate('StoreHome');
+
+}
+catch (error) {
+console.log(error.message);
+}
+}
   };
+
   const addPresentItem = async () => {
     try {
       console.log(Item);
@@ -149,7 +161,7 @@ const addItem = async () => {
       </View>
       <View style={style.imageContainer}>
         
-        <Image source={{uri:plant.address}} style={{resizeMode: 'contain', flex: 1,aspectRatio:1}} />
+        <Image source={{uri:plant.address1}} style={{resizeMode: 'contain', flex: 1,aspectRatio:1}} />
       </View>
       <View style={style.detailsContainer}>
         

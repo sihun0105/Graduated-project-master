@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useContext, useRef,useCallback} from 'react';
+import React, {useState, useEffect, useContext,useRef, useCallback} from 'react';
+
 
 import {
   View,
@@ -9,41 +10,43 @@ import {
   ScrollView,
   SafeAreaView,
   Alert,
-  Button,
+  Button
+  
 } from 'react-native';
 import Icon from "react-native-vector-icons/Entypo";
 
 import { AuthContext } from '../../utils/AuthProvider';
 import firestore from '@react-native-firebase/firestore';
-import firebase from '@react-native-firebase/app';
+import firebase  from '@react-native-firebase/app';
 import songs from '../../data/songdata';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Loading from '../../utils/Loading';
-import {songT} from '../../components/MusicPlayer/MusicPlayer';
+import {songT} from '../../components/MusicPlayer/MusicPlayer'
 import ViewShot from 'react-native-view-shot';
 import storage from '@react-native-firebase/storage';
-import {theme} from '../../Chat/ChatTheme';
+import { theme } from '../../Chat/ChatTheme';
 import moment from 'moment';
 import useStore from '../../../store/store';
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import counterSlice, { up } from '../../../slices/counter';
-import Toast from 'react-native-toast-message';
-const ProfileScreen = ({navigation, route}) => {
+
+const ProfileScreen = ({navigation,route}) => {
+
   const {user, logout} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [friendData, setFriendData] = useState([]);
-  const [songIndex, setSongIndex] = useState(0);
+  const [songIndex, setSongIndex]=useState(0);
   const [LoginuserData, setLoginUserData] = useState(null);
   const [RequestData, setRequestData] = useState([]);
-  const [ready, setReady] = useState(true);
+  const [ready, setReady] = useState(true)
   const captureRef = useRef();
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [CommentData, setCommentData] = useState([]);
-  const {countItem, BuyItem} = useStore();
+  const {countItem,BuyItem} = useStore();
   const isFocused = useIsFocused();
   const count = useSelector(state => {return state.count.value});
   const dispatch = useDispatch();
@@ -66,23 +69,27 @@ const ProfileScreen = ({navigation, route}) => {
       text2: `정상적으로 저장했습니다!👋`,
     });
   };
-  const getComment = async () => {
+
+  const getComment = async() => {
     const querySanp = await firestore()
-      .collection('guestbook')
-      .doc(route.params ? route.params.uid : user.uid)
-      .collection('comment')
-      .get();
+    .collection('guestbook')
+    .doc(route.params ? route.params.uid : user.uid)
+    .collection('comment')
+    .get()
 
-    const allcomments = querySanp.docs.map(docSnap => docSnap.data());
-    setCommentData(allcomments);
-  };
+    const allcomments = querySanp.docs.map(docSnap=>docSnap.data())
+    setCommentData(allcomments)
+      
+    
+  }
   const uploadImage = async () => {
+  
     const uploadUri = await getPhotoUri();
-
+    
     let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
 
     // Add timestamp to File Name
-    const extension = filename.split('.').pop();
+    const extension = filename.split('.').pop(); 
     const name = filename.split('.').slice(0, -1).join('.');
     filename = name + Date.now() + '.' + extension;
 
@@ -90,7 +97,7 @@ const ProfileScreen = ({navigation, route}) => {
 
     const storageRef = storage().ref(`miniRoomImage/${filename}`);
     const task = storageRef.putFile(uploadUri);
-    task.on('state_changed', taskSnapshot => {
+    task.on('state_changed', (taskSnapshot) => {
       console.log(
         `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
       );
@@ -105,71 +112,80 @@ const ProfileScreen = ({navigation, route}) => {
       await task;
 
       const url = await storageRef.getDownloadURL();
-      console.log('uri', url);
+      console.log('uri', url)
 
       setUploading(false);
       setImage(null);
       firestore()
-        .collection('users')
-        .doc(firebase.auth().currentUser.uid)
-        .update({
-          miniRoom: url,
-        });
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        miniRoom : url
+      })
       // Alert.alert(
       //   'Image uploaded!',
       //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
       // );
       return url;
+
     } catch (e) {
       console.log(e);
       return null;
     }
-  };
+
+
+  }; 
   const getPhotoUri = async () => {
     const uri = await captureRef.current.capture();
     console.log('👂👂 Image saved to', uri);
     return uri;
   };
-
+    
   const onSave = async () => {
     const uri = await getPhotoUri();
     const imageuri = uploadImage();
     console.log('Image Url: ', imageuri);
+
+ 
+    
+  
+
+
   };
 
-  const getUser = async () => {
+  const getUser = async() => {
     await firestore()
-      .collection('users')
-      .doc(route.params ? route.params.uid : user.uid)
-      .get()
-      .then(documentSnapshot => {
-        if (documentSnapshot.exists) {
-          setUserData(documentSnapshot.data());
-        }
-      });
-  };
-  const getLoginUser = async () => {
+    .collection('users')
+    .doc( route.params ? route.params.uid : user.uid)
+    .get()
+    .then((documentSnapshot) => {
+      if( documentSnapshot.exists ) {
+        console.log('User Data', documentSnapshot.data());
+        setUserData(documentSnapshot.data());
+      }
+    })
+  }
+  const getLoginUser = async() => {
     const currentUser = await firestore()
-      .collection('users')
-      .doc(user.uid)
-      .get()
-      .then(documentSnapshot => {
-        if (documentSnapshot.exists) {
-          setLoginUserData(documentSnapshot.data());
-        }
-      });
-  };
-
-  const getRequest = async () => {
-    const querySanp = await firestore()
-      .collection('Request')
-      .doc(firebase.auth().currentUser.uid)
-      .collection('RequestInfo')
-      .get();
-    const allRequests = querySanp.docs.map(docSnap => docSnap.data());
-    //  console.log(allusers)
-    setRequestData(allRequests);
-  };
+    .collection('users')
+    .doc(user.uid)
+    .get()
+    .then((documentSnapshot) => {
+      if( documentSnapshot.exists ) {
+        setLoginUserData(documentSnapshot.data());
+      }
+    })
+  }
+ 
+  const getRequest = async ()=>{
+    const querySanp = await firestore().collection('Request').doc(firebase.auth().currentUser.uid).collection('RequestInfo').get()
+    const allRequests = querySanp.docs.map(docSnap=>docSnap.data())
+   //  console.log(allusers)
+   console.log('Requests: ', RequestData );
+   setRequestData(allRequests)
+   
+}
+  
 
   const fetchFriends = async () => {
     try {
@@ -180,9 +196,15 @@ const ProfileScreen = ({navigation, route}) => {
         .doc(firebase.auth().currentUser.uid)
         .collection('friendsinfo')
         .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            const {name, sname, birthday} = doc.data();
+        .then((querySnapshot) => {
+           console.log('Total Friends: ', querySnapshot.size);
+          
+          querySnapshot.forEach((doc) => {
+            const {
+              name,
+              sname,
+              birthday,
+            } = doc.data();
             list.push({
               name,
               sname,
@@ -191,27 +213,29 @@ const ProfileScreen = ({navigation, route}) => {
           });
         });
 
-      setFriendData(list);
+        setFriendData(list);
 
       if (loading) {
         setLoading(false);
       }
+
+      console.log('Friends: ', friendData );
     } catch (e) {
       console.log(e);
     }
-  };
-
+  };  
+  
   useEffect(() => {
-    setTimeout(() => {
-      setReady(false);
-    }, 1000);
+    setTimeout(()=>{
+     setReady(false)
+     },1000)   
     getUser();
     fetchFriends();
     getLoginUser();
     getRequest();
     getComment();
-    navigation.addListener('focus', () => setLoading(!loading));
-  }, [navigation, loading, countItem, BuyItem, isFocused]);
+    navigation.addListener("focus", () => setLoading(!loading));
+  }, [navigation, loading,countItem,BuyItem,isFocused]);
 
   const FriendRequest = () => {
     Alert.alert(
@@ -233,12 +257,15 @@ const ProfileScreen = ({navigation, route}) => {
   };
 
   const Requset = () => {
+    
+
     firestore()
       .collection('Request')
       .doc(route.params ? route.params.uid : user.uid)
       .collection('RequestInfo')
       .doc(firebase.auth().currentUser.uid)
       .set({
+  
         uid: firebase.auth().currentUser.uid,
         name: LoginuserData.name,
         sname: '별명',
@@ -247,32 +274,35 @@ const ProfileScreen = ({navigation, route}) => {
       })
       .then(() => {
         console.log('requset Added!');
-        Alert.alert('회원님에게 친구를 요청하였습니다');
+        Alert.alert(
+          '회원님에게 친구를 요청하였습니다',
+        );
+  
+        
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('error.', error);
       });
+    
   };
 
   const onprofilePressed = () => {
     navigation.navigate('EditProfile');
-  };
-  const onMusicPressed = () => {
+};
+const onMusicPressed = () => {
+  
     navigation.navigate('Music');
-  };
-  const onEditFriendPressed = () => {
-    navigation.navigate('Friend');
-  };
+};
+const onEditFriendPressed = () => {
+  navigation.navigate('Friend', );
+};
 
-  const onRequsetPressed = () => {
-    navigation.navigate('Requset');
-  };
+const onRequsetPressed = () => {
+  navigation.navigate('Requset');
+};
   const onweblogpress = () => {
-    navigation.navigate('Weblog', {
-      name: userData.name,
-      uid: route.params ? route.params.uid : user.uid,
-    });
-  };
+    navigation.navigate('Weblog', {name : userData.name ,uid : route.params ? route.params.uid : user.uid});
+};
 
 const onDiarypress = () => {
   navigation.navigate('Diary',{name : userData.name ,uid : route.params ? route.params.uid : user.uid});
@@ -303,7 +333,7 @@ const AddStorePressed = () => {
       
     <View style={{flex: 1, backgroundColor: '#fff'}}>
         {(() => { 
-    if (true)    
+    if (false) // 관리자 구분    
     return  <View style={{flex: 1, backgroundColor: '#fff'}}>
     <View style={styles.title}>
   
@@ -599,23 +629,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // 혹은 'column'
   },
   leftcontainer: {
-    flex: 0.7,
+    flex:0.7,
     justifyContent: 'center',
     alignItems: 'center',
+   
   },
   userinfotext: {
-    justifyContent: 'center',
+    justifyContent: "center",
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   rightcontainer: {
-    flex: 0.8,
+    flex:0.8,
+    
   },
   container: {
     flex: 1,
     backgroundColor: '#f6f6f6',
-    marginTop: 10,
+    marginTop:10,
+   
   },
   logo: {
     alignItems: 'center',
@@ -628,33 +661,33 @@ const styles = StyleSheet.create({
     marginTop : 20,
   },
   imageContainer: {
-    marginLeft: 10,
+    marginLeft : 10,
     borderRadius: 25,
     height: 60,
     width: 60,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'center',
+    alignSelf: 'center' 
   },
-  music: {
-    marginTop: 10,
-    height: 25,
-    marginLeft: 25,
-    marginRight: 25,
+  music:{
+    marginTop:10,
+    height:25,
+    marginLeft:25,
+    marginRight:25,
   },
   username: {
     fontSize: theme.fontSize.title,
     color: '#696969',
     width: 210,
-    fontFamily: 'Jalnan',
+    fontFamily : "Jalnan",
   },
   message: {
     fontSize: theme.fontSize.message,
     width: 240,
     color: theme.colors.subTitle,
-    marginTop: 5,
-    fontFamily: 'Jalnan',
+    marginTop : 5,
+    fontFamily : "Jalnan",
   },
 
   title:{ 
@@ -665,30 +698,33 @@ const styles = StyleSheet.create({
     
    
   },
-  img: {width: 60, height: 60, borderRadius: 30, backgroundColor: 'orange'},
-  titleText: {
-    fontFamily: 'Jalnan',
+  img:{width:60,height:60,borderRadius:30,backgroundColor:"orange"},
+  titleText:{
+    fontFamily: "Jalnan",
     justifyContent: 'space-around',
     fontSize: 20,
-    color: 'white',
+    color:'white',
+   
   },
   conversation: {
     flexDirection: 'row',
     paddingBottom: 25,
     paddingRight: 20,
-    paddingTop: 20,
+    paddingTop : 20,
   },
   userImg: {
     height: 125,
     width: 125,
     borderRadius: 50,
     backgroundColor: '#fff',
+    
   },
   action: {
+    
     flexDirection: 'row',
     marginTop: 2,
     marginBottom: 1,
-
+    
     paddingBottom: 5,
   },
   userBtnWrapper: {
@@ -705,16 +741,19 @@ const styles = StyleSheet.create({
     marginTop : 10
       },
   userBtn: {
-    width: 120,
-    backgroundColor: '#fff',
+    width:120,
+    backgroundColor:'#fff',
     borderColor: 'orange',
-    borderBottomColor: '#fff',
-    borderWidth: 2,
+    borderBottomColor:'#fff',
+    borderWidth:2,
     paddingVertical: 12,
     paddingHorizontal: 12,
     marginHorizontal: 6,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+
+
+
   },
   row: {
     flexDirection: 'row',
@@ -725,60 +764,65 @@ const styles = StyleSheet.create({
     alignItems: 'center'
 },
   guestBtn: {
-    width: 395,
-    backgroundColor: '#fff',
+    width : 395,
+    backgroundColor:'#fff',
     borderColor: '#fff',
-    borderBottomColor: '#fff',
-    borderWidth: 1,
+    borderBottomColor:'#fff',
+    borderWidth:1,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    marginTop: 10,
+    marginTop: 10
+ 
   },
   guestBtn3: {
-    width: 395,
-    backgroundColor: '#fff',
+    width : 395,
+    backgroundColor:'#fff',
     borderColor: '#fff',
-    borderBottomColor: '#fff',
-    borderWidth: 1,
+    borderBottomColor:'#fff',
+    borderWidth:1,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    marginBottom: 10,
+    marginBottom: 10
+ 
   },
-  guestBtn2: {
-    width: 395,
-    backgroundColor: '#fff',
+    guestBtn2: {
+    width : 395,
+    backgroundColor:'#fff',
     borderColor: '#fff',
-    borderBottomColor: '#fff',
-    borderWidth: 1,
-    marginTop: 10,
+    borderBottomColor:'#fff',
+    borderWidth:1,
+    marginTop : 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+
+ 
   },
   guestBtn3: {
-    width: 395,
-    backgroundColor: '#fff',
+    width : 395,
+    backgroundColor:'#fff',
     borderColor: '#fff',
-    borderBottomColor: '#fff',
-    borderWidth: 1,
+    borderBottomColor:'#fff',
+    borderWidth:1,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    marginBottom: 10,
+    marginBottom: 10
+ 
   },
-  guestBtn2: {
-    width: 395,
-    backgroundColor: '#fff',
+    guestBtn2: {
+    width : 395,
+    backgroundColor:'#fff',
     borderColor: '#fff',
-    borderBottomColor: '#fff',
-    borderWidth: 1,
-    marginTop: 10,
+    borderBottomColor:'#fff',
+    borderWidth:1,
+    marginTop : 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
@@ -796,7 +840,7 @@ const styles = StyleSheet.create({
     fontSize:25,
   },
   userInfoWrapper: {
-    flex: 1,
+    flex : 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
@@ -809,28 +853,30 @@ const styles = StyleSheet.create({
     color: 'orange',
 
     fontSize: 18,
-
+    
     marginBottom: 5,
     textAlign: 'center',
   },
   userInfoTitle2: {
     color: '#696969',
-    fontFamily: 'Jalnan',
+    fontFamily: "Jalnan",
     fontSize: 18,
     marginBottom: 5,
   },
   userInfoSubTitle: {
+    
     fontSize: 20,
     color: '#666',
     textAlign: 'center',
   },
   miniroom: {
-    width: '100%',
-    height: 200,
+    width:'100%',
+    height:200,
     justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems:'center',
     paddingVertical: 8,
     paddingHorizontal: 8,
-    marginBottom: 10,
+    marginBottom : 10
   },
+
 });
