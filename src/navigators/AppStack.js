@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useRef, useState} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -27,7 +27,9 @@ import PresentScreen from '../screens/ChatScreen/PresentScreen';
 import PresentDetailScreen from '../screens/ChatScreen/PresentDetailScreen'
 import Changepwd from '../screens/SettingScreen/Changepwd'
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import { useDispatch, useSelector } from 'react-redux';
+import counterSlice, { up } from '../../slices/counter';
+import userSlice from '../../slices/user';
 
 
 const Stack = createStackNavigator();
@@ -380,7 +382,46 @@ const SettingStack = ({navigation}) => (
 
 
 const AppStack = () => {
+  const [min, setMin] = useState(6);
+  const [sec, setSec] = useState(0);
+  const time = useRef(360);
+  const timerId = useRef(null);
+  const dispatch = useDispatch();
+  const count = useSelector(state => {return state.count.value});
   
+  useEffect(()=>{
+  timerId.current = setInterval(() => { // 로그인시 미니펫용 카운터
+    setMin(parseInt(time.current / 60));
+    setSec(time.current % 60);
+    time.current -=1;
+    
+    console.log(time.current);
+  }, 3022220);
+
+  return () => clearInterval(timerId.current);
+  },[]);
+
+  useEffect(()=>{
+    const promise = new Promise((resolve, reject) => {
+      if(time.current %60===0) {
+        resolve(1);
+      } else if(time.current <=0){
+        reject('타이머 종료');
+      }
+      });
+    promise.then((item) => {
+      dispatch(counterSlice.actions.up(item)); //로그인후 앱스택 접속시 시작, 미니룸 펫 키우기용
+      console.log(`먹이 꺼-억${item} - 먹은갯수:${count}`);
+    })
+    .catch((error) => {
+      console.log(error);
+      clearInterval(timerId.current);
+    });
+  },[sec]);
+  // dispatch(counterSlice.actions.up(1)); //로그인후 앱스택 접속시 시작, 미니룸 펫 키우기용
+  // console.log(count);
+  // console.log('타임아웃');
+  // clearInterval(timerId.current);
   const getTabBarVisibility = (route) => {
     const routeName = route.state
       ? route.state.routes[route.state.index].name

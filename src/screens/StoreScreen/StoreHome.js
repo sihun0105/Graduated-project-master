@@ -78,7 +78,7 @@ const StoreHome = ({navigation}) => {
     try {
       const data = await usersCollectionP.get();
       setMinipat(data._docs.map(doc => ({ ...doc.data(), id: doc.id })));
-      console.log('B');
+      console.log('P');
     } catch (error) {
       console.log(error.message);
     }
@@ -127,10 +127,17 @@ const StoreHome = ({navigation}) => {
               marginTop:15,
               alignItems: 'center',
             }}>
-            <Image
+              {
+              plant.type=="minipat" ? // 미니펫은 이미지가 5개가 필요해서 따로 검사
+              <Image
+              source={{uri:plant.address1}}
+              style={{flex: 1, resizeMode: 'contain',aspectRatio: 1.0,}} resizeMethod='resize'
+            />
+              : <Image
               source={{uri:plant.address}}
               style={{flex: 1, resizeMode: 'contain',aspectRatio: 1.0,}} resizeMethod='resize'
             />
+            }
           </View>
           <View style={{marginTop:13}}>
           <Text style={{ fontSize: 17, marginTop: 10, fontFamily: "Jalnan",}}>

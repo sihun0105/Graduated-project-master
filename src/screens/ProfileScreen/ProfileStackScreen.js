@@ -20,6 +20,9 @@ import AddPhotos from './Albums/AddPhotos';
 import PhotoDetail from './Albums/PhotoDetail';
 import Comment from './Albums/Comment';
 import PointGuide from '../SettingScreen/PointGuide';
+import Miniroom from './Miniroom/Miniroom';
+import CheckItem from './Miniroom/CheckItem';
+import MiniroomStack from './Miniroom/MiniroomStack';
 import UserScreen from './Admin/UserScreen';
 import ReportScreen from './Admin/ReportScreen';
 import AddStore from './Admin/AddStore';
@@ -361,89 +364,101 @@ const ProfileStackScreen = ({navigation}) => {
                     }}
                   />
 
-                  <Stack.Screen
-                    name="Comment"
-                    component={Comment}
-                    options={{
-                    title: '댓글',
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                      fontFamily: 'Jalnan',
-                      color : '#696969'
-                     },
-                    headerStyle: {
-                    backgroundColor: '#fff',
-                    shadowColor: '#fff',
-                    elevation: 0,
-                    
-          
-                    },
-                    headerBackTitleVisible: false,
-                    headerBackImage: () => (
-                    <View style={{marginLeft: 15}}>
-                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-                      </View>
-                    ),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="Weblog"
-                    component={Weblog}
-                    options={{
-                    title: '방명록',
-                    headerTitleAlign: 'center',   
-                     headerTitleStyle: {
-                      fontFamily: 'Jalnan',
-                      color : '#696969'
-                     },
-                    headerStyle: {
-                    backgroundColor: '#fff',
-                    shadowColor: '#fff',
-                    elevation: 0,
-                    
-          
-                    },
-                    headerBackTitleVisible: false,
-                    headerBackImage: () => (
-                    <View style={{marginLeft: 15}}>
-                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-                      </View>
-                    ),
-                    }}
-                  />
-                  
-                  <Stack.Screen
-                    name="Miniroom"
-                    component={Miniroom}
-                    options={{
-                      headerShown : true,
-          
-                     
-          
-                      title: '미니룸',
-                    headerTitleAlign: 'center',   
-                     headerTitleStyle: {
-                      fontFamily: 'Jalnan',
-                      color : '#696969'
-                     },
-                    headerStyle: {
-                    backgroundColor: '#fff',
-                    shadowColor: '#fff',
-                    elevation: 0,
-                    
-          
-                    },
-                    headerBackTitleVisible: false,
-                    headerBackImage: () => (
-                    <View style={{marginLeft: 15}}>
-                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-                      </View>
-                    
-                    ),
-                    
-                    
-                     }}
-                  />
+      <Stack.Screen
+        name="Comment"
+        component={Comment}
+        options={{
+          title: '댓글',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'Jalnan',
+            color: '#696969',
+          },
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+            <View style={{marginLeft: 15}}>
+              <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+            </View>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Weblog"
+        component={Weblog}
+        options={{
+          title: '방명록',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'Jalnan',
+            color: '#696969',
+          },
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+            <View style={{marginLeft: 15}}>
+              <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+            </View>
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="Miniroom"
+        component={Miniroom}
+        options={{
+          headerShown: true,
+
+          title: '미니룸',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'Jalnan',
+            color: '#696969',
+          },
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerBackTitleVisible: false,
+          // headerBackImage: () => (
+          //   <View style={{marginLeft: 15}}>
+          //     <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+          //   </View>
+          // ),
+        }}
+      />
+      <Stack.Screen
+        name="CheckItem"
+        component={CheckItem}
+        options={{
+          title: 'CheckItem',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'Jalnan',
+            color: '#696969',
+          },
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerBackTitleVisible: true,
+          headerBackImage: () => (
+            <View style={{marginLeft: 15}}>
+              <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+            </View>
+          ),
+        }}
+      />
                   <Stack.Screen
                     name="UserScreen"
                     component={UserScreen}
@@ -520,11 +535,15 @@ const ProfileStackScreen = ({navigation}) => {
                     ),
                     }}
                   />
-
-                
-
-                
-            </Stack.Navigator>
+      <Stack.Screen
+        name="MiniroomStack"
+        component={MiniroomStack}
+        options={{
+          headerShown: false,
+          headerBackTitleVisible: false,
+        }}
+      />
+    </Stack.Navigator>
 
             
   );
