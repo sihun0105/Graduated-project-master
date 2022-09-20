@@ -66,14 +66,6 @@ const ToolInven = () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    // navigation.reset({
-                    //   routes: [
-                    //     {
-                    //       name: 'CheckItem',
-                    //       params: {tool, idx}, // 보낼 데이터가 있다면
-                    //     },
-                    //   ],
-                    // });
                     navigation.navigate('CheckItem', {tool, idx});
                   }}
                   style={{}}>
