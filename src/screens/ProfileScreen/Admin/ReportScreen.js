@@ -65,6 +65,7 @@ const ReportScreen = ({props}) => {
       await firestore()
         
       .collection("ReportPost")
+      .orderBy("postTime", "desc")
       .get()
         .then((querySnapshot) => {
           // console.log('Total Posts: ', querySnapshot.size);
@@ -74,6 +75,7 @@ const ReportScreen = ({props}) => {
               uid,
               userimg,
               post,
+              postTime,
               postimg,
               name,
               postid,
@@ -82,6 +84,7 @@ const ReportScreen = ({props}) => {
             list.push({
               id: doc.id,
               uid,
+              postTime : postTime,
               userimg,
               postimg,
               post,
@@ -115,7 +118,7 @@ const ReportScreen = ({props}) => {
     getBestPosts();
   }, [deleted,refreshing,isFocused]);
 
-  const handleDelete = (postId) => {
+  const handleDelete = (postId,userId,report) => {
     Alert.alert(
       '글 삭제하기',
       '확실합니까?',
@@ -127,14 +130,14 @@ const ReportScreen = ({props}) => {
         },
         {
           text: 'Confirm',
-          onPress: () => deletePost(postId),
+          onPress: () => deletePost(postId,userId,report),
         },
       ],
       {cancelable: false},
     );
   };
 
-  const deletePost = (postId) => {
+  const deletePost = (postId,userId,report) => {
     console.log('Current Post Id: ', postId);
 
     firestore()
@@ -153,20 +156,20 @@ const ReportScreen = ({props}) => {
               .delete()
               .then(() => {
                 console.log(`${postImg} 성공적으로 삭제되었습니다.`);
-                deleteFirestoreData(postId);
+                deleteFirestoreData(postId,userId,report);
               })
               .catch((e) => {
                 console.log('Error while deleting the image. ', e);
               });
             // If the post image is not available
           } else {
-            deleteFirestoreData(postId);
+            deleteFirestoreData(postId,userId,report);
           }
         }
       });
   };
 
-  const deleteFirestoreData = (postId,userId) => {
+  const deleteFirestoreData = (postId,userId,report) => {
     firestore()
       .collection('posts')
       .doc(postId)
@@ -179,9 +182,11 @@ const ReportScreen = ({props}) => {
 
       firestore()
       .collection('ReportRecord')
-      .doc(item.uid)
-      .set({
+      .doc(userId)
+      .collection('ReportTime')
+      .add({
         postTime: firestore.Timestamp.fromDate(new Date()),
+        report : report,
 
       })
       
@@ -227,7 +232,7 @@ const ReportScreen = ({props}) => {
             <Ionicons name="md-sad-outline" size={23} />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => handleDelete(item.id)}>
+            <TouchableOpacity onPress={() => handleDelete(item.id,item.uid,item.report)}>
             <Ionicons name="trash" size={23} />
             </TouchableOpacity>
             

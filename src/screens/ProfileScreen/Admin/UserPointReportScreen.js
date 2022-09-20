@@ -25,79 +25,22 @@ const UserPointReportScreen = ({navigation, route}) => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-  const getFriend = async() => {
+  
+  const getUsers = async() => {
     const querySanp = await firestore()
-    .collection('friends')
-    .doc(firebase.auth().currentUser.uid)
-    .collection('friendsinfo')
-    .get()
-
-    const allfriends = querySanp.docs.map(docSnap=>docSnap.data())
-    setFriendData(allfriends)
-      
-    
-  }
-
-  const getUsers = async () => {
-    const currentUser = await firestore()
-      .collection('users')
-      .doc(route.params.uid)
-      .get()
-      .then(documentSnapshot => {
-        if (documentSnapshot.exists) {
-            setUserdData(documentSnapshot.data());
-        }
-      });
-  };
-  const getComment = async() => {
-    const querySanp = await firestore()
-    .collection('PointInfo')
+    .collection('ReportRecord')
     .doc(route.params.uid)
-    .collection('AboutPoint')
-    .orderBy('commentTime', 'desc')
+    .collection('ReportTime')
+    .orderBy('postTime', 'desc')
     .get()
 
     const allcomments = querySanp.docs.map(docSnap=>docSnap.data())
-    setCommentData(allcomments)
+    setUserdData(allcomments)
       
     
   }
-  const PlusPoint = async () => {
-    
-
-    const querySanp = await firestore()
-    .collection('PointInfo')
-    .doc(route.params.uid)
-    .collection('AboutPoint')
-    .add({
   
-      Point : "+" + point,
-      About : about, 
-      commentTime: firestore.Timestamp.fromDate(new Date()),
-    })
-    .then(() => {
-    firestore()
-    .collection('users')
-    .doc(route.params.uid)
-    .update({
   
-      point : Number(userData.point) + Number(point)
-      
-    })
-    
-      setDeleted(true);
-      Alert.alert('포인트 지급 완료!')
-
-     
-        
-   
-
-      
-    })
-    .catch((error) => {
-      console.log('Something went wrong with added post to firestore.', error);
-    });
-  }
   const MinusPoint = async () => {
     
 
@@ -136,20 +79,17 @@ const UserPointReportScreen = ({navigation, route}) => {
     });
   }
   useEffect(() => {
-    getFriend();
     getUsers();
-    getComment()
     setDeleted(false);
   }, [deleted,refreshing]);
 
 
   const RenderCard = ({item})=>{
     return (
-        <View style={{flexDirection:'row',flex:1,width:370,marginBottom: 10}}>
-        <Text style={{fontFamily : "Jalnan", fontSize : 15,textAlign:"left"}}>{moment(item.commentTime.toDate()).fromNow()}</Text>
-        <Text style={{flex : 1,fontFamily : "Jalnan", fontSize : 15,textAlign : "center"}}> {item.About}</Text>
-        <Text style={{flex : 1,fontFamily : "Jalnan", fontSize : 15,textAlign:"right"}}> {item.Point}</Text>
-         
+        <View style={{flexDirection:'row',flex:1,width:370,marginBottom: 10,justifyContent: "space-between"}}>
+        <Text style={{fontFamily : "Jalnan", fontSize : 15,textAlign:"left"}}>사유 : { item.report } </Text>
+        <Text style={{fontFamily : "Jalnan", fontSize : 15,}}>{moment(item.postTime.toDate()).fromNow()}</Text>
+    
 
          
 
@@ -166,8 +106,9 @@ const UserPointReportScreen = ({navigation, route}) => {
           <View style={{width:40}}></View>
           
         </View>
+        
         <FlatList 
-          data={CommentData}
+          data={userData}
           renderItem={({item})=> {return <RenderCard item={item} />
         
         }}

@@ -145,7 +145,8 @@ const tags = ["무분별한 게시물 도배", ,"선정적인 음란 게시물",
         postimg: route.params.img,
         name: userData ? userData.name || '' : '',
         postid: route.params.postid,
-        report: tag
+        report: tag,
+        postTime : firestore.Timestamp.fromDate(new Date()),
       })
       
          
