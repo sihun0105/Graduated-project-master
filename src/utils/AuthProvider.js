@@ -141,7 +141,7 @@ export const AuthProvider = ({children}) => {
             .then(() => {
               firestore().collection('users').doc(auth().currentUser.uid)
               .set({
-                  
+                  InterSearch : InterSearch,
                   name: name,
                   password : password,
                   email: email,
@@ -149,7 +149,7 @@ export const AuthProvider = ({children}) => {
                   age: age,
                   uid: auth().currentUser.uid,
                   point: 1000,
-                  about: null,
+                  about: about,
                   miniRoom : 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/miniRoomImage%2FReactNative-snapshot-image76099903516454588181655454835737.jpg?alt=media&token=a21f2503-6475-4d80-9acb-7f1aa8f8646d',
                   birthday: birthday,
                   createdAt: firestore.Timestamp.fromDate(new Date()),
@@ -187,6 +187,14 @@ export const AuthProvider = ({children}) => {
                   firestore().collection('Inventory').doc(auth().currentUser.uid).collection('minipat').doc().set({
                     address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
                     ,count:1
+                  })
+                  firestore().collection('SearchCount').doc(auth().currentUser.uid).set({
+                    동물 : 0,
+                    문화 : 0,
+                    물건 : 0,
+                    배경 : 0,
+                    음식 : 0,
+                    인물 : 0,
                   })
                   .catch(error => {
                   console.log('Something went wrong with added user to firestore: ', error);

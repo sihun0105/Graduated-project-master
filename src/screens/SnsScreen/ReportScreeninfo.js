@@ -13,7 +13,6 @@ import {
   Dimensions
 } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import FormButton_2 from '../../components/shared/FormButton_2';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useIsFocused } from '@react-navigation/native';

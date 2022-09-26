@@ -7,7 +7,6 @@ import Diary from './Diary/Diary';
 import AddDiary from './Diary/AddDiary';
 import Album from './Albums/Album';
 import Weblog from './GuestBook/Weblog';
-import Miniroom from './Miniroom/Miniroom';
 import ProfileScreen from './ProfileScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Requset from './Friend/Requset';
