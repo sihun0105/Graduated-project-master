@@ -22,12 +22,9 @@ const SearchScreen = ({navigation}) => {
   const [userData, setUserData] = useState(null);
   const isFocused = useIsFocused();
   const tags = ["인물", "배경", "음식", "동물", "물건", "문화"]
-  const [maxnum,setmaxnum] = useState(0);  
 
-  const [maxnumT, setMaxnumT] = useState(null);
 
   const [search, setSearch] = useState(null);
-  var [searchT, setsearchT] = useState('배경');
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
