@@ -15,17 +15,19 @@ var { height, width } = Dimensions.get('window');
 
 const SearchScreen = ({navigation}) => {
   const {Post} = useStore(); // 0522새로고침용
-  const [posts,setPosts] = useState(null)
   const [loading, setLoading] = useState(true);
   const [Bestposts,setBestPosts] = useState(null)
   const [ready, setReady] = useState(true)
   const {Lsearch, setLsearch,setLsearchcount,Lsearchcount}  = useStore()
   const [userData, setUserData] = useState(null);
-  const [random, setRandom] = useState([]); 
-  
   const isFocused = useIsFocused();
+  const tags = ["인물", "배경", "음식", "동물", "물건", "문화"]
+  const [maxnum,setmaxnum] = useState(0);  
 
+  const [maxnumT, setMaxnumT] = useState(null);
 
+  const [search, setSearch] = useState(null);
+  var [searchT, setsearchT] = useState('배경');
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -35,7 +37,6 @@ const SearchScreen = ({navigation}) => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-  const tags = ["인물", "배경", "음식", "동물", "물건", "문화"]
   const [changepost,setchangePosts] = useState(null)
   const [allpost,setallpost] = useState(null)
   const [Count,setCounts] = useState(null)
@@ -70,7 +71,7 @@ const getCounts = async() => {
 
 const getPosts = async ()=>{
     
-  const querySanp = await firestore().collection('posts').where('tag', '==' , '동물').orderBy('postTime', 'desc').get()
+  const querySanp = await firestore().collection('posts').where('tag', '==' , userData ? userData.InterSearch : '동물').orderBy('postTime', 'desc').get()
   const allposts = querySanp.docs.map(docSnap=>docSnap.data())
  setchangePosts(allposts)
 
@@ -131,6 +132,17 @@ const ALlPosts =  async (tags) => {
     console.log(e);
   }
 };
+const getSearch = async() => {
+  await firestore().collection('SearchCount')
+  .doc(firebase.auth().currentUser.uid).get()
+  .then((documentSnapshot) => {
+    if( documentSnapshot.exists ) {
+      console.log('User Data', documentSnapshot.data());
+      setSearch(documentSnapshot.data());
+    }
+  })
+}
+
 
 const getBestPosts = async ()=>{
   const querySanp = await firestore()
@@ -146,10 +158,7 @@ const AllBestPosts =  async () => {
   try {
     const list = [];
     
-    await firestore()
-      .collection('posts')
-      .orderBy('likes', 'desc')
-      .get()
+    await firestore().collection('posts').where('tag', '==' , userData ? userData.InterSearch : '동물').orderBy('postTime', 'desc').get()
       .then((querySnapshot) => {
         // console.log('Total Posts: ', querySnapshot.size);
         querySnapshot.forEach((doc) => {
@@ -245,7 +254,7 @@ const handleSearchTextChange =  async () => {
     setLsearchcount();  
 
   {(() => { 
-    if (Lsearch === '동물')    
+    if (Lsearch === "동물")    
     return  firestore()
     .collection('SearchCount')
     .doc(firebase.auth().currentUser.uid)
@@ -292,9 +301,31 @@ const handleSearchTextChange =  async () => {
             물건 : Count.물건 +1
           })
         }
+        
+
         })()} 
-    
-      
+
+        
+        const searchs =[search.인물,search.배경,search.음식,search.동물,search.물건,search.문화]
+        var maxnum2 = 0;
+        var maxnumT2 = '';
+          for (let i = 0; i < tags.length; i++) {
+            if (searchs[i] > maxnum2) {
+              maxnum2 = searchs[i]
+              //setmaxnum(searchs[i])
+              maxnumT2 =tags[i]
+              console.log(maxnum2)
+              console.log(maxnumT2)
+           
+            }
+          }
+          
+   firestore()
+  .collection('users')
+  .doc(firebase.auth().currentUser.uid)
+  .update({
+    InterSearch : maxnumT2
+  })
       
     if (loading) {
       setLoading(false);
@@ -384,6 +415,8 @@ useEffect(()=>{
     getRandomIndex()
     getCounts()
     getAllPosts()
+    getSearch()
+    
   },[Post,isFocused])
 
   const RenderCard = ({item})=>{
@@ -441,14 +474,13 @@ useEffect(()=>{
     <TouchableOpacity onPress={handleSearchTextChange}>
     <View style={styles.serachBtn}>
     <Text style={{color : '#696969' , fontFamily : 'Jalnan'}}>검색</Text>
-    
+
     </View>
     </TouchableOpacity>
     </View>
    
     
     <View style={{flexDirection : 'row'}}>
-
     <Text style={{fontSize : 20, marginLeft : 5, fontFamily : 'Jalnan',marginTop : 5, color : 'orange'}}>🎉인기 게시물 Top 5🎉  </Text>
 
           </View>
@@ -486,7 +518,7 @@ useEffect(()=>{
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button2} onPress={() => AllBestPosts()}>
-              <Text style={styles.userBtnTxt2}>인기 게시물</Text>
+              <Text style={styles.userBtnTxt2}>관심 게시물</Text>
           </TouchableOpacity>
 
           </ScrollView>
