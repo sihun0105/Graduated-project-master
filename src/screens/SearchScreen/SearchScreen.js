@@ -22,7 +22,7 @@ const SearchScreen = ({navigation}) => {
   const [userData, setUserData] = useState(null);
   const isFocused = useIsFocused();
   const tags = ["인물", "배경", "음식", "동물", "물건", "문화"]
-  
+
 
   const [search, setSearch] = useState(null);
   const wait = (timeout) => {
