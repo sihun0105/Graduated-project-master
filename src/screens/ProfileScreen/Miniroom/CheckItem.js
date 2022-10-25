@@ -22,9 +22,8 @@ const CheckItem = ({navigation, route}) => {
   const {settooladdress, BuyItem, countItem, setcountItem, setwhfmrl} =
     useStore();
   const [userData, setUserData] = useState(null);
-
   const plant = route.params;
-
+  console.log(plant.tool);
   const [Item, setItem] = useState('');
   const Checktype = () => {
     if (plant.type == 'tool') return setItem('tool');
@@ -56,12 +55,12 @@ const CheckItem = ({navigation, route}) => {
       [
         {
           text: '아니요',
-          onPress: () => console.log('안해욧'),
+          onPress: () => console.log('안사요'),
         },
         {
           text: '네',
           onPress: () =>
-            plant.type === 'tool'
+            plant.tool[0].type == 'tool'
               ? pushTool(
                   plant.tool[plant.idx].address,
                   plant.tool[plant.idx].name,
@@ -94,6 +93,7 @@ const CheckItem = ({navigation, route}) => {
         size: size,
       });
     settooladdress(address);
+    console.log('푸쉬툴');
     setcountItem();
     navigation.reset({
       routes: [
@@ -114,6 +114,7 @@ const CheckItem = ({navigation, route}) => {
       .doc(firebase.auth().currentUser.uid + 'mid')
       .update({address: newaddress, name: newname, size: size});
     settooladdress(newaddress);
+    console.log('푸쉬미니미');
     setcountItem();
     navigation.reset({
       routes: [
@@ -137,6 +138,7 @@ const CheckItem = ({navigation, route}) => {
             size={28}
             onPress={() => navigation.goBack()}
           /> */}
+
           <Text style={{fontSize: 18, marginTop: 3, fontFamily: 'Jalnan'}}>
             <Icons name="coins" size={18} /> {userData ? userData.point : ''}
           </Text>
