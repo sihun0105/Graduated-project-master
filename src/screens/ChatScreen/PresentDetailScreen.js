@@ -75,7 +75,7 @@ const PresentScreen = ({navigation, route}) => {
 
   const addItem = async () => {
     try {
-      await firestore()
+      await firestore()asdas
         .collection('Inventory')
         .doc(route.params.uid)
         .collection('tool')
