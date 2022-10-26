@@ -127,6 +127,7 @@ const DetailsScreen = ({navigation, route}) => {
             address4: plant.address4,
             address5: plant.address5,
             address6: plant.address6,
+            type: plant.type,
           });
         updatePoint();
         console.log(`update 완료`);

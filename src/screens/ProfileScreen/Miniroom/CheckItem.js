@@ -59,18 +59,45 @@ const CheckItem = ({navigation, route}) => {
         },
         {
           text: '네',
-          onPress: () =>
-            plant.tool[0].type == 'tool'
-              ? pushTool(
-                  plant.tool[plant.idx].address,
-                  plant.tool[plant.idx].name,
-                  plant.tool[plant.idx].size,
-                )
-              : pushMinime(
-                  plant.tool[plant.idx].address,
-                  plant.tool[plant.idx].name,
-                  plant.tool[plant.idx].size,
-                ),
+          onPress: () => {
+            if (plant.tool[0].type == 'tool') {
+              pushTool(
+                plant.tool[plant.idx].address,
+                plant.tool[plant.idx].name,
+                plant.tool[plant.idx].size,
+              );
+            }
+            if (plant.tool[0].type == 'minime') {
+              pushMinime(
+                plant.tool[plant.idx].address,
+                plant.tool[plant.idx].name,
+                plant.tool[plant.idx].size,
+              );
+            }
+            if (plant.tool[0].type == 'minipat') {
+              pushMinipat(
+                plant.tool[plant.idx].address1,
+                plant.tool[plant.idx].address2,
+                plant.tool[plant.idx].address3,
+                plant.tool[plant.idx].address4,
+                plant.tool[plant.idx].address5,
+                plant.tool[plant.idx].address6,
+                plant.tool[plant.idx].name,
+                plant.tool[plant.idx].price,
+              );
+            }
+          },
+          // plant.tool[0].type == 'tool'
+          //   ? pushTool(
+          //       plant.tool[plant.idx].address,
+          //       plant.tool[plant.idx].name,
+          //       plant.tool[plant.idx].size,
+          //     )
+          //   : pushMinime(
+          //       plant.tool[plant.idx].address,
+          //       plant.tool[plant.idx].name,
+          //       plant.tool[plant.idx].size,
+          //     )
         },
       ],
       {cancelable: false},
@@ -124,7 +151,44 @@ const CheckItem = ({navigation, route}) => {
       ],
     });
   };
-
+  const pushMinipat = (
+    address1,
+    address2,
+    address3,
+    address4,
+    address5,
+    address6,
+    name,
+    price,
+  ) => {
+    firestore()
+      .collection('miniroom')
+      .doc(firebase.auth().currentUser.uid)
+      .collection('room')
+      .doc(firebase.auth().currentUser.uid)
+      .collection('minipat')
+      .doc(firebase.auth().currentUser.uid + 'mid')
+      .update({
+        1: address1,
+        2: address2,
+        3: address3,
+        4: address4,
+        5: address5,
+        6: address6,
+        name: name,
+        price: price,
+      });
+    // /settooladdress(newaddress);
+    console.log('푸쉬미니펫');
+    setcountItem();
+    navigation.reset({
+      routes: [
+        {
+          name: 'Miniroom',
+        },
+      ],
+    });
+  };
   return (
     <SafeAreaView
       style={{
@@ -145,7 +209,11 @@ const CheckItem = ({navigation, route}) => {
         </View>
         <View style={style.imageContainer}>
           <Image
-            source={{uri: plant && plant.tool[plant.idx].address}}
+            source={{
+              uri:
+                (plant && plant.tool[plant.idx].address) ||
+                plant.tool[plant.idx].address1,
+            }}
             style={{resizeMode: 'contain', flex: 1, aspectRatio: 1}}
           />
         </View>

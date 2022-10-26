@@ -34,7 +34,6 @@ import useStore from '../../../store/store';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import counterSlice, {up} from '../../../slices/counter';
-
 const ProfileScreen = ({navigation, route}) => {
   const {user, logout} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
@@ -51,7 +50,11 @@ const ProfileScreen = ({navigation, route}) => {
   const [CommentData, setCommentData] = useState([]);
   const {countItem, BuyItem} = useStore();
   const isFocused = useIsFocused();
-
+  const dispatch = useDispatch();
+  const CheckadminEmail = useSelector(state => {
+    return state.user.email;
+  });
+  console.log('이메일은~~', CheckadminEmail);
   const showToast = name => {
     Toast.show({
       type: 'success',
@@ -308,7 +311,7 @@ const ProfileScreen = ({navigation, route}) => {
   ) : (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       {(() => {
-        if (false)
+        if (CheckadminEmail && CheckadminEmail == 'admin@gmail.com')
           // 관리자 구분
           return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
