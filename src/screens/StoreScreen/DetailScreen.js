@@ -87,7 +87,7 @@ const DetailsScreen = ({navigation, route}) => {
     setPoint(userData.point - plant.price);
   };
   const addItem = async () => {
-    if (plant.type == 'tool' || plant.type == 'minime') {
+    if (plant.type == 'tool' || plant.type == 'minime' ) {
       try {
         console.log(Item);
         await firestore()
@@ -105,6 +105,30 @@ const DetailsScreen = ({navigation, route}) => {
         console.log(`update 완료`);
         console.log(
           `이름 : ${plant.name} 가격: ${plant.price} 주소 : ${plant.address} type : ${plant.type}`,
+        );
+        setBuyItem(plant.name);
+        navigation.navigate('StoreHome');
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    if (plant.type == 'background') {
+      try {
+        await firestore()
+          .collection('Inventory')
+          .doc(firebase.auth().currentUser.uid)
+          .collection(`${Item}`)
+          .add({
+            name: plant.name,
+            price: plant.price,
+            address: plant.address,
+
+            type: plant.type,
+          });
+        updatePoint();
+        console.log(`update 완료`);
+        console.log(
+          `이름 : ${plant.name} 가격: ${plant.price} 주소 : ${plant.address} `,
         );
         setBuyItem(plant.name);
         navigation.navigate('StoreHome');

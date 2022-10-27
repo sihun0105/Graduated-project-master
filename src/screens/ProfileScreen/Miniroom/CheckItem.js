@@ -67,6 +67,12 @@ const CheckItem = ({navigation, route}) => {
                 plant.tool[plant.idx].size,
               );
             }
+            if (plant.tool[0].type == 'background') {
+              pushBackground(
+                plant.tool[plant.idx].address,
+                plant.tool[plant.idx].name,
+              );
+            }
             if (plant.tool[0].type == 'minime') {
               pushMinime(
                 plant.tool[plant.idx].address,
@@ -130,6 +136,27 @@ const CheckItem = ({navigation, route}) => {
       ],
     });
   };
+  const pushBackground = (newaddress, newname) => {
+    firestore()
+      .collection('miniroom')
+      .doc(firebase.auth().currentUser.uid)
+      .collection('room')
+      .doc(firebase.auth().currentUser.uid)
+      .collection('background')
+      .doc(firebase.auth().currentUser.uid + 'mid')
+      .update({address: newaddress, name: newname});
+    settooladdress(newaddress);
+    console.log('푸쉬미니미');
+    setcountItem();
+    navigation.reset({
+      routes: [
+        {
+          name: 'Miniroom',
+        },
+      ],
+    });
+  };
+
 
   const pushMinime = (newaddress, newname, size) => {
     firestore()

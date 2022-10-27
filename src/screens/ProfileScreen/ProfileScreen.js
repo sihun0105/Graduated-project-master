@@ -359,7 +359,7 @@ const ProfileScreen = ({navigation, route}) => {
                     style={{flexDirection: 'row'}}
                     onPress={() => AddStorePressed()}>
                     <Icon name="shop" size={30} />
-                    <Text style={styles.userBtnTxt2}> 상점 아이템 관리</Text>
+                    <Text style={styles.userBtnTxt2}> 미니룸 스토어 아이템 관리</Text>
                   </TouchableOpacity>
                 </View>
               </View>
