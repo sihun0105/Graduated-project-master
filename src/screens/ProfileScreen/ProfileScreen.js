@@ -54,7 +54,7 @@ const ProfileScreen = ({navigation, route}) => {
   const CheckadminEmail = useSelector(state => {
     return state.user.email;
   });
-  console.log('이메일은~~', CheckadminEmail);
+  console.log('이메일은~~', userData ? userData.email : '');
   const showToast = name => {
     Toast.show({
       type: 'success',
@@ -311,7 +311,7 @@ const ProfileScreen = ({navigation, route}) => {
   ) : (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       {(() => {
-        if (CheckadminEmail && CheckadminEmail == 'admin@gmail.com')
+        if (userData.email == 'admin@gmail.com')
           // 관리자 구분
           return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>

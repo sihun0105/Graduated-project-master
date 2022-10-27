@@ -183,10 +183,7 @@ export const AuthProvider = ({children}) => {
                     ,gety : 95
                     ,name : '기본'
                   })
-                  firestore().collection('miniroom').doc(auth().currentUser.uid).collection('room').doc(auth().currentUser.uid).collection('minipat').doc(auth().currentUser.uid+ 'mid').set({
-                    address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/plants_growing%2F1.png?alt=media&token=0d700f0e-7b6f-430f-a8ec-dc7e9ca2601d'
-                    ,count: 1
-                  })
+                 
                   firestore().collection('Inventory').doc(auth().currentUser.uid).collection('minipat').doc().set({
                     address: 'https://firebasestorage.googleapis.com/v0/b/graduated-project-ce605.appspot.com/o/newAnimals%2F1.png?alt=media&token=05f16d97-3ecb-4e70-876a-5013d797529e'
                     ,count:1
