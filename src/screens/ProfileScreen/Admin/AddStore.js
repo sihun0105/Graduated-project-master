@@ -180,6 +180,7 @@ const AddStore = ({navigation}) => {
           >아이템 카테고리</Text>
           
           </View>
+          <View style={{alignItems : "center"}}>
           <SelectDropdown
            data={tags}
            onSelect={(selectedItem, index) => {
@@ -196,6 +197,7 @@ const AddStore = ({navigation}) => {
       return item
    }}
 />
+</View>
           <FormButton_2 buttonTitle="업데이트" onPress={submitItem}  />
     </View>
 

@@ -26,6 +26,7 @@ const Friend = () => {
     .collection('friends')
     .doc(firebase.auth().currentUser.uid)
     .collection('friendsinfo')
+    .orderBy('postTime', 'desc')
     .get()
 
     const allfriends = querySanp.docs.map(docSnap=>docSnap.data())

@@ -105,6 +105,7 @@ const SNSProfileScreen = ({navigation, route}) => {
         sname: '별명',
         birthday: LoginuserData.birthday,
         userimg: LoginuserData.userImg,
+        postTime: firestore.Timestamp.fromDate(new Date()),
       })
       .then(() => {
         console.log('requset Added!');

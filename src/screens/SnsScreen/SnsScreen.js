@@ -191,12 +191,12 @@ const SnsScreen = ({props}) => {
       '확실합니까?',
       [
         {
-          text: 'Cancel',
+          text: '취소',
           onPress: () => console.log('Cancel Pressed!'),
           style: 'cancel',
         },
         {
-          text: 'Confirm',
+          text: '확인',
           onPress: () => deletePost(postId),
         },
       ],

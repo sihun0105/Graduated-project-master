@@ -312,12 +312,7 @@ const ProfileScreen = ({navigation, route}) => {
   return ready ? (
     <Loading />
   ) : (
-    <View style={{flex: 1, backgroundColor: '#fff'}}      refreshControl={
-      <RefreshControl
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-      />
-    }>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       {(() => {
         if (CheckadminEmail && CheckadminEmail == 'admin@gmail.com')
           // 관리자 구분
