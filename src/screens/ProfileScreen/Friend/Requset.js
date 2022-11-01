@@ -27,6 +27,7 @@ const Request = () => {
     .collection('Request')
     .doc(firebase.auth().currentUser.uid)
     .collection('RequestInfo')
+    .orderBy('postTime', 'desc')
     .get()
 
     const allrequests = querySanp.docs.map(docSnap=>docSnap.data())
@@ -78,6 +79,8 @@ const Request = () => {
         sname: '별명',
         birthday: item.birthday,
         userimg: item.userimg,
+        postTime: firestore.Timestamp.fromDate(new Date()),
+
       })
       .then(() => {
         firestore()
@@ -92,6 +95,7 @@ const Request = () => {
         sname: '별명',
         birthday: userData.birthday,
         userimg: userData.userImg,
+        postTime: firestore.Timestamp.fromDate(new Date()),
       }).then(() => {
         firestore()
       .collection('Request')

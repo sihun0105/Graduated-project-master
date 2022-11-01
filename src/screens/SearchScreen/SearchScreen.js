@@ -464,7 +464,7 @@ useEffect(()=>{
 				<Icon name="search" size={20} color={theme.colors.searchIcon} />
 				<TextInput style={styles.input}
          onChangeText={(text) => {setLsearch(text)}}
-         placeholder="Search"
+         placeholder="검색어를 입력하세요"
           maxLength={10} />
 			</View>
 		</View>
