@@ -51,8 +51,15 @@ const ProfileScreen = ({navigation, route}) => {
   const [CommentData, setCommentData] = useState([]);
   const {countItem, BuyItem} = useStore();
   const isFocused = useIsFocused();
-
+  const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
   const CheckadminEmail = useSelector(state => {
     return !!state.user.email === 'admin@gmail.com';
   });
@@ -219,7 +226,7 @@ const ProfileScreen = ({navigation, route}) => {
     getRequest();
     getComment();
     navigation.addListener('focus', () => setLoading(!loading));
-  }, [navigation, loading, countItem, BuyItem, isFocused]);
+  }, [navigation, loading, countItem, BuyItem, isFocused, refreshing]);
 
   const FriendRequest = () => {
     Alert.alert(
@@ -419,6 +426,12 @@ const ProfileScreen = ({navigation, route}) => {
 
               <ScrollView
                 style={styles.container}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
                 contentContainerStyle={{
                   justifyContent: 'center',
                   alignItems: 'center',
