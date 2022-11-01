@@ -26,8 +26,9 @@ import SelectDropdown from 'react-native-select-dropdown'
 import { tapGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/TapGestureHandler';
 
 
-const ReportScreeninfo = ({route,navigation}) => {
+const ReportScreeninfo = ({route}) => {
 
+const navigation = useNavigation();
 
 const [tag, setTag] = useState(null);
 
@@ -154,6 +155,7 @@ const tags = ["무분별한 게시물 도배", ,"선정적인 음란 게시물",
       );
 
  
+      navigation.goBack()
 
 
      

@@ -14,6 +14,7 @@ const UserPointReportScreen = ({navigation, route}) => {
 
   const [friendData, setFriendData] = useState(null);
   const [userData, setUserdData] = useState(null);
+  const [userInfo, SetUserdData] = useState(null);
 
   const [deleted, setDeleted] = useState(false);
 
@@ -39,6 +40,21 @@ const UserPointReportScreen = ({navigation, route}) => {
       
     
   }
+
+  const getUsersInfo = async() => {
+    await firestore()
+      .collection('users')
+      .doc(route.params.uid)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          console.log('User Data', documentSnapshot.data());
+          SetUserdData(documentSnapshot.data());
+        }
+      });
+      
+    
+  }
   
   
   const MinusPoint = async () => {
@@ -51,7 +67,7 @@ const UserPointReportScreen = ({navigation, route}) => {
     .add({
   
       Point : "-" + point,
-      About : about ,
+      About :  "신고 누적",
       commentTime: firestore.Timestamp.fromDate(new Date()),
 
     })
@@ -61,7 +77,7 @@ const UserPointReportScreen = ({navigation, route}) => {
     .doc(route.params.uid)
     .update({
   
-      point : Number(userData.point) - Number(point)
+      point : Number(userInfo.point) - Number(point)
       
     })
     
@@ -80,6 +96,7 @@ const UserPointReportScreen = ({navigation, route}) => {
   }
   useEffect(() => {
     getUsers();
+    getUsersInfo();
     setDeleted(false);
   }, [deleted,refreshing]);
 
@@ -100,6 +117,7 @@ const UserPointReportScreen = ({navigation, route}) => {
     return (
     <View style={styles.container}>
         <Text style={{fontSize:20, paddingBottom: 10, fontFamily : "Jalnan"}}>{route.params.name}님의 게시글 제재 내역</Text>
+        <Text style={{fontSize:18, paddingBottom: 10, fontFamily : "Jalnan"}}>보유 포인트    {userInfo ? userInfo.point : ''}</Text>
         <View style={styles.title}>
         <View style={{width:40}}></View>
      

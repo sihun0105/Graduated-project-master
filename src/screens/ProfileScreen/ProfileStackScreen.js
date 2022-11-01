@@ -26,7 +26,6 @@ import UserScreen from './Admin/UserScreen';
 import ReportScreen from './Admin/ReportScreen';
 import AddStore from './Admin/AddStore';
 import UserPointScreen from './Admin/UserPointScreen';
-import ReportScreeninfo from '../SnsScreen/ReportScreeninfo';
 import UserPointReportScreen from './Admin/UserPointReportScreen';
 const Stack = createNativeStackNavigator();
 const ProfileStackScreen = ({navigation}) => {
@@ -563,31 +562,8 @@ const ProfileStackScreen = ({navigation}) => {
                     ),
                     }}
                   />
-                   <Stack.Screen
-                    name="ReportScreeninfo"
-                    component={ReportScreeninfo}
-                    options={{
-                    title: '게시물 신고',
-                    headerTitleStyle: {
-                      fontFamily: 'Jalnan',
-                      color : '#696969'
-                     },
-                    headerTitleAlign: 'center',
-                    headerStyle: {
-                    backgroundColor: '#fff',
-                    shadowColor: '#fff',
-                    elevation: 0,
-                    
-          
-                    },
-                    headerBackTitleVisible: false,
-                    headerBackImage: () => (
-                    <View style={{marginLeft: 15}}>
-                    <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-                      </View>
-                    ),
-                    }}
-                  />
+                  
+                  
 
 <Stack.Screen
                     name="AddStore"

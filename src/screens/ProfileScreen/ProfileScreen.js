@@ -16,6 +16,7 @@ import {
   SafeAreaView,
   Alert,
   Button,
+  RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
@@ -50,11 +51,13 @@ const ProfileScreen = ({navigation, route}) => {
   const [CommentData, setCommentData] = useState([]);
   const {countItem, BuyItem} = useStore();
   const isFocused = useIsFocused();
+
+  
   const dispatch = useDispatch();
   const CheckadminEmail = useSelector(state => {
     return state.user.email;
   });
-  console.log('이메일은~~', userData ? userData.email : '');
+  console.log('이메일은~~', CheckadminEmail);
   const showToast = name => {
     Toast.show({
       type: 'success',
@@ -309,9 +312,14 @@ const ProfileScreen = ({navigation, route}) => {
   return ready ? (
     <Loading />
   ) : (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}      refreshControl={
+      <RefreshControl
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
+    }>
       {(() => {
-        if (userData.email == 'admin@gmail.com')
+        if (CheckadminEmail && CheckadminEmail == 'admin@gmail.com')
           // 관리자 구분
           return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -368,9 +376,11 @@ const ProfileScreen = ({navigation, route}) => {
         else {
           return (
             <View style={{flex: 1, backgroundColor: '#fff'}}>
+              
               <View style={styles.title}>
                 {route.params ? (
                   <>
+                  <View style={{flexDirection : 'row', marginTop : 10}}>
                     <TouchableOpacity
                       style={{marginLeft: 15, justifyContent: 'center'}}
                       onPress={() => navigation.goBack()}>
@@ -386,20 +396,14 @@ const ProfileScreen = ({navigation, route}) => {
                         {userData ? userData.name : ''}님의 미니홈피
                       </Text>
                     </View>
-                    <TouchableOpacity
-                      style={{marginRight: 15, justifyContent: 'center'}}
-                      onPress={() => navigation.navigate('PointGuide')}>
-                      <Icon
-                        name="dots-three-horizontal"
-                        size={25}
-                        color="#fff"
-                      />
-                    </TouchableOpacity>
+                    </View>
+                    
                   </>
                 ) : (
                   <>
                     <View
                       style={{
+                        marginTop : 10,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center',
@@ -410,15 +414,7 @@ const ProfileScreen = ({navigation, route}) => {
                           {userData ? userData.name : ''}님의 미니홈피
                         </Text>
                       </View>
-                      <TouchableOpacity
-                        style={{marginRight: 15}}
-                        onPress={() => navigation.navigate('PointGuide')}>
-                        <Icon
-                          name="dots-three-horizontal"
-                          size={25}
-                          color="#fff"
-                        />
-                      </TouchableOpacity>
+                      
                     </View>
                   </>
                 )}

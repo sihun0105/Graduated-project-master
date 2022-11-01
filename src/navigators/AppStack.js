@@ -27,13 +27,8 @@ import PresentScreen from '../screens/ChatScreen/PresentScreen';
 import PresentDetailScreen from '../screens/ChatScreen/PresentDetailScreen';
 import Changepwd from '../screens/SettingScreen/Changepwd';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
-import counterSlice, {up} from '../../slices/counter';
-import userSlice from '../../slices/user';
-import {FirebaseStorageTypes} from '@react-native-firebase/storage';
-import firestore from '@react-native-firebase/firestore';
-import firebase from '@react-native-firebase/app';
-import Toast from 'react-native-toast-message';
+import ReportScreeninfos from '../screens/SnsScreen/ReportScreeninfo';
+import ReportScreeninfo from '../screens/SnsScreen/ReportScreeninfo';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -91,6 +86,31 @@ const FeedStack = ({navigation}) => (
         ),
       }}
     />
+    <Stack.Screen
+          name="ReportScreeninfo"
+          component={ReportScreeninfo}
+          options={{
+          title: '게시물 신고',
+          headerTitleStyle: {
+            fontFamily: 'Jalnan',
+            color : '#696969'
+           },
+          headerTitleAlign: 'center',
+          headerStyle: {
+          backgroundColor: '#fff',
+          shadowColor: '#fff',
+          elevation: 0,
+          
+
+          },
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+          <Ionicons name="arrow-back" size={25} color = "black" />
+            </View>
+          ),
+          }}
+        />
     <Stack.Screen
       name="AddPost"
       component={AddPostScreen}
@@ -435,6 +455,7 @@ const AppStack = () => {
         name="Home"
         component={ProfileStackScreen}
         options={{
+          unmountOnBlur: true,
           // tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="person" color={color} size={size} />
@@ -446,6 +467,7 @@ const AppStack = () => {
         name="Search"
         component={SearchStack}
         options={{
+          unmountOnBlur: true,
           tabBarIcon: ({color, size}) => (
             <Icon name="search" size={size} color={color} />
           ),
@@ -455,6 +477,7 @@ const AppStack = () => {
         name="SNSTAP"
         component={FeedStack}
         options={({route}) => ({
+          unmountOnBlur: true,
           tabBarLabel: 'SNS',
           // tabBarVisible: route.state && route.state.index === 0,
           tabBarIcon: ({color, size}) => (
@@ -467,6 +490,7 @@ const AppStack = () => {
         name="CHATATP"
         component={MessageStack}
         options={({route}) => ({
+          unmountOnBlur: true,
           tabBarVisible: getTabBarVisibility(route),
           tabBarLabel: 'CHAT',
 
@@ -483,6 +507,7 @@ const AppStack = () => {
         name="STORE"
         component={Store}
         options={{
+          unmountOnBlur: true,
           tabBarIcon: ({size, color}) => (
             <Icon name="shopping-bag" size={size} color={color} />
           ),
@@ -492,6 +517,7 @@ const AppStack = () => {
         name="SETTING"
         component={SettingStack}
         options={{
+          unmountOnBlur: true,
           tabBarIcon: ({size, color}) => (
             <Ionicons name="settings" size={size} color={color} />
           ),
