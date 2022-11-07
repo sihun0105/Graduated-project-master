@@ -14,7 +14,7 @@ Version 31.0.3-7562133<br>
 npm install => npm run android
 
  <h3>Screen_shot</h3>
- 
+ <p align="center">
 <img src="https://user-images.githubusercontent.com/80196373/182438584-4d982534-fb00-45e1-a008-9621126fa07b.png" width="200" height="400"/>
 <img src="https://user-images.githubusercontent.com/80196373/182438608-02d83d9e-b6c4-47c3-a4ba-9150d33c2130.png" width="200" height="400"/>
 <img src="https://user-images.githubusercontent.com/80196373/182438720-a0613a3b-1542-4dd8-88a4-1a21a1b10042.png" width="200" height="400"/>
@@ -22,3 +22,4 @@ npm install => npm run android
 <img src="https://user-images.githubusercontent.com/80196373/182438752-c68d97b8-6cca-4153-858d-5a0f506a20a7.png" width="200" height="400"/>
 <img src="https://user-images.githubusercontent.com/80196373/182438764-b576e8d4-d31c-4645-bc8b-73da570cf267.png" width="200" height="400"/>
 <img src="https://user-images.githubusercontent.com/80196373/182438783-d1d4157e-24ef-47c4-8bcc-dcbf1961b98c.png" width="200" height="400"/>
+</p>
