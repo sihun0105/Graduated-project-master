@@ -13,8 +13,8 @@ Version 31.0.3-7562133<br>
 <h3>실행방법</h3>npm install => npm run android<br/>
 
 <h3>시연영상</h3>
-[유튜브링크](https://www.youtube.com/watch?v=s7urJ4cahts&themeRefresh=1)
-[링크는 젤다의전설 주인공 이름](http://zeldahagoshipda.com)
+[유튜브링크]https://www.youtube.com/watch?v=s7urJ4cahts&themeRefresh=1
+[Google](https://google.com, "google link")
 
  <h3>Screen_shot</h3>
  <p align="center">
