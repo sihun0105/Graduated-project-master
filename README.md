@@ -15,7 +15,7 @@ npm install => npm run android
 
  <h3>Screen_shot</h3>
  
-![Screenshot_1659461674](https://user-images.githubusercontent.com/80196373/182438584-4d982534-fb00-45e1-a008-9621126fa07b.png)
+![Screenshot_1659461674](https://user-images.githubusercontent.com/80196373/182438584-4d982534-fb00-45e1-a008-9621126fa07b.png){: width="100" height="100"}
 ![Screenshot_1659461475](https://user-images.githubusercontent.com/80196373/182438608-02d83d9e-b6c4-47c3-a4ba-9150d33c2130.png)
 ![Screenshot_1659461480](https://user-images.githubusercontent.com/80196373/182438720-a0613a3b-1542-4dd8-88a4-1a21a1b10042.png)
 ![Screenshot_1659461484](https://user-images.githubusercontent.com/80196373/182438734-9cbbd694-94c9-4230-8f92-aac4442b1551.png)
