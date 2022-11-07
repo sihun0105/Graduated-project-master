@@ -13,8 +13,8 @@ Version 31.0.3-7562133<br>
 #사용방법<br/>
 npm install => npm run android
 
-#시연영상
-[유튜브링크]https://www.youtube.com/watch?v=s7urJ4cahts&themeRefresh=1
+#시연영상<br/>
+[유튜브링크](https://www.youtube.com/watch?v=s7urJ4cahts&themeRefresh=1)
 
  <h3>Screen_shot</h3>
  <p align="center">
