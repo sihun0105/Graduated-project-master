@@ -13,6 +13,9 @@ Version 31.0.3-7562133<br>
 #사용방법<br/>
 npm install => npm run android
 
+#시연영상
+[유튜브링크]https://www.youtube.com/watch?v=s7urJ4cahts&themeRefresh=1
+
  <h3>Screen_shot</h3>
  <p align="center">
 <img src="https://user-images.githubusercontent.com/80196373/182438584-4d982534-fb00-45e1-a008-9621126fa07b.png" width="200" height="400"/>
